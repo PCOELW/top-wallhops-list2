@@ -116,7 +116,6 @@
   function render(){
     const platform=state.platform, isPc=platform==='pc';
     $('pageTitle').textContent=isPc?'PC Wallhops':'Mobile Wallhops';
-    $('pageDescription').textContent=isPc?'Community-ranked wallhops for keyboard and mouse players.':'Community-ranked wallhops for mobile players.';
     const filtered=getFilteredRows(),tbody=$('rankingRows'),frag=document.createDocumentFragment();
     if(filtered.length){const selected=selectedRow();filtered.forEach(r=>frag.append(renderRow(r,r.title===selected?.title)));}
     else {const tr=el('tr');const td=el('td','table-message',state.payload? (listRows().length?'No wallhops match your filters.':'No rankings available for this platform yet.'):'Loading rankings...');td.colSpan=10;tr.append(td);frag.append(tr);}
