@@ -1,0 +1,72 @@
+name: Update wallhops and deploy site
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'index.html'
+      - 'styles.css'
+      - 'app.js'
+      - 'config.js'
+      - 'scripts/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+  schedule:
+    # GitHub Actions 최소 주기인 5분 간격 (실제 실행은 지연될 수 있음)
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: wallhops-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch public Google Sheet
+        run: python scripts/sync_sheets.py --output .build/rankings.json
+      - name: Track real ranking changes
+        run: python scripts/track_changes.py --fresh .build/rankings.json --snapshot data/rankings.json --history data/changes.json
+      - name: Save ranking history (only when changed)
+        run: |
+          git add data/rankings.json data/changes.json
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Update public wallhop rankings [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "Cannot persist ranking history. The website will still deploy this run. Check Actions workflow permissions."
+          fi
+      - name: Assemble website
+        run: |
+          mkdir -p _site/data
+          cp index.html styles.css app.js config.js _site/
+          cp .build/rankings.json _site/data/rankings.json
+          cp data/changes.json _site/data/changes.json
+          touch _site/.nojekyll
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
