@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a1420">
+  <meta name="description" content="PC and Mobile wallhop rankings, difficulties, tiers, verifiers, creators, game and video links.">
+  <title>Top Wallhops — PC & Mobile Rankings</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner shell">
+      <a class="brand" href="./" aria-label="Top Wallhops">Top Wallhops</a>
+      <nav class="main-nav" aria-label="Navigation">
+        <button class="nav-item is-active" type="button" data-platform="pc" aria-current="page">PC Wallhops</button>
+        <button class="nav-item" type="button" data-platform="mobile">Mobile Wallhops</button>
+        <button class="nav-item" id="rulesButton" type="button">Rules</button>
+        <a class="nav-item" id="discordNav" href="#" target="_blank" rel="noopener noreferrer" hidden>Discord</a>
+      </nav>
+      <label class="header-search search-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16.3 16.3 5 5"/></svg>
+        <input id="globalSearch" type="search" placeholder="Search wallhops, creators, or games..." autocomplete="off" aria-label="Search all wallhops">
+      </label>
+    </div>
+  </header>
+
+  <main class="shell page">
+    <section class="page-intro" aria-label="Ranking introduction">
+      <h1 id="pageTitle">PC Wallhops</h1>
+      <p id="pageDescription">Community-ranked wallhops for keyboard and mouse players.</p>
+      <p class="tier-notice"><span class="notice-icon" aria-hidden="true">i</span> These tiers do not refer to normal obby tiers.</p>
+    </section>
+
+    <div id="statusAlert" role="status" class="status-alert" hidden>
+      <span class="status-dot" aria-hidden="true"></span><span id="statusText"></span>
+      <button type="button" id="dismissAlert" aria-label="Dismiss message">×</button>
+    </div>
+
+    <div class="content-grid">
+      <section class="rankings-column" aria-label="Wallhop rankings">
+        <div class="toolbar">
+          <label class="toolbar-search search-field">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16.3 16.3 5 5"/></svg>
+            <input id="listSearch" type="search" placeholder="Search wallhops..." aria-label="Search current rankings" autocomplete="off">
+          </label>
+          <label class="select-wrap">
+            <span class="sr-only">Filter by difficulty</span>
+            <select id="difficultyFilter" aria-label="Filter by difficulty">
+              <option value="all">All Difficulties</option>
+              <option value="6.5">6.5 and above</option>
+              <option value="6.0">6.0 and above</option>
+              <option value="below6">Below 6.0</option>
+              <option value="unknown">Unrated</option>
+            </select>
+          </label>
+          <label class="select-wrap">
+            <span class="sr-only">Filter by attribute</span>
+            <select id="attributeFilter" aria-label="Filter by attribute">
+              <option value="all">All Attributes</option>
+            </select>
+          </label>
+          <label class="select-wrap sort-wrap">
+            <span class="sr-only">Sort rankings</span>
+            <select id="sortSelect" aria-label="Sort rankings">
+              <option value="difficulty">Sort by: Difficulty</option>
+              <option value="rank">Sort by: Rank</option>
+              <option value="title">Sort by: Name</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="table-scroll" role="region" aria-label="Wallhop rankings table" tabindex="0">
+          <table class="rankings-table">
+            <colgroup>
+              <col class="col-rank"><col class="col-title"><col class="col-diff"><col class="col-verifier"><col class="col-creator"><col class="col-game"><col class="col-video"><col class="col-style"><col class="col-attr"><col class="col-quality">
+            </colgroup>
+            <thead><tr><th scope="col">#</th><th scope="col">Wallhop Title</th><th scope="col">Difficulty / Tier</th><th scope="col">Verifier(s)</th><th scope="col">Creator(s)</th><th scope="col">Game Link</th><th scope="col">Video Link</th><th scope="col">Gameplay Style &amp; Length</th><th scope="col">Attribute</th><th scope="col">Quality</th></tr></thead>
+            <tbody id="rankingRows"><tr><td colspan="10" class="table-message">Loading rankings...</td></tr></tbody>
+          </table>
+        </div>
+        <div class="table-bottom"><span id="resultsLabel">Loading rankings...</span><span>Click a row to view details <span aria-hidden="true">↗</span></span></div>
+      </section>
+
+      <aside class="details-column" aria-label="Selected wallhop details">
+        <section class="detail-panel" id="detailPanel">
+          <div class="detail-heading"><span id="detailRank" class="detail-rank">#1</span><h2 id="detailTitle">Select a wallhop</h2></div>
+          <div class="detail-divider"></div>
+          <dl class="detail-data">
+            <div class="detail-line score-line"><dt>Difficulty</dt><dd><span id="detailDifficulty" class="difficulty-box">—</span></dd></div>
+            <div class="detail-line"><dt>Tier</dt><dd id="detailTier">—</dd></div>
+          </dl>
+          <div class="detail-divider"></div>
+          <dl class="detail-data">
+            <div class="detail-line"><dt>Verifier(s)</dt><dd id="detailVerifier">—</dd></div>
+            <div class="detail-line"><dt>Creator(s)</dt><dd id="detailCreator">—</dd></div>
+          </dl>
+          <div class="detail-divider"></div>
+          <div class="detail-block"><h3>Gameplay Style &amp; Length</h3><p id="detailStyle">—</p></div>
+          <div class="detail-divider"></div>
+          <dl class="detail-data bottom-fields">
+            <div class="detail-line"><dt>Attribute</dt><dd id="detailAttribute">—</dd></div>
+            <div class="detail-line"><dt>Quality</dt><dd id="detailQuality">—</dd></div>
+          </dl>
+          <div class="detail-buttons">
+            <a id="detailGame" class="primary-action is-disabled" aria-disabled="true" tabindex="-1">View on Roblox <span aria-hidden="true">↗</span></a>
+            <a id="detailVideo" class="secondary-action is-disabled" aria-disabled="true" tabindex="-1">Watch Video <span aria-hidden="true">↗</span></a>
+          </div>
+        </section>
+        <div class="data-footnote">
+          <div class="sync-state"><span class="small-indicator" id="syncDot"></span><span id="syncState">Checking sheet data...</span></div>
+          <div id="lastSync">—</div>
+          <button type="button" id="refreshButton">↻ Refresh data</button>
+          <a id="sheetLink" href="https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit" target="_blank" rel="noopener noreferrer">Source spreadsheet ↗</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <dialog id="rulesDialog" class="rules-dialog" aria-labelledby="rulesTitle">
+    <form method="dialog"><button class="dialog-close" aria-label="Close dialog">×</button></form>
+    <h2 id="rulesTitle">About these rankings</h2>
+    <p>These tiers do not refer to normal obby tiers. Rankings, scores, verifiers, creators, and links are based on the linked community spreadsheet. The site is an unofficial viewer, not the owner of the list.</p>
+    <a id="dialogSheetLink" href="https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit" target="_blank" rel="noopener noreferrer">Open original spreadsheet ↗</a>
+  </dialog>
+  <script defer src="./config.js"></script>
+  <script defer src="./app.js"></script>
+</body>
+</html>

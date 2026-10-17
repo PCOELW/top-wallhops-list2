@@ -1,0 +1,121 @@
+{
+  "status": "demo",
+  "updatedAt": null,
+  "pc": [
+    {
+      "rank": 1,
+      "title": "Concussion",
+      "difficulty": "6.5",
+      "tier": "Tier 16 Mid",
+      "verifier": "Krwkgropik",
+      "creator": "Krwkgropik",
+      "style": "SCP Anomaly | Headbumps | 20-45 seconds",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 2,
+      "title": "Silent Ballistics",
+      "difficulty": "6.4",
+      "tier": "Tier 16 Mid-Low",
+      "verifier": "JustaHolocene",
+      "creator": "Den1s2211",
+      "style": "7 Stud Headbumps | Cam Control | 20-45 seconds",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 3,
+      "title": "Edifice of Wallhop Against Time",
+      "difficulty": "6.3",
+      "tier": "Tier 16 Low-Mid",
+      "verifier": "Microwavium",
+      "creator": "Microwavium",
+      "style": "COs | Mixed Jumps/Lodges | 2+ minutes",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 4,
+      "title": "Steeple of Suspiciously Large Right Arm",
+      "difficulty": "6.3",
+      "tier": "Tier 16 Low-Mid",
+      "verifier": "Microwavium",
+      "creator": "Microwavium",
+      "style": "Checkpoints | Consistency | COs | 10+ minutes",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 5,
+      "title": "Stephenson 2-18",
+      "difficulty": "6.2",
+      "tier": "Tier 16 Low",
+      "verifier": "Den1s2211",
+      "creator": "Den1s2211",
+      "style": "Mix of Headbumps | 20-45 seconds | Easier Flicks",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 6,
+      "title": "Tree Canopy",
+      "difficulty": "6.2",
+      "tier": "Tier 16 Low",
+      "verifier": "WuduTeHg",
+      "creator": "Krwkgropik",
+      "style": "One Studs | Hard Jumps | Cam Control | <1 minute",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 7,
+      "title": "Chicken 44",
+      "difficulty": "6.1",
+      "tier": "Tier 16 Bottom",
+      "verifier": "Microwavium",
+      "creator": "Ecotism",
+      "style": "Cam Control | 1+ minute",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 8,
+      "title": "Edifice of Wooting 80HE Zinc",
+      "difficulty": "6.1",
+      "tier": "Tier 16 Bottom",
+      "verifier": "Microwavium",
+      "creator": "zvoidrr",
+      "style": "Hard Jumps | Net | Low JP | 2+ minutes",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 9,
+      "title": "Power Tower - Solo",
+      "difficulty": "6.1",
+      "tier": "Tier 16 Bottom",
+      "verifier": "WuduTeHg",
+      "creator": "KittenCarnation",
+      "style": "Wallhop Tower | Lodges | COs | RNG | 2+ minutes",
+      "gameUrl": "",
+      "videoUrl": ""
+    },
+    {
+      "rank": 10,
+      "title": "LETHAL MACHINERY",
+      "difficulty": "6",
+      "tier": "Tier 16 Baseline",
+      "verifier": "JustaHolocene",
+      "creator": "WuduTeHg",
+      "style": "Extremely Low JP | Cylinder Slides | 10-20 seconds",
+      "gameUrl": "",
+      "videoUrl": ""
+    }
+  ],
+  "mobile": [],
+  "warnings": [
+    "스크린샷에서 확인된 PC 상위 10개만 표시 중입니다."
+  ],
+  "source": "User screenshot — preview only"
+}
