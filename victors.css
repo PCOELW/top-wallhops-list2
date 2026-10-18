@@ -72,3 +72,8 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+/* Mobile Wallhops에서만 Victors 숨기기 */
+body:has([data-platform="mobile"].is-active) #victorsPanel {
+    display: none !important;
+}
