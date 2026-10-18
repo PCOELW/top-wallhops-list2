@@ -6,7 +6,7 @@ The source must be accessible to an anonymous GitHub Actions runner.
 """
 import argparse
 import csv
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import io
 import json
 import os
@@ -34,7 +34,7 @@ TOWER_CREATOR_ID_RE = re.compile(r"\bTower\s*Creator\s*id\s*[:：]\s*([0-9]+(?:#
 # Excel can save HYPERLINK as a formula instead of a hyperlink relationship.
 HYPERLINK_RE = re.compile(r'^\s*(?:_xlfn\.)?HYPERLINK\s*\(\s*"((?:[^"]|"")+)"\s*[,;]', re.I)
 COLS = {"rank":"A", "title":"B", "difficulty":"C", "tier":"D",
-        "verifier":"E", "creator":"F", "gameUrl":"G", "videoUrl":"H", "style":"I", "attribute":"J", "quality":"K"}
+        "verifier":"E", "creator":"F", "gameUrl":"G", "videoUrl":"H", "style":"I", "attribute":"J", "quality":"K", "date":"L", "towerCreatorId":"M"}
 
 
 def fetch(url):
@@ -195,7 +195,7 @@ def read_xlsx(data):
                 for cell in row.findall(S + "c"):
                     cell_ref = cell.attrib.get("r", "").upper()
                     match = CELL_RE.match(cell_ref)
-                    if not match or col_number(match.group(1)) > 11:
+                    if not match or col_number(match.group(1)) > 13:
                         continue
                     value = extract_cell(cell, strings)
                     # Prefer an explicit XML relationship over formula URL over literal URL.
@@ -207,6 +207,39 @@ def read_xlsx(data):
                 row_map[row_idx] = cells
             outputs[title] = records_from_rows(row_map, cell_notes)
         return outputs
+
+
+def normalize_date(value):
+    """Normalize spreadsheet dates; Google Visualization months are zero based."""
+    value = str(value or '').strip()
+    if not value:
+        return ''
+    gviz = re.fullmatch(r'Date\((\d{4}),(\d{1,2}),(\d{1,2})(?:,[^)]*)?\)', value, re.I)
+    if gviz:
+        try:
+            y, m, d = map(int, gviz.groups()[:3])
+            return (datetime(y, 1, 1) + timedelta(days=0)).replace(month=m+1, day=d).strftime('%Y-%m-%d')
+        except ValueError:
+            return value
+    if re.fullmatch(r'\d{5}(?:\.\d+)?', value) and 30000 < float(value) < 80000:
+        return (datetime(1899, 12, 30) + timedelta(days=float(value))).strftime('%Y-%m-%d')
+    return value
+
+
+def parse_tower_creator_id(value):
+    match = re.fullmatch(r'(?:Tower\s*Creator\s*(?:ID)?\s*[:：]\s*)?(\d{6,20}(?:#[A-Za-z0-9_-]+)?)', str(value or '').strip(), re.I)
+    return match.group(1) if match else ''
+
+
+def is_tower_creator_game(value):
+    # Do not confuse place IDs with internal Tower Creator IDs.
+    if not safe_http_url(value):
+        return False
+    from urllib.parse import urlparse
+    parsed = urlparse(value)
+    if not re.search(r'(^|\.)roblox\.com$', parsed.hostname or '', re.I):
+        return False
+    return bool(re.match(r'/games/8646026339(?:/|$)', parsed.path, re.I))
 
 
 def records_from_rows(rows, cell_notes=None):
@@ -234,7 +267,10 @@ def records_from_rows(rows, cell_notes=None):
         notes = cell_notes or {}
         note = notes.get(f"G{rindex}", "")
         match = TOWER_CREATOR_ID_RE.search(note)
-        record["towerCreatorId"] = match.group(1) if match else ""
+        explicit_id = parse_tower_creator_id(record.get("towerCreatorId"))
+        extracted_id = match.group(1) if match else ""
+        record["towerCreatorId"] = (explicit_id or extracted_id) if is_tower_creator_game(record["gameUrl"]) else ""
+        record["date"] = normalize_date(record.get("date", ""))
         records.append(record)
     return sorted(records, key=lambda record: record["rank"])
 
@@ -249,7 +285,7 @@ def read_public_csv(tab):
     for i, values in enumerate(csv.reader(io.StringIO(data.decode("utf-8-sig"))), 1):
         # Google Visualization may omit the sheet's first two decorative rows,
         # so rely on the numeric Rank and a nonempty Title, not a CSV line offset.
-        rows[i + 2] = {chr(65 + j):(v, "") for j, v in enumerate(values[:11])}
+        rows[i + 2] = {chr(65 + j):(v, "") for j, v in enumerate(values[:13])}
     return records_from_rows(rows)
 
 
