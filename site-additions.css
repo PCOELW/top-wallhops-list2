@@ -87,16 +87,20 @@
     display: none !important;
 }
 
-/* Discord 버튼 완전 단색 */
-.site-header-inner .discord-cta,
-.site-header-inner .discord-cta:hover,
-.site-header-inner .discord-cta:active,
-.site-header-inner .discord-cta:focus {
-    background: #5865f2 !important;
+
+/* Discord 버튼 색상 완전 고정 */
+#discordCta,
+#discordCta:hover,
+#discordCta:active,
+#discordCta:focus,
+#discordCta.is-unconfigured {
+    background: #5865F2 !important;
     background-image: none !important;
-    border: none !important;
+    border: 0 !important;
     box-shadow: none !important;
-    color: #ffffff !important;
-    transform: none !important;
+    opacity: 1 !important;
     filter: none !important;
+    transform: none !important;
+    transition: none !important;
+    color: #FFFFFF !important;
 }
