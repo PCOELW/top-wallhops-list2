@@ -32,7 +32,7 @@
   }
   const attrClass = name => {
     const v = trim(name).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-    return ['headbump','mixed','precision','camera-control','unique','insane'].includes(v)?'attribute-'+v:'attribute-other';
+    return ['legendary','insane','popular','unknown','unique','headbump','trash','endurance','camera-control','precision','mixed','hard-jumps'].includes(v)?'attribute-'+v:'attribute-other';
   };
   function chip(label, type='attribute') {
     const s = el('span','chip '+(type==='quality'?'quality-chip '+(/^[SABCD]$/.test(label)?'quality-'+label.toLowerCase():'quality-other'):attrClass(label)),label);
@@ -218,13 +218,27 @@
     }
     return result.sort((a,b)=>a.rank-b.rank);
   }
-  function attachSavedLinks(rows,backupRows){
-    const byTitle=new Map((backupRows||[]).map(r=>[trim(r.title).toLowerCase(),r]));
+  // A public GViz response often contains only the visible text of a hyperlink,
+  // not the URL stored behind [GAME] / [Link]. A direct refresh must NEVER
+  // clear URLs that were already present in the GitHub snapshot or on screen.
+  function stableTitle(title) {
+    return trim(title).replace(/\s+/g,' ').toLocaleLowerCase('en');
+  }
+  function mergeLiveRows(rows, savedRows, previousRows) {
+    const saved=new Map((savedRows||[]).map(r=>[stableTitle(r.title),r]));
+    const previous=new Map((previousRows||[]).map(r=>[stableTitle(r.title),r]));
     return rows.map(row=>{
-      const old=byTitle.get(trim(row.title).toLowerCase());
-      return {...row,
-        gameUrl:row.gameUrl||old?.gameUrl||'',
-        videoUrl:row.videoUrl||old?.videoUrl||''
+      const key=stableTitle(row.title);
+      const snapshot=saved.get(key);
+      const earlier=previous.get(key);
+      // For links, prefer newly read valid URLs; then the updated GitHub
+      // snapshot; then the last URL known to this browser session.
+      const gameUrl=url(row.gameUrl)||url(snapshot?.gameUrl)||url(earlier?.gameUrl)||'';
+      const videoUrl=url(row.videoUrl)||url(snapshot?.videoUrl)||url(earlier?.videoUrl)||'';
+      // Missing optional values are not allowed to wipe known metadata.
+      return {...row, gameUrl, videoUrl,
+        attribute:trim(row.attribute)||trim(earlier?.attribute)||trim(snapshot?.attribute),
+        quality:trim(row.quality)||trim(earlier?.quality)||trim(snapshot?.quality)
       };
     });
   }
@@ -271,7 +285,8 @@
           try{
             const decoded=decodeSheet(item.value);
             if(!decoded.length)throw new Error('No ranking rows in '+tabs[platform]);
-            result[platform]=normalizeList(attachSavedLinks(decoded,backup[platform]));
+            const earlierRows=state.payload?.[platform]||[];
+            result[platform]=normalizeList(mergeLiveRows(decoded,backup[platform],earlierRows));
           }catch(err){errors.push(platform+': '+err.message);}
         }else errors.push(platform+': '+item.reason?.message);
       }
