@@ -63,3 +63,20 @@
  .rules-section li:before { right:calc(100% + 12px); }
  .rules-note { margin:0 14px 16px; padding:12px; font-size:13px; }
 }
+
+/* Same small heading shown above "Rules", now also above PC / Mobile titles. */
+.page-intro::before {
+  content: "THE TOP WALLHOPS";
+  display: block;
+  margin-bottom: 9px;
+  color: #a7b4c7;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .11em;
+  line-height: 1.35;
+}
+
+/* Hide the section counters on the Rules page: "02 rules", "05 rules", etc. */
+.rules-count {
+  display: none !important;
+}
