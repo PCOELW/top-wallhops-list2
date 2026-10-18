@@ -5,5 +5,5 @@ window.WALLHOPS_CONFIG = {
   pcSheetName: 'Top PC Wallhops',
   mobileSheetName: 'Top Mobile Wallhops',
   refreshMs: 30000,
-  discordUrl: '' // Optional: Set a real Discord invite URL to show the Discord tab.
+  discordUrl: 'https://discord.gg/HzYYkAqJ6C' // Optional: Set a real Discord invite URL to show the Discord tab.
 };
