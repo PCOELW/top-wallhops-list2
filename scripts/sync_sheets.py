@@ -28,6 +28,9 @@ S = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
 PKG = "{http://schemas.openxmlformats.org/package/2006/relationships}"
 CELL_RE = re.compile(r"^([A-Za-z]+)([0-9]+)$")
+# A cell note such as "Tower Creator id: 872867958#5" is a tower ID,
+# not the place ID in the linked Roblox game URL.
+TOWER_CREATOR_ID_RE = re.compile(r"\bTower\s*Creator\s*id\s*[:：]\s*([0-9]+(?:#[A-Za-z0-9_-]+)?)", re.I)
 # Excel can save HYPERLINK as a formula instead of a hyperlink relationship.
 HYPERLINK_RE = re.compile(r'^\s*(?:_xlfn\.)?HYPERLINK\s*\(\s*"((?:[^"]|"")+)"\s*[,;]', re.I)
 COLS = {"rank":"A", "title":"B", "difficulty":"C", "tier":"D",
@@ -88,6 +91,39 @@ def rels_map(zf, filepath):
     return out
 
 
+def read_sheet_notes(zf, sheet_rels):
+    """Read Google Sheets notes exported as Excel comment parts.
+
+    Notes are not available from the public GViz value feed. Notes/legacy
+    comments are mapped to A1 cell references using the worksheet rels.
+    """
+    notes = {}
+    for path in set(sheet_rels.values()):
+        lower = path.lower()
+        if path not in zf.namelist() or not re.search(r"(?:^|/)(?:comments|threadedcomments)", lower):
+            continue
+        try:
+            root = ET.fromstring(zf.read(path))
+        except ET.ParseError:
+            continue
+        for elem in root.iter():
+            kind = elem.tag.rsplit("}", 1)[-1]
+            if kind not in ("comment", "threadedComment"):
+                continue
+            ref = elem.attrib.get("ref", "").upper()
+            if not CELL_RE.match(ref):
+                continue
+            # Legacy <comment><text><t>...</t></text></comment>, and
+            # threaded <threadedComment><text>...</text></threadedComment>.
+            chunks = [node.text or "" for node in elem.iter() if node.tag.rsplit("}", 1)[-1] == "t"]
+            if not chunks:
+                chunks = [node.text or "" for node in elem.iter() if node.tag.rsplit("}", 1)[-1] == "text"]
+            text = "".join(chunks).strip()
+            if text:
+                notes[ref] = text
+    return notes
+
+
 def get_shared_strings(zf):
     if "xl/sharedStrings.xml" not in zf.namelist():
         return []
@@ -143,6 +179,7 @@ def read_xlsx(data):
             page = ET.fromstring(zf.read(target))
             hyperlinks = {}
             sheet_rels = rels_map(zf, target)
+            cell_notes = read_sheet_notes(zf, sheet_rels)
             for link in page.findall("./" + S + "hyperlinks/" + S + "hyperlink"):
                 ref = link.attrib.get("ref", "").split(":")[0].upper()
                 rel_id = link.attrib.get(R + "id")
@@ -168,11 +205,11 @@ def read_xlsx(data):
                     url = hyperlinks.get(cell_ref, "") or (fm.group(1).replace('""', '"') if fm else "")
                     cells[match.group(1)] = (value, safe_http_url(url))
                 row_map[row_idx] = cells
-            outputs[title] = records_from_rows(row_map)
+            outputs[title] = records_from_rows(row_map, cell_notes)
         return outputs
 
 
-def records_from_rows(rows):
+def records_from_rows(rows, cell_notes=None):
     records = []
     for rindex, row in sorted(rows.items()):
         raw_rank = row.get("A", ("", ""))[0].strip()
@@ -191,6 +228,13 @@ def records_from_rows(rows):
                 continue
             display, hyperlink = row.get(column, ("", ""))
             record[field] = (hyperlink or safe_http_url(display)) if field.endswith("Url") else display.strip()
+        # Find Tower Creator ID in the Google Sheets note on the [GAME]
+        # cell. The small black-corner tooltip seen in Sheets is a note,
+        # separate from the Roblox hyperlink and visible cell text.
+        notes = cell_notes or {}
+        note = notes.get(f"G{rindex}", "")
+        match = TOWER_CREATOR_ID_RE.search(note)
+        record["towerCreatorId"] = match.group(1) if match else ""
         records.append(record)
     return sorted(records, key=lambda record: record["rank"])
 

@@ -48,7 +48,8 @@
     rank:Number.isFinite(Number(r.rank))&&Number(r.rank)>0?Math.trunc(Number(r.rank)):i+1,
     title:trim(r.title),difficulty:trim(r.difficulty),tier:trim(r.tier),
     verifier:trim(r.verifier),creator:trim(r.creator),style:trim(r.style),
-    attribute:trim(r.attribute),quality:trim(r.quality),gameUrl:url(r.gameUrl),videoUrl:url(r.videoUrl)
+    attribute:trim(r.attribute),quality:trim(r.quality),gameUrl:url(r.gameUrl),videoUrl:url(r.videoUrl),
+    towerCreatorId:trim(r.towerCreatorId)
   })):[];}
   const rankSort = (a,b)=>a.rank-b.rank;
   function listRows() {return state.payload?.[state.platform] || [];}
@@ -71,11 +72,48 @@
     else rows.sort((a,b)=>(numericDifficulty(b)??-Infinity)-(numericDifficulty(a)??-Infinity)||rankSort(a,b));
     return rows;
   }
-  function linkCell(label, link, type){
+  function installTowerCreatorUI(){
+    if($('towerCreatorLine') || !$('detailCreator'))return;
+    const creatorLine=$('detailCreator').closest('.detail-line');
+    if(!creatorLine)return;
+    const line=el('div','detail-line');line.id='towerCreatorLine';line.hidden=true;
+    const name=el('dt','', 'Tower Creator ID');
+    const container=el('dd','tower-creator-value');
+    const value=el('code','tower-creator-id');value.id='towerCreatorId';
+    const copy=el('button','tower-creator-copy','Copy');copy.type='button';copy.id='copyTowerCreatorId';
+    copy.title='Copy Tower Creator ID';
+    copy.addEventListener('click',async()=>{
+      const id=trim(value.textContent);
+      if(!id)return;
+      try{
+        await navigator.clipboard.writeText(id);
+        copy.textContent='Copied';
+        copy.title='ID copied';
+      }catch{copy.textContent='Copy failed';}
+    });
+    container.append(value,copy);line.append(name,container);creatorLine.after(line);
+    const css=el('style');css.textContent=`
+      .tower-creator-value{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+      .tower-creator-id{font:inherit;color:#e7ecf6;overflow-wrap:anywhere;}
+      .tower-creator-copy{border:1px solid #435061;border-radius:6px;background:#263140;
+        color:#e5eaf3;padding:5px 8px;font-size:12px;}
+      .tower-creator-copy:hover{background:#334253;}
+    `;document.head.append(css);
+  }
+  function showTowerCreatorId(row){
+    const line=$('towerCreatorLine');if(!line)return;
+    const id=trim(row?.towerCreatorId);
+    line.hidden=!id;
+    $('towerCreatorId').textContent=id;
+    $('copyTowerCreatorId').textContent='Copy';
+  }
+  function linkCell(label, link, type, towerCreatorId=''){
     const td=el('td');const href=url(link);
     if(!href){td.append(el('span','unavailable','—'));return td;}
     const a=el('a','short-link',label);a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.addEventListener('click',e=>e.stopPropagation());
-    a.setAttribute('aria-label',`${type} for ${label} (opens new tab)`);td.append(a);return td;
+    a.setAttribute('aria-label',`${type} for ${label} (opens new tab)`);
+    if(type==='Game link'&&towerCreatorId)a.title='Tower Creator ID: '+towerCreatorId;
+    td.append(a);return td;
   }
   function renderRow(row, selected){
     const tr=el('tr',selected?'is-selected':'');tr.tabIndex=0;
@@ -84,7 +122,7 @@
     const title=el('td','title-value',row.title);tr.append(title);
     const diff=el('td');const score=el('div','difficulty-cell');score.append(el('strong','difficulty-score',displayDifficulty(row)),el('span','tier-inline',row.tier||'—'));diff.append(score);tr.append(diff);
     tr.append(el('td','person-value',row.verifier||'—'),el('td','person-value',row.creator||'—'));
-    tr.append(linkCell('Game',row.gameUrl,'Game link'),linkCell('Video',row.videoUrl,'Video link'));
+    tr.append(linkCell('Game',row.gameUrl,'Game link',row.towerCreatorId),linkCell('Video',row.videoUrl,'Video link'));
     tr.append(el('td','style-value',row.style||'—'));
     const attr=el('td');const attrName=displayAttr(row);attr.append(attrName==='—'?el('span','unavailable','—'):chip(attrName));tr.append(attr);
     const quality=el('td');const grade=qualityFor(row);quality.append(grade==='—'?el('span','unavailable','—'):chip(grade,'quality'));tr.append(quality);
@@ -104,9 +142,9 @@
     if(!row){setText('detailRank','#—');$('detailRank').className='detail-rank';setText('detailTitle','No selection');
       for(const id of ['detailDifficulty','detailTier','detailVerifier','detailCreator','detailStyle'])setText(id,'—');
       $('detailAttribute').replaceChildren(el('span','unavailable','—'));
-      $('detailQuality').replaceChildren(el('span','unavailable','—'));setAction('detailGame','');setAction('detailVideo','');return;}
+      $('detailQuality').replaceChildren(el('span','unavailable','—'));showTowerCreatorId(null);setAction('detailGame','');setAction('detailVideo','');return;}
     setText('detailRank','#'+row.rank);$('detailRank').className='detail-rank'+(row.rank<=3?' rank-'+row.rank:'');setText('detailTitle',row.title);setText('detailDifficulty',displayDifficulty(row));setText('detailTier',row.tier);
-    setText('detailVerifier',row.verifier);setText('detailCreator',row.creator);
+    setText('detailVerifier',row.verifier);setText('detailCreator',row.creator);showTowerCreatorId(row);
     setText('detailStyle',row.style.replace(/\s*\|\s*/g,' | '));
     const attr=displayAttr(row);$('detailAttribute').replaceChildren(attr==='—'?el('span','unavailable','—'):chip(attr));
     const q=qualityFor(row);$('detailQuality').replaceChildren(q==='—'?el('span','unavailable','—'):chip(q,'quality'));
@@ -213,7 +251,7 @@
       result.push({
         rank,title,difficulty:get('C'),tier:get('D'),verifier:get('E'),
         creator:get('F'),gameUrl:url(get('G')),videoUrl:url(get('H')),
-        style:get('I'),attribute:get('J'),quality:get('K')
+        style:get('I'),attribute:get('J'),quality:get('K'),towerCreatorId:get('L')
       });
     }
     return result.sort((a,b)=>a.rank-b.rank);
@@ -238,7 +276,8 @@
       // Missing optional values are not allowed to wipe known metadata.
       return {...row, gameUrl, videoUrl,
         attribute:trim(row.attribute)||trim(earlier?.attribute)||trim(snapshot?.attribute),
-        quality:trim(row.quality)||trim(earlier?.quality)||trim(snapshot?.quality)
+        quality:trim(row.quality)||trim(earlier?.quality)||trim(snapshot?.quality),
+        towerCreatorId:trim(row.towerCreatorId)||trim(snapshot?.towerCreatorId)||trim(earlier?.towerCreatorId)
       };
     });
   }
@@ -320,6 +359,7 @@
     }finally{state.busy=false;$('refreshButton').disabled=false;}
   }
   function init(){
+    installTowerCreatorUI();
     const sheet=url(config.spreadsheetUrl);
     if(sheet){$('sheetLink').href=sheet;$('dialogSheetLink').href=sheet;}
     const discord=url(config.discordUrl);
