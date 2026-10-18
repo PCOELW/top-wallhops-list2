@@ -20,7 +20,7 @@
   box-shadow:0 3px 10px rgba(0,0,0,.15);
   transition:background-color .15s ease;
 }
-.site-header-inner a.discord-cta:hover { background:#7864bc; border-color:#9684cf; }
+.site-header-inner a.discord-cta:hover { background:#5865f2;; border-color:#9684cf; }
 .site-header-inner .discord-cta.is-unconfigured { opacity:.78; cursor:default; }
 .site-header-inner .discord-cta svg { width:20px; height:20px; fill:currentColor; stroke:none; flex:none; }
 
