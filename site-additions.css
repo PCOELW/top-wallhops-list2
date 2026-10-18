@@ -86,3 +86,17 @@
     content: none !important;
     display: none !important;
 }
+
+/* Discord 버튼 완전 단색 */
+.site-header-inner .discord-cta,
+.site-header-inner .discord-cta:hover,
+.site-header-inner .discord-cta:active,
+.site-header-inner .discord-cta:focus {
+    background: #5865f2 !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    transform: none !important;
+    filter: none !important;
+}
