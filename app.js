@@ -513,7 +513,6 @@
   }
   function init(){
     installTowerCreatorUI();
-    installStickyDetails();
     setupDifficultyAndSortMenus();
     installOrderToggle();
     const sheet=url(config.spreadsheetUrl);
