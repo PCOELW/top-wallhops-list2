@@ -3,16 +3,8 @@ name: Update wallhops and deploy site
 on:
   push:
     branches: [main, master]
-    paths:
-      - 'index.html'
-      - 'styles.css'
-      - 'app.js'
-      - 'config.js'
-      - 'scripts/**'
-      - '.github/workflows/**'
   workflow_dispatch:
   schedule:
-    # GitHub Actions 최소 주기인 5분 간격 (실제 실행은 지연될 수 있음)
     - cron: '*/5 * * * *'
 
 permissions:
@@ -28,40 +20,81 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'    
-      - name: Fetch public Google Sheet
-        run: python scripts/sync_sheets.py --output .build/rankings.json
-      - name: Track real ranking changes
-        run: python scripts/track_changes.py --fresh .build/rankings.json --snapshot data/rankings.json --history data/changes.json
-      - name: Save ranking history (only when changed)
+          python-version: '3.12'
+
+      - name: Download PC & Mobile rankings from NEW spreadsheet
+        id: rankings
+        continue-on-error: true
+        env:
+          WALLHOPS_SHEET_ID: '1RwF0kxkdXh_Fk49zBLWJx1pGxVBLEtnRJK74gvSwzWo'
         run: |
-          git add data/rankings.json data/changes.json
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Update public wallhop rankings [skip ci]"
-            git push origin "HEAD:${GITHUB_REF_NAME}" || echo "Cannot persist ranking history. The website will still deploy this run. Check Actions workflow permissions."
+          mkdir -p .build
+          python scripts/sync_sheets.py --output .build/rankings.json
+
+      - name: Keep prior rankings if sheet download fails
+        if: steps.rankings.outcome == 'failure'
+        run: |
+          echo '::warning::Could not update rankings; preserving previous snapshot.'
+          mkdir -p .build
+          cp data/rankings.json .build/rankings.json
+
+      - name: Track ranking changes
+        if: steps.rankings.outcome == 'success'
+        run: |
+          if [ -f scripts/track_changes.py ]; then
+            python scripts/track_changes.py --fresh .build/rankings.json --snapshot data/rankings.json --history data/changes.json
           fi
-      - name: Assemble website
+
+      - name: Download Victors from new spreadsheet (M-column notes)
+        id: victors
+        continue-on-error: true
+        env:
+          TTWL_VICTORS_SHEET_ID: '1RwF0kxkdXh_Fk49zBLWJx1pGxVBLEtnRJK74gvSwzWo'
+        run: |
+          mkdir -p .build
+          python scripts/sync_victors.py --output .build/victors.json
+
+      - name: Keep previous Victors if notes cannot be downloaded
+        if: steps.victors.outcome == 'failure'
+        run: |
+          echo '::warning::Could not read Victor notes from XLSX; check source permissions and note export.'
+          cp data/victors.json .build/victors.json
+
+      - name: Save ranking history, if updated
+        if: steps.rankings.outcome == 'success'
+        run: |
+          git add data/rankings.json data/changes.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Update public rankings [skip ci]'
+            git push origin "HEAD:${GITHUB_REF_NAME}" || echo '::warning::Cannot persist ranking history, but deploying current data.'
+          fi
+
+      - name: Assemble website (preserve existing CSS, JS, rules, favicon)
         run: |
           mkdir -p _site/data
-          cp index.html styles.css badge-colors.css app.js config.js _site/
+          find . -maxdepth 1 -type f \( -iname '*.html' -o -iname '*.css' -o -iname '*.js' -o -iname '*.ico' -o -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.svg' -o -iname '*.webp' \) -exec cp {} _site/ \;
+          if [ -d data ]; then cp -a data/. _site/data/; fi
           cp .build/rankings.json _site/data/rankings.json
-          cp data/changes.json _site/data/changes.json
-          cp rules.html site-additions.css site-additions.js _site/
-          cp favicon.ico favicon.png apple-touch-icon.png _site/
+          cp .build/victors.json _site/data/victors.json
+          python scripts/prepare_victors_site.py
           touch _site/.nojekyll
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
       - name: Upload build
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
