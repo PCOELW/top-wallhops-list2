@@ -97,12 +97,24 @@
     const rows=listRows().filter(row=>{
       const hit=!q||[row.title,row.verifier,row.creator,row.style,row.tier,row.difficulty,attributeFor(row)].join(' ').toLocaleLowerCase().includes(q);
       const score=numericDifficulty(row);
-      const diff=state.difficulty==='all'||(state.difficulty==='unknown'?score===null:(state.difficulty==='below6'?score!==null&&score<6:score!==null&&score>=Number(state.difficulty)));
+      // Difficulty group matches a complete unit interval: 6.x, 5.x ... 0.x.
+      // Unrated wallhops are still shown under All Difficulties only.
+      const group=Number(state.difficulty);
+      const diff=state.difficulty==='all'||(
+        score!==null && Number.isInteger(group) && group>=0 && group<=6 &&
+        score>=group && score<group+1
+      );
       const attr=state.attribute==='all'||displayAttr(row)===state.attribute;
       return hit&&diff&&attr;
     });
     if(state.sort==='title')rows.sort((a,b)=>a.title.localeCompare(b.title,'en')||rankSort(a,b));
-    else if(state.sort==='rank')rows.sort(rankSort);
+    else if(state.sort==='quality'){
+      // S is highest, then A, B, C, D. Unknown grades go last.
+      // Equal grades keep their original ranking order.
+      const gradeOrder={S:0,A:1,B:2,C:3,D:4};
+      const gradeIndex=row=>gradeOrder[qualityFor(row)]??5;
+      rows.sort((a,b)=>gradeIndex(a)-gradeIndex(b)||rankSort(a,b));
+    }
     else rows.sort((a,b)=>(numericDifficulty(b)??-Infinity)-(numericDifficulty(a)??-Infinity)||rankSort(a,b));
     return rows;
   }
@@ -390,8 +402,27 @@
       refreshAttributeOptions();render();
     }finally{state.busy=false;$('refreshButton').disabled=false;}
   }
+  function setupDifficultyAndSortMenus(){
+    // Modify options in code so there is no need to edit the user's index.html.
+    const difficulty=$('difficultyFilter');
+    difficulty.replaceChildren(new Option('All Difficulties','all'));
+    for(let number=6;number>=0;number--){
+      difficulty.append(new Option(number+'.0–'+number+'.9',String(number)));
+    }
+    difficulty.value=state.difficulty;
+
+    const sort=$('sortSelect');
+    const rankOption=sort.querySelector('option[value="rank"]');
+    if(rankOption){
+      rankOption.value='quality';
+      rankOption.textContent='Sort by: Quality';
+    }else if(!sort.querySelector('option[value="quality"]')){
+      sort.append(new Option('Sort by: Quality','quality'));
+    }
+  }
   function init(){
     installTowerCreatorUI();
+    setupDifficultyAndSortMenus();
     const sheet=url(config.spreadsheetUrl);
     if(sheet){$('sheetLink').href=sheet;$('dialogSheetLink').href=sheet;}
     const discord=url(config.discordUrl);
