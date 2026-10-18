@@ -3,6 +3,21 @@
     {
       "platform": "pc",
       "type": "new",
+      "title": "qwejpqwpeniqpnwiepn",
+      "rank": 2,
+      "at": "2026-10-18T02:09:51+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "removed",
+      "title": "Silent Ballistics",
+      "beforeRank": 2,
+      "rank": null,
+      "at": "2026-10-18T02:09:51+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "new",
       "title": "WWWWWWWWWWWW",
       "rank": 1,
       "at": "2026-10-18T01:58:45+00:00"
@@ -16,5 +31,5 @@
       "at": "2026-10-18T01:58:45+00:00"
     }
   ],
-  "updatedAt": "2026-10-18T01:58:45+00:00"
+  "updatedAt": "2026-10-18T02:09:51+00:00"
 }
