@@ -4,7 +4,7 @@
   const config = window.WALLHOPS_CONFIG || {};
   const state = {
     platform: location.hash.toLowerCase() === '#mobile' ? 'mobile' : 'pc',
-    query: '', difficulty: 'all', attribute: 'all', sort: 'difficulty',
+    query: '', difficulty: 'all', attribute: 'all', sort: 'difficulty', reverseOrder: false,
     payload: null, selection: {pc:null, mobile:null}, busy:false, lastCheck:0
   };
   const trim = x => x === null || x === undefined ? '' : String(x).trim();
@@ -95,7 +95,7 @@
   function getFilteredRows(){
     const q=state.query.trim().toLocaleLowerCase();
     const rows=listRows().filter(row=>{
-      const hit=!q||[row.title,row.verifier,row.creator,row.style,row.tier,row.difficulty,attributeFor(row)].join(' ').toLocaleLowerCase().includes(q);
+      const hit=!q||row.title.toLocaleLowerCase().includes(q);
       const score=numericDifficulty(row);
       // Difficulty group matches a complete unit interval: 6.x, 5.x ... 0.x.
       // Unrated wallhops are still shown under All Difficulties only.
@@ -115,7 +115,10 @@
       const gradeIndex=row=>gradeOrder[qualityFor(row)]??5;
       rows.sort((a,b)=>gradeIndex(a)-gradeIndex(b)||rankSort(a,b));
     }
+    else if(state.sort==='rank')rows.sort(rankSort);
     else rows.sort((a,b)=>(numericDifficulty(b)??-Infinity)-(numericDifficulty(a)??-Infinity)||rankSort(a,b));
+    // One independent toggle reverses whichever order the dropdown selected.
+    if(state.reverseOrder)rows.reverse();
     return rows;
   }
   function installTowerCreatorUI(){
@@ -419,10 +422,72 @@
     }else if(!sort.querySelector('option[value="quality"]')){
       sort.append(new Option('Sort by: Quality','quality'));
     }
+    // Reverse ordering is handled by its own square button, not this menu.
+    sort.querySelector('option[value="reverse-rank"]')?.remove();
+    if(state.sort==='reverse-rank')state.sort='difficulty';
+    sort.value=state.sort;
+  }
+  function installOrderToggle(){
+    const search=$('listSearch')?.closest('.toolbar-search');
+    if(!search || $('ttwl-order-toggle'))return;
+
+    const button=el('button','ttwl-order-toggle', '↑');
+    button.id='ttwl-order-toggle';
+    button.type='button';
+    const update=()=>{
+      button.textContent=state.reverseOrder?'↓':'↑';
+      button.setAttribute('aria-pressed',String(state.reverseOrder));
+      const label=state.reverseOrder?'Reverse order on. Switch to normal order':'Normal order. Switch to reverse order';
+      button.setAttribute('aria-label',label);
+      button.title=label;
+    };
+    update();
+    button.addEventListener('click',()=>{
+      state.reverseOrder=!state.reverseOrder;
+      update();
+      render();
+    });
+    search.after(button);
+
+    // Inject the small layout adjustment instead of replacing the user's CSS.
+    const style=document.createElement('style');
+    style.id='ttwl-order-toggle-style';
+    style.textContent=`
+      .toolbar .toolbar-search{flex:1 1 0;min-width:120px}
+      .toolbar #ttwl-order-toggle{
+        flex:0 0 45px; width:45px; height:45px; padding:0;
+        display:inline-flex; align-items:center; justify-content:center;
+        border:1px solid #374252; border-radius:10px;
+        background:#1a2533; color:#edf1f7;
+        font:700 25px/1 Arial,sans-serif; cursor:pointer;
+        transition:background-color .15s ease,border-color .15s ease;
+      }
+      .toolbar #ttwl-order-toggle:hover{background:#263242;border-color:#667489}
+      .toolbar #ttwl-order-toggle[aria-pressed="true"]{background:#253140;border-color:#697788}
+      .toolbar #ttwl-order-toggle:focus-visible{outline:2px solid #c5ceda;outline-offset:2px}
+      @media(max-width:1040px){
+        .toolbar .toolbar-search{flex:1 1 calc(100% - 64px);min-width:120px}
+        .toolbar #ttwl-order-toggle{flex:0 0 45px}
+      }
+      @media(max-width:620px){.toolbar #ttwl-order-toggle{height:42px}}
+    `;
+    document.head.appendChild(style);
+  }
+  function installStickyDetails(){
+    // Sticky the grid column, not only the inner panel: sticky children are
+    // otherwise constrained by a short aside that ends before the table does.
+    // Media query leaves the vertically stacked narrow-screen layout unchanged.
+    if(document.getElementById('ttwl-sticky-details-style'))return;
+    const style=document.createElement('style');
+    style.id='ttwl-sticky-details-style';
+    style.textContent='@media (min-width: 1041px) { body .content-grid > .details-column { position: sticky !important; top: 14px !important; align-self: start !important; } }';
+    document.head.appendChild(style);
   }
   function init(){
     installTowerCreatorUI();
+    installStickyDetails();
     setupDifficultyAndSortMenus();
+    installOrderToggle();
     const sheet=url(config.spreadsheetUrl);
     if(sheet){$('sheetLink').href=sheet;$('dialogSheetLink').href=sheet;}
     const discord=url(config.discordUrl);
