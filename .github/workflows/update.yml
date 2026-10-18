@@ -53,6 +53,7 @@ jobs:
           cp index.html styles.css badge-colors.css app.js config.js _site/
           cp .build/rankings.json _site/data/rankings.json
           cp data/changes.json _site/data/changes.json
+          cp rules.html site-additions.css site-additions.js _site/
           touch _site/.nojekyll
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
