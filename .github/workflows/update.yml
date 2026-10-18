@@ -50,7 +50,7 @@ jobs:
       - name: Assemble website
         run: |
           mkdir -p _site/data
-          cp index.html styles.css app.js config.js _site/
+          cp index.html styles.css badge-colors.css app.js config.js _site/
           cp .build/rankings.json _site/data/rankings.json
           cp data/changes.json _site/data/changes.json
           touch _site/.nojekyll
