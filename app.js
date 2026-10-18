@@ -27,12 +27,12 @@
     const grade = trim(row.quality).toUpperCase();
     if (/^[SABCD]$/.test(grade))return grade;
     // The original A–I spreadsheet has no Quality column. Illustrative only before first live sync.
-    if(state.payload?.status!=='live' && state.platform==='pc' && row.rank>=1 && row.rank<=10)return demoGrades[row.rank-1];
+    if(state.payload?.status==='demo' && state.platform==='pc' && row.rank>=1 && row.rank<=10)return demoGrades[row.rank-1];
     return '—';
   }
   const attrClass = name => {
     const v = trim(name).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-    return ['legendary','insane','popular','unknown','unique','headbump','trash','endurance','camera-control','precision','mixed','hard-jumps'].includes(v)?'attribute-'+v:'attribute-other';
+    return ['headbump','mixed','precision','camera-control','unique','insane'].includes(v)?'attribute-'+v:'attribute-other';
   };
   function chip(label, type='attribute') {
     const s = el('span','chip '+(type==='quality'?'quality-chip '+(/^[SABCD]$/.test(label)?'quality-'+label.toLowerCase():'quality-other'):attrClass(label)),label);
@@ -116,6 +116,8 @@
   function render(){
     const platform=state.platform, isPc=platform==='pc';
     $('pageTitle').textContent=isPc?'PC Wallhops':'Mobile Wallhops';
+    const description=$('pageDescription');
+    if(description) description.textContent=isPc?'Community-ranked wallhops for keyboard and mouse players.':'Community-ranked wallhops for mobile players.';
     const filtered=getFilteredRows(),tbody=$('rankingRows'),frag=document.createDocumentFragment();
     if(filtered.length){const selected=selectedRow();filtered.forEach(r=>frag.append(renderRow(r,r.title===selected?.title)));}
     else {const tr=el('tr');const td=el('td','table-message',state.payload? (listRows().length?'No wallhops match your filters.':'No rankings available for this platform yet.'):'Loading rankings...');td.colSpan=10;tr.append(td);frag.append(tr);}
@@ -144,29 +146,163 @@
     const when=raw?new Date(raw):null;
     return when&&!Number.isNaN(when.getTime())?when.toLocaleString('en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'Not synced yet';
   }
-  async function loadData(){
-    if(state.busy)return;state.busy=true;$('refreshButton').disabled=true;
-    const abort=new AbortController(),timer=setTimeout(()=>abort.abort(),20000);
-    try {
+  // Fetch a public Google Sheets tab via GViz JSONP: cross-origin script loading
+  // works on GitHub Pages without Apps Script or private credentials.
+  let requestSerial=0;
+  function spreadsheetId(){
+    const configured=trim(config.sheetId);
+    if(configured)return configured;
+    return trim(config.spreadsheetUrl).match(/\/spreadsheets\/d\/([\w-]+)/)?.[1] || '';
+  }
+  function fetchSheet(tab){
+    const id=spreadsheetId();
+    if(!id)return Promise.reject(new Error('Spreadsheet ID missing from config.js'));
+    const callback='__wallhopsGViz_'+(++requestSerial)+'_'+Date.now();
+    return new Promise((resolve,reject)=>{
+      let settled=false;
+      const script=document.createElement('script');
+      const timeout=setTimeout(()=>finish(new Error('Google Sheets request timed out')),14000);
+      function finish(error,response){
+        if(settled)return;
+        settled=true;
+        clearTimeout(timeout);
+        script.remove();
+        try{delete window[callback];}catch{window[callback]=undefined;}
+        if(error)reject(error);else resolve(response);
+      }
+      window[callback]=(response)=>{
+        if(!response || String(response.status).toLowerCase()!=='ok' || !response.table){
+          const message=response?.errors?.map(e=>e.detailed_message||e.message).filter(Boolean).join('; ')||'Invalid Google Sheets response';
+          finish(new Error(message));return;
+        }
+        finish(null,response.table);
+      };
+      script.async=true;
+      script.onerror=()=>finish(new Error('Public sheet not accessible or connection blocked'));
+      const base='https://docs.google.com/spreadsheets/d/'+encodeURIComponent(id)+'/gviz/tq';
+      const params=new URLSearchParams({
+        sheet:tab,
+        headers:'0',
+        tqx:'out:json;responseHandler:'+callback,
+        cacheBust:String(Date.now())
+      });
+      script.src=base+'?'+params.toString();
+      document.head.appendChild(script);
+    });
+  }
+  function readCell(cell){
+    if(!cell)return '';
+    // v is the underlying value, f only its formatted display.
+    // Prefer the formatted text for long text/links, but use raw numeric values.
+    const raw=cell.v;
+    if(raw===null||raw===undefined)return trim(cell.f);
+    return trim(typeof raw==='string'?raw:(cell.f??raw));
+  }
+  function decodeSheet(table){
+    if(!Array.isArray(table.rows))throw new Error('Sheet contains no table rows');
+    const columns=(Array.isArray(table.cols)?table.cols:[]).map(c=>trim(c?.id).toUpperCase());
+    const colIndex=letter=>{const n=columns.indexOf(letter);return n===-1?letter.charCodeAt(0)-65:n;};
+    const result=[];
+    for(const dataRow of table.rows){
+      const cells=Array.isArray(dataRow?.c)?dataRow.c:[];
+      const get=letter=>readCell(cells[colIndex(letter)]);
+      const rawRank=get('A');
+      const rank=Number(rawRank);
+      const title=get('B');
+      if(!Number.isSafeInteger(rank)||rank<=0||!title)continue;
+      result.push({
+        rank,title,difficulty:get('C'),tier:get('D'),verifier:get('E'),
+        creator:get('F'),gameUrl:url(get('G')),videoUrl:url(get('H')),
+        style:get('I'),attribute:get('J'),quality:get('K')
+      });
+    }
+    return result.sort((a,b)=>a.rank-b.rank);
+  }
+  function attachSavedLinks(rows,backupRows){
+    const byTitle=new Map((backupRows||[]).map(r=>[trim(r.title).toLowerCase(),r]));
+    return rows.map(row=>{
+      const old=byTitle.get(trim(row.title).toLowerCase());
+      return {...row,
+        gameUrl:row.gameUrl||old?.gameUrl||'',
+        videoUrl:row.videoUrl||old?.videoUrl||''
+      };
+    });
+  }
+  async function readBackup(){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),12000);
+    try{
       const source=url(config.dataUrl)||config.dataUrl||'./data/rankings.json';
-      const res=await fetch(source+(source.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store',signal:abort.signal});
-      if(!res.ok)throw new Error(`HTTP ${res.status}`);
-      const data=await res.json();
-      if(!Array.isArray(data.pc)||!Array.isArray(data.mobile))throw new Error('Unexpected ranking format');
-      state.payload={...data,pc:normalizeList(data.pc),mobile:normalizeList(data.mobile)};
-      const isLive=data.status==='live';$('syncState').textContent=isLive?'Connected to Google Sheets':'Preview data · waiting for first sync';
-      $('syncDot').classList.toggle('is-live',isLive);
-      $('lastSync').textContent='Last sync: '+displayTime(data.updatedAt);
-      if(isLive){
-        const warnings=(Array.isArray(data.warnings)?data.warnings:[]).filter(Boolean);
-        setAlert(warnings.length?'Sync notice: '+warnings.join(' · '):'');
-      }else setAlert(''); // The sidebar always identifies preview data until the first successful sync.
-      state.lastCheck=Date.now();refreshAttributeOptions();render();
-    }catch(err){
-      $('syncState').textContent='Data connection unavailable';$('syncDot').classList.remove('is-live');
-      setAlert('Could not load ranking data. Check GitHub Actions, Pages deployment, and public spreadsheet access. ('+err.message+')');
-      if(!state.payload){state.payload={pc:[],mobile:[],status:'error'};refreshAttributeOptions();render();}
-    }finally {clearTimeout(timer);state.busy=false;$('refreshButton').disabled=false;}
+      const separator=source.includes('?')?'&':'?';
+      const result=await fetch(source+separator+'v='+Date.now(),{cache:'no-store',signal:controller.signal});
+      if(!result.ok)throw new Error('Backup HTTP '+result.status);
+      const payload=await result.json();
+      if(!Array.isArray(payload.pc)||!Array.isArray(payload.mobile))throw new Error('Invalid backup data');
+      state.backup={...payload,pc:normalizeList(payload.pc),mobile:normalizeList(payload.mobile)};
+      state.backupChecked=Date.now();
+      if(!state.payload){
+        state.payload=state.backup;
+        $('syncState').textContent=payload.status==='live'?'GitHub backup · awaiting direct sync':'Preview · awaiting direct sync';
+        $('lastSync').textContent='Backup sync: '+displayTime(payload.updatedAt);
+        $('syncDot').classList.toggle('is-live',payload.status==='live');
+        refreshAttributeOptions();render();
+      }
+    }finally{clearTimeout(timer);}
+  }
+  async function loadData(){
+    if(state.busy)return;
+    state.busy=true;
+    $('refreshButton').disabled=true;
+    let backupError=null;
+    try{
+      // Update the URL fallback only every 5 minutes. Its hyperlinks can be
+      // embedded in Google Sheets cells and are not guaranteed in GViz output.
+      if(!state.backup || Date.now()-(state.backupChecked||0)>=300000){
+        try{await readBackup();}catch(err){backupError=err;}
+      }
+      const backup=state.backup||{pc:[],mobile:[]};
+      const tabs={pc:trim(config.pcSheetName)||'Top PC Wallhops',mobile:trim(config.mobileSheetName)||'Top Mobile Wallhops'};
+      const outcomes=await Promise.allSettled([fetchSheet(tabs.pc),fetchSheet(tabs.mobile)]);
+      const result={pc:null,mobile:null};
+      const errors=[];
+      for(const [index,platform] of ['pc','mobile'].entries()){
+        const item=outcomes[index];
+        if(item.status==='fulfilled'){
+          try{
+            const decoded=decodeSheet(item.value);
+            if(!decoded.length)throw new Error('No ranking rows in '+tabs[platform]);
+            result[platform]=normalizeList(attachSavedLinks(decoded,backup[platform]));
+          }catch(err){errors.push(platform+': '+err.message);}
+        }else errors.push(platform+': '+item.reason?.message);
+      }
+      if(result.pc||result.mobile){
+        // Retain last successful direct data if only one tab fails temporarily.
+        const oldLive=state.payload?.status==='direct'?state.payload:null;
+        state.payload={
+          ...(state.backup||{}),status:'direct',updatedAt:new Date().toISOString(),
+          pc:result.pc||oldLive?.pc||backup.pc,
+          mobile:result.mobile||oldLive?.mobile||backup.mobile
+        };
+        $('syncState').textContent=errors.length?'Google Sheets · partial live data':'Google Sheets · direct (30s)';
+        $('syncDot').classList.add('is-live');
+        $('lastSync').textContent='Last checked: '+displayTime(new Date().toISOString());
+        setAlert(errors.length?'Direct sync notice: '+errors.join(' · '):'');
+      }else if(state.backup){
+        // Preserve last direct results if present; otherwise show last GitHub snapshot.
+        if(!state.payload||state.payload.status!=='direct')state.payload=state.backup;
+        $('syncState').textContent='Direct sync unavailable · showing saved data';
+        $('syncDot').classList.remove('is-live');
+        $('lastSync').textContent='Backup sync: '+displayTime(backup.updatedAt);
+        setAlert('Direct Google Sheets access failed; showing the last saved data. '+errors.join(' · '));
+      }else{
+        $('syncState').textContent='Unable to access Google Sheets';
+        $('syncDot').classList.remove('is-live');
+        setAlert('Direct sync failed and no saved data was available. '+errors.join(' · ')+(backupError?' · '+backupError.message:''));
+        if(!state.payload)state.payload={pc:[],mobile:[],status:'error'};
+      }
+      state.lastCheck=Date.now();
+      refreshAttributeOptions();render();
+    }finally{state.busy=false;$('refreshButton').disabled=false;}
   }
   function init(){
     const sheet=url(config.spreadsheetUrl);
@@ -186,7 +322,7 @@
     $('rulesDialog').addEventListener('click',e=>{if(e.target===$('rulesDialog'))$('rulesDialog').close();});
     window.addEventListener('hashchange',()=>{const page=location.hash.slice(1).toLowerCase();if(['pc','mobile'].includes(page)&&page!==state.platform)switchPlatform(page);});
     switchPlatform(state.platform);loadData();
-    const every=Math.max(60000,Number(config.refreshMs)||60000);
+    const every=Math.max(10000,Number(config.refreshMs)||30000);
     setInterval(()=>{if(!document.hidden)loadData();},every);
     document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-state.lastCheck>every)loadData();});
   }
