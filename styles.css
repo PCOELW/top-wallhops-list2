@@ -161,6 +161,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,[t
 .header-search {
     display: none !important;
 }
+.detail-panel {
+    position: static !important;
+    top: auto !important;
+}
 
 @media(max-width:1500px){.site-header-inner{gap:20px}.main-nav{gap:0}.rankings-table{min-width:1050px}.col-title{width:14%}.content-grid{grid-template-columns:minmax(0,1fr) 318px}.detail-panel{padding:17px}.detail-heading h2{font-size:22px}}
 @media(max-width:1040px){.content-grid{grid-template-columns:1fr}.details-column{max-width:680px}.detail-panel{position:static}.site-header{height:auto}.site-header-inner{min-height:70px;flex-wrap:wrap;padding:9px 0;gap:6px 16px}.brand{font-size:24px}.main-nav{order:3;width:100%;height:47px;overflow-x:auto}.nav-item{height:47px;padding:0 15px}.nav-item.is-active:after{bottom:3px}.header-search{width:min(360px,49vw)}.page-intro{padding-left:4px;padding-right:4px}.page-intro h1{font-size:48px}.toolbar{flex-wrap:wrap}.toolbar-search{flex-basis:100%}.select-wrap{flex:1}.select-wrap select,.select-wrap.sort-wrap select{min-width:0;width:100%;max-width:none}.table-scroll{scrollbar-width:thin}}
