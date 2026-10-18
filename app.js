@@ -32,7 +32,7 @@
   }
   const attrClass = name => {
     const v = trim(name).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-    return ['headbump','mixed','precision','camera-control','unique','insane'].includes(v)?'attribute-'+v:'attribute-other';
+    return ['legendary','insane','popular','unknown','unique','headbump','trash','endurance','camera-control','precision','mixed','hard-jumps'].includes(v)?'attribute-'+v:'attribute-other';
   };
   function chip(label, type='attribute') {
     const s = el('span','chip '+(type==='quality'?'quality-chip '+(/^[SABCD]$/.test(label)?'quality-'+label.toLowerCase():'quality-other'):attrClass(label)),label);
