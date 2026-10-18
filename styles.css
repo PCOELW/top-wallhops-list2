@@ -169,6 +169,22 @@ button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,[t
     display: none !important;
 }
 
+/* 긴 월홉 이름 자동 줄바꿈 */
+.rankings-table td.title-value {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}
+
+/* 월홉 이름 칸 너비 확대 */
+.rankings-table .col-title {
+    width: 17% !important;
+}
+
+.rankings-table .col-style {
+    width: 17.3% !important;
+}
+
 @media(max-width:1500px){.site-header-inner{gap:20px}.main-nav{gap:0}.rankings-table{min-width:1050px}.col-title{width:14%}.content-grid{grid-template-columns:minmax(0,1fr) 318px}.detail-panel{padding:17px}.detail-heading h2{font-size:22px}}
 @media(max-width:1040px){.content-grid{grid-template-columns:1fr}.details-column{max-width:680px}.detail-panel{position:static}.site-header{height:auto}.site-header-inner{min-height:70px;flex-wrap:wrap;padding:9px 0;gap:6px 16px}.brand{font-size:24px}.main-nav{order:3;width:100%;height:47px;overflow-x:auto}.nav-item{height:47px;padding:0 15px}.nav-item.is-active:after{bottom:3px}.header-search{width:min(360px,49vw)}.page-intro{padding-left:4px;padding-right:4px}.page-intro h1{font-size:48px}.toolbar{flex-wrap:wrap}.toolbar-search{flex-basis:100%}.select-wrap{flex:1}.select-wrap select,.select-wrap.sort-wrap select{min-width:0;width:100%;max-width:none}.table-scroll{scrollbar-width:thin}}
 @media(max-width:620px){.shell{width:calc(100% - 24px)}.site-header-inner{justify-content:space-between}.header-search{order:2;width:100%;margin:7px 0 2px}.main-nav{order:3;gap:0}.nav-item{font-size:13px}.page-intro{padding-top:23px;padding-bottom:18px}.page-intro h1{font-size:41px}.page-intro>p{font-size:15px}.page-intro .tier-notice{font-size:12px}.toolbar{padding:9px;gap:8px}.toolbar-search{height:42px}.select-wrap{flex:1 1 calc(50% - 8px)}.select-wrap select,.select-wrap.sort-wrap select{height:42px;font-size:12px;padding:0 24px 0 10px}.select-wrap:after{right:11px}.select-wrap.sort-wrap{flex-grow:1}.table-bottom{font-size:11px}.detail-panel{padding:17px 16px}.detail-heading h2{font-size:24px}.detail-rank{font-size:27px}.detail-line dt,.detail-line dd{font-size:14px}.detail-block p{font-size:15px}}
