@@ -129,7 +129,7 @@
     const dateLine=$('wallhopDateLine');
     if(dateLine){
       const value=formatWallhopDate(row?.date);
-      dateLine.hidden=!value;
+      dateLine.hidden=state.platform==='mobile'||!value;
       $('wallhopDate').textContent=value||'—';
     }
     const idLine=$('towerCreatorLine');
