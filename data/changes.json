@@ -3,6 +3,36 @@
     {
       "platform": "pc",
       "type": "new",
+      "title": "Concussion",
+      "rank": 1,
+      "at": "2026-10-18T02:15:10+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "new",
+      "title": "Silent Ballistics",
+      "rank": 2,
+      "at": "2026-10-18T02:15:10+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "removed",
+      "title": "WWWWWWWWWWWW",
+      "beforeRank": 1,
+      "rank": null,
+      "at": "2026-10-18T02:15:10+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "removed",
+      "title": "qwejpqwpeniqpnwiepn",
+      "beforeRank": 2,
+      "rank": null,
+      "at": "2026-10-18T02:15:10+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "new",
       "title": "qwejpqwpeniqpnwiepn",
       "rank": 2,
       "at": "2026-10-18T02:09:51+00:00"
@@ -31,5 +61,5 @@
       "at": "2026-10-18T01:58:45+00:00"
     }
   ],
-  "updatedAt": "2026-10-18T02:09:51+00:00"
+  "updatedAt": "2026-10-18T02:15:10+00:00"
 }
