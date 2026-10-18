@@ -1,0 +1,65 @@
+/* Add-on styling only; does not replace your existing styles.css or badge colors. */
+.main-nav #discordNav { display:none !important; }
+.site-header-inner .discord-cta {
+  margin-left:auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-width:128px;
+  min-height:40px;
+  padding:0 17px;
+  border:1px solid #7663ac;
+  border-radius:9px;
+  background:#6653a4;
+  color:#ffffff;
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  white-space:nowrap;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  transition:background-color .15s ease;
+}
+.site-header-inner a.discord-cta:hover { background:#7864bc; border-color:#9684cf; }
+.site-header-inner .discord-cta.is-unconfigured { opacity:.78; cursor:default; }
+.site-header-inner .discord-cta svg { width:20px; height:20px; fill:currentColor; stroke:none; flex:none; }
+
+.rules-content { max-width:1240px; padding-top:38px; padding-bottom:84px; }
+.rules-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:25px; margin:0 0 28px; }
+.rules-eyebrow { display:block; color:#a7b4c7; font-size:12px; font-weight:700; letter-spacing:.11em; margin-bottom:9px; }
+.rules-heading h1 { margin:0; font-size:52px; line-height:1.12; letter-spacing:-1.5px; font-weight:780; }
+.rules-heading p { color:#adb9ca; font-size:16px; line-height:1.6; margin:10px 0 0; }
+.rules-byline { color:#a6b3c4; font-size:13px; white-space:nowrap; padding-bottom:8px; }
+.rules-section { border:1px solid #2b3543; border-radius:12px; background:#101823; margin:0 0 17px; overflow:hidden; }
+.rules-section-title { display:flex; align-items:center; gap:12px; min-height:62px; padding:13px 22px; background:#161e29; border-bottom:1px solid #2d3644; }
+.rules-section-marker { display:block; width:4px; height:25px; border-radius:2px; background:#dfc37c; flex:none; }
+.rules-section-title h2 { font-size:21px; font-weight:760; letter-spacing:-.4px; margin:0; }
+.rules-count { margin-left:auto; color:#8c9aad; font-size:12px; font-weight:600; }
+.rules-section ol { padding:5px 26px 15px 60px; margin:0; counter-reset:rule; list-style:none; }
+.rules-section li { padding:13px 0 13px 0; font-size:15px; line-height:1.65; color:#dce3ec; position:relative; }
+.rules-section li:not(:last-child) { border-bottom:1px solid rgba(255,255,255,.055); }
+.rules-section li:before { counter-increment:rule; content:counter(rule) "."; position:absolute; right:calc(100% + 14px); color:#b3bece; font-weight:780; }
+.rules-verification .rules-section-marker { background:#dfc37c; }
+.rules-completion .rules-section-marker { background:#9bc6cf; }
+.rules-worthiness .rules-section-marker { background:#afa0d2; }
+.rules-verification .rules-section-title h2 { color:#f3dfaa; }
+.rules-completion .rules-section-title h2 { color:#c2e3e8; }
+.rules-worthiness .rules-section-title h2 { color:#d8cdf0; }
+.rules-note { margin:2px 22px 23px; padding:15px 17px; background:#1d2634; border:1px solid #354254; border-radius:9px; color:#c7d1df; font-size:14px; line-height:1.65; }
+.rules-note strong { color:#f4f7fa; }
+@media(max-width:1040px) {
+ .site-header-inner .discord-cta { margin-left:auto; }
+}
+@media(max-width:620px) {
+ .site-header-inner .discord-cta { min-width:105px; min-height:36px; font-size:13px; padding:0 11px; margin-left:auto; }
+ .rules-content { padding-top:28px; }
+ .rules-heading { align-items:flex-start; flex-direction:column; gap:9px; margin-bottom:23px; }
+ .rules-heading h1 { font-size:42px; }
+ .rules-byline { padding:0; }
+ .rules-section-title { padding:12px 15px; }
+ .rules-section-title h2 { font-size:18px; }
+ .rules-section ol { padding:4px 14px 12px 47px; }
+ .rules-section li { font-size:13px; }
+ .rules-section li:before { right:calc(100% + 12px); }
+ .rules-note { margin:0 14px 16px; padding:12px; font-size:13px; }
+}
