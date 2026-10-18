@@ -1,0 +1,33 @@
+/* Top Wallhops — clean, flat colors inspired by the reference spreadsheet.
+   Add this stylesheet AFTER styles.css so only badge colors change. */
+.chip {
+  border: 0;
+  border-radius: 6px;
+  box-shadow: none;
+  color: #1a1d24;
+  font-weight: 700;
+}
+
+/* Attribute */
+.attribute-legendary      { background: #c1d2ec; color: #202a41; }
+.attribute-insane         { background: #d27a6c; color: #271716; }
+.attribute-popular        { background: #efd1db; color: #3b2731; }
+.attribute-unknown        { background: #edb77e; color: #392819; }
+.attribute-unique         { background: #f0ca66; color: #322714; }
+.attribute-headbump       { background: #d6c9e5; color: #35263e; }
+.attribute-trash          { background: #e5a8a7; color: #392321; }
+.attribute-endurance      { background: #b9d4ae; color: #253724; }
+.attribute-camera-control { background: #d5abc1; color: #3b2531; }
+.attribute-precision      { background: #f3df9c; color: #3c3118; }
+.attribute-mixed          { background: #e5e5e9; color: #272b34; }
+.attribute-hard-jumps     { background: #ad9bcc; color: #29223d; }
+.attribute-other          { background: #bac5d1; color: #252e38; }
+
+/* Quality — D orange, C yellow, B green, A cyan, S magenta */
+.quality-chip { font-weight: 800; }
+.quality-d   { background: #ecae64; color: #382512; }
+.quality-c   { background: #e9d979; color: #332c11; }
+.quality-b   { background: #a5dca5; color: #19351f; }
+.quality-a   { background: #95dce0; color: #17373b; }
+.quality-s   { background: #e5a5d9; color: #3c2039; }
+.quality-other { background: #bac5d1; color: #252e38; }
