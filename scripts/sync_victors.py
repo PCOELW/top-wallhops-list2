@@ -26,6 +26,12 @@ VICTOR_WORD = re.compile(r'\bvictors?\b', re.I)
 VICTOR_LABEL = re.compile(r'(?:^|[\n\r])\s*(?:victors?|winners?)\s*[:：=\-–]?\s*', re.I)
 NAME = re.compile(r'^[\w.\-]{2,40}$', re.UNICODE)
 NOISE = re.compile(r'\b(tower\s+creator\s+id|date\s*\(|rules?|verified\s+by)\b', re.I)
+# Exact source mapping provided by the user:
+# Column B = Wallhop Title, column M = victor notes (same row).
+# Column N is only an auxiliary reading column and MUST NOT be used for matching.
+TITLE_NUMBER = re.compile(r'^\s*\d+(?:\.0+)?\s*$')
+SHEET_PC = os.environ.get('WALLHOPS_PC_TAB', 'Top PC Wallhops').casefold()
+SHEET_MOBILE = os.environ.get('WALLHOPS_MOBILE_TAB', 'Top Mobile Wallhops').casefold()
 
 
 def key(value):
@@ -124,55 +130,56 @@ def extract(payload):
         strings = shared_strings(zf)
         output = {'pc': {}, 'mobile': {}, 'all': {}}
         found_notes = 0
+        skipped_numeric = 0
         for entry in workbook.findall('./'+S+'sheets/'+S+'sheet'):
             label = entry.attrib.get('name','')
             path = rels.get(entry.attrib.get(R+'id'))
             if not path or path not in zf.namelist(): continue
-            platform = identify_platform(label)
+            # Restrict to the two ranking tabs; do not attribute Victor notes
+            # from unrelated sheets just because their name contains 'PC'.
+            if label.casefold() not in (SHEET_PC, SHEET_MOBILE):
+                continue
+            platform = 'pc' if label.casefold() == SHEET_PC else 'mobile'
             root = ET.fromstring(zf.read(path))
             cells = {}
             for row in root.findall('./'+S+'sheetData/'+S+'row'):
                 r = int(row.attrib.get('r','0'))
                 cells[r] = {c.attrib.get('r','').upper():cell_value(c,strings).strip() for c in row.findall(S+'c')}
-            # Header detection supports sheets whose Victors column is not in a fixed position.
-            victor_cols=set()
-            title_col='B'
-            for r in range(1, min(max(cells or {0:0}), 8)+1):
-                for address, value in cells.get(r,{}).items():
-                    m=CELL.fullmatch(address)
-                    if not m: continue
-                    if re.fullmatch(r'\s*victors?(?:\s*\([^)]*\))?\s*',value,re.I):victor_cols.add(m.group(1))
-                    if re.fullmatch(r'\s*(?:wallhop\s*title|wallhop\s*name|tower\s*name|title)\s*',value,re.I):title_col=m.group(1)
-            notes = read_notes(zf,relationships(zf,path))
+            # Only B{row} identifies the wallhop. N{row} must be ignored.
+            # M{row} contains Victors (usually in an XLSX cell note).
+            notes = read_notes(zf, relationships(zf, path))
             found_notes += len(notes)
             byrow = {}
             for r, row in cells.items():
-                title = row.get(f'{title_col}{r}', '') or row.get(f'B{r}','')
-                if not title or title.lower() in ('wallhop title','title','wallhop name'):
+                if r < 3:
+                    continue  # Sheet headers / banner
+                title = row.get(f'B{r}', '').strip()
+                # A numeric value is not a valid wallhop title; never use N as fallback.
+                if not title or TITLE_NUMBER.fullmatch(title) or title.casefold() in (
+                    'wallhop title', 'title', 'wallhop name', 'wallhop', 'wallhop title / name'
+                ):
+                    if title and TITLE_NUMBER.fullmatch(title):
+                        skipped_numeric += 1
                     continue
                 byrow[r] = title
-                # Also support a visible Victors column, if one exists.
-                for col in victor_cols:
-                    raw = row.get(f'{col}{r}', '')
-                    if raw: add(output[platform], title, usernames(raw))
+                # Support both visible values and notes in column M.
+                visible = row.get(f'M{r}', '').strip()
+                if visible and not re.fullmatch(r'victors?', visible, re.I):
+                    add(output[platform], title, usernames(visible))
             for address, note in notes.items():
-                m=CELL.fullmatch(address)
-                if not m:continue
+                m = CELL.fullmatch(address)
+                if not m:
+                    continue
                 col, r = m.group(1), int(m.group(2))
-                title=byrow.get(r)
-                if not title:continue
-                value=cells.get(r,{}).get(address,'')
-                named=bool(VICTOR_WORD.search(note))
-                in_column=col in victor_cols
-                labelled=bool(VICTOR_WORD.search(value))
-                # If the note contains only plain usernames, also accept it if
-                # the attached cell's visible label says Victor(s).
-                if not (named or in_column or labelled):continue
-                if NOISE.search(note):continue
-                if named:
-                    # Strip the Victor heading, not other prose, before splitting.
-                    note = re.sub(r'(?i)\bvictors?\s*[:：=\-–]?\s*',' ',note)
-                add(output[platform],title,usernames(note))
+                if col != 'M' or r not in byrow:
+                    continue
+                if NOISE.search(note):
+                    continue
+                if VICTOR_WORD.search(note):
+                    note = re.sub(r'(?i)\bvictors?\s*[:：=\-–]?\s*', ' ', note)
+                add(output[platform], byrow[r], usernames(note))
+        if skipped_numeric:
+            print(f'Victor extraction: {skipped_numeric} rows with numeric values in B were skipped; N was intentionally ignored.', file=sys.stderr)
         return output,found_notes
 
 
@@ -187,7 +194,7 @@ def run(input_file=None):
     records, total_notes=extract(content)
     found=sum(len(x) for x in records.values())
     if not found:
-        raise ValueError(f'No Victor entries extracted from XLSX (notes found: {total_notes}). Check the note labels, cell layout, and XLSX export support.')
+        raise ValueError(f'No Victor entries extracted from XLSX (notes found: {total_notes}). Check column B titles and column M notes, tab names, and XLSX export support.')
     return {'status':'live','updatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
             'sourceUrl':f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit',
             'pc':records['pc'],'mobile':records['mobile'],'all':records['all'],
