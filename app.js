@@ -431,13 +431,35 @@
     const search=$('listSearch')?.closest('.toolbar-search');
     if(!search || $('ttwl-order-toggle'))return;
 
-    const button=el('button','ttwl-order-toggle', '↑');
+    // Minimal two-way sort glyph: the highlighted side indicates the active direction.
+    const button=el('button','ttwl-order-toggle');
     button.id='ttwl-order-toggle';
     button.type='button';
+    const svgNs='http://www.w3.org/2000/svg';
+    const glyph=document.createElementNS(svgNs,'svg');
+    glyph.setAttribute('viewBox','0 0 24 24');
+    glyph.setAttribute('width','20');
+    glyph.setAttribute('height','20');
+    glyph.setAttribute('fill','none');
+    glyph.setAttribute('aria-hidden','true');
+    const arrows=[
+      {cls:'sort-up',paths:['M8 19V5','M4.5 8.5 8 5l3.5 3.5']},
+      {cls:'sort-down',paths:['M16 5v14','m12.5 15.5 3.5 3.5 3.5-3.5']}
+    ];
+    for(const item of arrows){
+      const group=document.createElementNS(svgNs,'g');
+      group.setAttribute('class',item.cls);
+      for(const d of item.paths){
+        const path=document.createElementNS(svgNs,'path');
+        path.setAttribute('d',d);
+        group.appendChild(path);
+      }
+      glyph.appendChild(group);
+    }
+    button.appendChild(glyph);
     const update=()=>{
-      button.textContent=state.reverseOrder?'↓':'↑';
       button.setAttribute('aria-pressed',String(state.reverseOrder));
-      const label=state.reverseOrder?'Reverse order on. Switch to normal order':'Normal order. Switch to reverse order';
+      const label=state.reverseOrder?'Descending order. Switch to ascending':'Ascending order. Switch to descending';
       button.setAttribute('aria-label',label);
       button.title=label;
     };
@@ -449,25 +471,31 @@
     });
     search.after(button);
 
-    // Inject the small layout adjustment instead of replacing the user's CSS.
+    // All styling lives here; the user's site CSS and color customizations remain untouched.
     const style=document.createElement('style');
     style.id='ttwl-order-toggle-style';
     style.textContent=`
       .toolbar .toolbar-search{flex:1 1 0;min-width:120px}
       .toolbar #ttwl-order-toggle{
-        flex:0 0 45px; width:45px; height:45px; padding:0;
-        display:inline-flex; align-items:center; justify-content:center;
-        border:1px solid #374252; border-radius:10px;
-        background:#1a2533; color:#edf1f7;
-        font:700 25px/1 Arial,sans-serif; cursor:pointer;
-        transition:background-color .15s ease,border-color .15s ease;
+        flex:0 0 44px;width:44px;height:45px;padding:0;
+        display:inline-flex;align-items:center;justify-content:center;
+        border:1px solid #374252;border-radius:9px;
+        background:#1a2533;cursor:pointer;
+        transition:background-color .15s,border-color .15s;
       }
-      .toolbar #ttwl-order-toggle:hover{background:#263242;border-color:#667489}
-      .toolbar #ttwl-order-toggle[aria-pressed="true"]{background:#253140;border-color:#697788}
+      .toolbar #ttwl-order-toggle svg{
+        width:19px;height:19px;
+        fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;
+      }
+      .toolbar #ttwl-order-toggle .sort-up{stroke:#edf2fa;transition:stroke .15s}
+      .toolbar #ttwl-order-toggle .sort-down{stroke:#64758a;transition:stroke .15s}
+      .toolbar #ttwl-order-toggle[aria-pressed="true"] .sort-up{stroke:#64758a}
+      .toolbar #ttwl-order-toggle[aria-pressed="true"] .sort-down{stroke:#edf2fa}
+      .toolbar #ttwl-order-toggle:hover{background:#222f40;border-color:#56667b}
       .toolbar #ttwl-order-toggle:focus-visible{outline:2px solid #c5ceda;outline-offset:2px}
       @media(max-width:1040px){
         .toolbar .toolbar-search{flex:1 1 calc(100% - 64px);min-width:120px}
-        .toolbar #ttwl-order-toggle{flex:0 0 45px}
+        .toolbar #ttwl-order-toggle{flex:0 0 44px}
       }
       @media(max-width:620px){.toolbar #ttwl-order-toggle{height:42px}}
     `;
