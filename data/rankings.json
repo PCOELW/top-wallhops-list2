@@ -1,6 +1,6 @@
 {
   "status": "live",
-  "updatedAt": "2026-10-18T02:15:10+00:00",
+  "updatedAt": "2026-10-18T02:25:56+00:00",
   "source": "Google Sheets",
   "downloadFormat": "xlsx",
   "sourceUrl": "https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit",
@@ -21,6 +21,7 @@
       "style": "SCP Anomaly | Headbumps | 20-45 seconds",
       "attribute": "Headbump",
       "quality": "S",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -35,6 +36,7 @@
       "style": "7 Stud Headbumps | Cam Control | 20-45 seconds",
       "attribute": "Headbump",
       "quality": "A",
+      "towerCreatorId": "872867958#5",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -49,6 +51,7 @@
       "style": "COs | Mixed Jumps/Lodges | 2+ minutes",
       "attribute": "Mixed",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon11/Png/noFilter"
     },
     {
@@ -63,6 +66,7 @@
       "style": "Checkpoints | Consistency | COs | 10+ minutes",
       "attribute": "Mixed",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c69f83f4be9a2295f16884c2379ff8c7/150/150/Image/Png/noFilter"
     },
     {
@@ -77,6 +81,7 @@
       "style": "Mix of Headbumps | 20-45 seconds | Easier Flicks",
       "attribute": "Headbump",
       "quality": "A",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-bcee76116410e656a9e78cea67ea89be/150/150/Image/Png/noFilter"
     },
     {
@@ -91,6 +96,7 @@
       "style": "One Studs | Hard Jumps | Cam Control | <1 minute",
       "attribute": "Precision",
       "quality": "S",
+      "towerCreatorId": "919137499#2",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -105,6 +111,7 @@
       "style": "Cam Control |  | 1+ minute",
       "attribute": "Camera Control",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -119,6 +126,7 @@
       "style": "Hard Jumps | Net | Low JP | 2+ minutes",
       "attribute": "Insane",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -133,6 +141,7 @@
       "style": "Wallhop Tower | Lodges | COs | RNG | 2+ minutes",
       "attribute": "Mixed",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-d85f035db3b00e86cdf4d1614ac01ae8/150/150/Image/Png/noFilter"
     },
     {
@@ -147,6 +156,7 @@
       "style": "Extremely Low JP | Cylinder Slides | 10-20 seconds",
       "attribute": "Unique",
       "quality": "S",
+      "towerCreatorId": "1825448918#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -161,6 +171,7 @@
       "style": "Headbumps | Cam Control | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "A",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon4/Png/noFilter"
     },
     {
@@ -175,6 +186,7 @@
       "style": "Wallhop Tower | Consistency | 2+ minutes",
       "attribute": "Endurance",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon7/Png/noFilter"
     },
     {
@@ -189,6 +201,7 @@
       "style": "Consistency | One Studs | Lodge | 1+ minute",
       "attribute": "Endurance",
       "quality": "B",
+      "towerCreatorId": "919137499#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -203,6 +216,7 @@
       "style": "Headbumps | Hard Jumps | 20-45  seconds",
       "attribute": "Headbump",
       "quality": "S",
+      "towerCreatorId": "1825448918#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -217,6 +231,7 @@
       "style": "Headbumps | Cam Control | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "A",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -231,6 +246,7 @@
       "style": "Wallhop Tower | Basic | 2+ minutes",
       "attribute": "Endurance",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon7/Png/noFilter"
     },
     {
@@ -245,6 +261,7 @@
       "style": "Speedrun | Hard Jumps | 2+ minutes",
       "attribute": "Unique",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -259,6 +276,7 @@
       "style": "5 Stud Headbumps | Basic | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -273,6 +291,7 @@
       "style": "C.O.'s/Spinners | Cam Control | <1 minute",
       "attribute": "Legendary",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-6605983c4a70ebf5fa8e4fe4a85f7f57/150/150/Image/Png/noFilter"
     },
     {
@@ -287,6 +306,7 @@
       "style": "Cam Control | Headbumps | 20-45 seconds",
       "attribute": "Common",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -301,6 +321,7 @@
       "style": "Wallhop Tower | Break | 1+ minute",
       "attribute": "Common",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -315,6 +336,7 @@
       "style": "7 Stud Headbumps | Cam Control | 20-45 seconds",
       "attribute": "Insane",
       "quality": "A",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -329,6 +351,7 @@
       "style": "Wallhop Tower | Difficulty Spikes | 2+ minutes",
       "attribute": "Endurance",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -343,6 +366,7 @@
       "style": "Wallhop Tower | 1+ minutes",
       "attribute": "Endurance",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -357,6 +381,7 @@
       "style": "Mixed Jumps/Lodge | Cam Control | 1+ minute",
       "attribute": "Precision",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fd4b439f8497c778b66d18e8c00d1a1f/150/150/Image/Png/noFilter"
     },
     {
@@ -371,6 +396,7 @@
       "style": "Wallhop Tower | Headbumps | 1+ minute",
       "attribute": "Popular",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -385,6 +411,7 @@
       "style": "Mixed Jumps | Cam Control | 20-45 sec",
       "attribute": "Insane",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -399,6 +426,7 @@
       "style": "Headhitter | Cam Control | 20-45 seconds",
       "attribute": "Unknown",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -413,6 +441,7 @@
       "style": "Lodge | Cam Control | 20-45 seconds",
       "attribute": "Precision",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-407f8fe12a11deaa5ab26b56097dd399/150/150/Image/Png/noFilter"
     },
     {
@@ -427,6 +456,7 @@
       "style": "Hard Jumps | Gaps | <1 minute",
       "attribute": "Common",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -441,6 +471,7 @@
       "style": "Wallhop Tower | Hard Jumps | 1+ minutes",
       "attribute": "Insane",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon7/Png/noFilter"
     },
     {
@@ -455,6 +486,7 @@
       "style": "Headbump | Cam Control | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "A",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
@@ -469,6 +501,7 @@
       "style": "Hard Wraps| Simple | <1 minute",
       "attribute": "Hard Jumps",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-6c01b45af88479f377858194a550f2da/150/150/Image/Png/noFilter"
     },
     {
@@ -483,6 +516,7 @@
       "style": "Wallhop Tower | Headbumps | Lodge | <1 minute",
       "attribute": "Mixed",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
@@ -497,6 +531,7 @@
       "style": "Headbumps | Jank | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -511,6 +546,7 @@
       "style": "Cylinder Headbumps | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "B",
+      "towerCreatorId": "1666281593#10",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -525,6 +561,7 @@
       "style": "Headbumps | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "S",
+      "towerCreatorId": "919137499#2",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -539,6 +576,7 @@
       "style": "Low JP | Consistency | C.O. | 1+ minute",
       "attribute": "Insane",
       "quality": "A",
+      "towerCreatorId": "1825448918#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -553,6 +591,7 @@
       "style": "Consistency | Headbumps | 20-45 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -566,7 +605,8 @@
       "videoUrl": "https://youtu.be/C3CTpXKkXf0?si=Z88-gPJ0eDmh3e6K",
       "style": "Hard Jumps | Lodge | 20-45 seconds",
       "attribute": "Unique",
-      "quality": "B"
+      "quality": "B",
+      "towerCreatorId": ""
     },
     {
       "rank": 41,
@@ -580,6 +620,7 @@
       "style": "RNG | Headbumps | One Studs | 20-45 seconds",
       "attribute": "TRASH",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -594,6 +635,7 @@
       "style": "Hard Jumps | Low JP | 10-20 seconds",
       "attribute": "Unique",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -608,6 +650,7 @@
       "style": "Cylinders | Headbumps | 1+ minute",
       "attribute": "Insane",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -622,6 +665,7 @@
       "style": "Lodges | Hard Jumps | 20-45 seconds",
       "attribute": "Precision",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -636,6 +680,7 @@
       "style": "Long | Wedges | Basic | 1+ minute",
       "attribute": "TRASH",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -650,6 +695,7 @@
       "style": "One Studs | Cam Control | 20-45 seconds",
       "attribute": "Precision",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-04866c7149bb4dcacabafbcdd993f5c9/150/150/Image/Png/noFilter"
     },
     {
@@ -664,6 +710,7 @@
       "style": "Low Visibility | Lodges | Headbumps | 1+ minute",
       "attribute": "Mixed",
       "quality": "A",
+      "towerCreatorId": "2216707229#21",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -678,6 +725,7 @@
       "style": "Wallhop Tower | Basic | 1+ minute",
       "attribute": "Common",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -692,6 +740,7 @@
       "style": "Wallhop Tower | Hard Wraps | <1 minute",
       "attribute": "Hard Jumps",
       "quality": "B",
+      "towerCreatorId": "1666281593#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -706,6 +755,7 @@
       "style": "Headbumps | Cam Control | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "D",
+      "towerCreatorId": "8409939352#5",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -720,6 +770,7 @@
       "style": "Wallhop Tower | Mixed Jumps/Lodge | <1 Minute",
       "attribute": "Unique",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -734,6 +785,7 @@
       "style": "Hard Jumps | Headbumps | 20-45 seconds",
       "attribute": "Unique",
       "quality": "S",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
@@ -748,6 +800,7 @@
       "style": "Cam Control | WallWalks | 10-20 seconds",
       "attribute": "Unique",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -762,6 +815,7 @@
       "style": "Cam Control | Headbumps | 5-10 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
@@ -776,6 +830,7 @@
       "style": "Hard Wraps | C.O. | <1 minute",
       "attribute": "Hard Jumps",
       "quality": "C",
+      "towerCreatorId": "11209474372#1",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -790,6 +845,7 @@
       "style": "9 Stud Headbumps | 5-10 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "2554364132#2",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -803,7 +859,8 @@
       "videoUrl": "https://www.youtube.com/watch?v=Uvu5LWf1HZI",
       "style": "Headbumps | Cam Control | 10-20 seconds",
       "attribute": "Headbump",
-      "quality": "A"
+      "quality": "A",
+      "towerCreatorId": "872867958#2"
     },
     {
       "rank": 58,
@@ -817,6 +874,7 @@
       "style": "Lodge | Headbumps | 20-45 seconds",
       "attribute": "Unknown",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -830,7 +888,8 @@
       "videoUrl": "https://www.youtube.com/watch?v=7INCaEYO02E&feature=youtu.be",
       "style": "One Studs | Lodges | 1+ minute",
       "attribute": "Mixed",
-      "quality": "B"
+      "quality": "B",
+      "towerCreatorId": ""
     },
     {
       "rank": 60,
@@ -844,6 +903,7 @@
       "style": "Camera Control | Fun | <1 minute",
       "attribute": "Mixed",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -857,7 +917,8 @@
       "videoUrl": "https://www.youtube.com/watch?v=3xkYB8evPlM",
       "style": "Wallhop Tower | Hard Jumps | <1 minute",
       "attribute": "Insane",
-      "quality": "D"
+      "quality": "D",
+      "towerCreatorId": ""
     },
     {
       "rank": 62,
@@ -871,6 +932,7 @@
       "style": "Wallhop Tower | Left Side | 1+ minute",
       "attribute": "Unique",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -885,6 +947,7 @@
       "style": "Lodges | Cam Control | 20-45 seconds",
       "attribute": "Unique",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -899,6 +962,7 @@
       "style": "Wallhop Tower | Cam Control | 1+ minute",
       "attribute": "Unknown",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -913,6 +977,7 @@
       "style": "Wallhop Tower | Hard Wraps | 20-45 seconds",
       "attribute": "Hard Jumps",
       "quality": "C",
+      "towerCreatorId": "3752884709#6",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -927,6 +992,7 @@
       "style": "Lodge | Headbumps | Cam Control | 20-45 seconds",
       "attribute": "Unknown",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
@@ -941,6 +1007,7 @@
       "style": "Lodges | Cam Control | 20-45 seconds",
       "attribute": "Camera Control",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -955,6 +1022,7 @@
       "style": "5 Stud Headbumps | 5-10 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "11209474372#1",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -969,6 +1037,7 @@
       "style": "One Studs | Headbumps | 20-45 seconds",
       "attribute": "Precision",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -983,6 +1052,7 @@
       "style": "Hard Jumps | Cam Control | 20-45 seconds",
       "attribute": "Unknown",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fb8815abd8e6a669abd5ef95e484addc/150/150/Image/Png/noFilter"
     },
     {
@@ -997,6 +1067,7 @@
       "style": "Wallhop Tower | 1+ minute",
       "attribute": "Endurance",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-2328aa288225e9dcf3e293f42f065e20/150/150/Image/Png/noFilter"
     },
     {
@@ -1010,7 +1081,8 @@
       "videoUrl": "https://www.youtube.com/watch?v=7zxdbL0ZG7I",
       "style": "Nets | Consistency |  5+ minutes",
       "attribute": "Endurance",
-      "quality": "C"
+      "quality": "C",
+      "towerCreatorId": ""
     },
     {
       "rank": 73,
@@ -1024,6 +1096,7 @@
       "style": "Low JP | Cam Control | 1+ minute",
       "attribute": "Endurance",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-f67b3b0fa6d04a2eb5e04413e74c6644/150/150/Image/Png/noFilter"
     },
     {
@@ -1038,6 +1111,7 @@
       "style": "Headbumps | Basic | 20-45 seconds",
       "attribute": "Unknown",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fb8815abd8e6a669abd5ef95e484addc/150/150/Image/Png/noFilter"
     },
     {
@@ -1052,6 +1126,7 @@
       "style": "WallWalks | Hard Jumps | 5-10 seconds",
       "attribute": "Unique",
       "quality": "S",
+      "towerCreatorId": "1825448918#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -1066,6 +1141,7 @@
       "style": "Wallhop Tower | Headbumps | <1 minute",
       "attribute": "Unknown",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-8cb11daa7547e4f6c13c7ccb081ac3ab/150/150/Image/Png/noFilter"
     },
     {
@@ -1079,7 +1155,8 @@
       "videoUrl": "https://www.youtube.com/watch?v=iosozBUH6s4",
       "style": "Nets | COs | Lodges | 2+ minutes",
       "attribute": "Insane",
-      "quality": "C"
+      "quality": "C",
+      "towerCreatorId": ""
     },
     {
       "rank": 78,
@@ -1093,6 +1170,7 @@
       "style": "Lodges | Headhitters | 20-45 seconds",
       "attribute": "Mixed",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
@@ -1107,6 +1185,7 @@
       "style": "Wallhop Tower | Basic | <1 minute",
       "attribute": "Common",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1121,6 +1200,7 @@
       "style": "Headbumps | Cam Control | 5-10 seconds",
       "attribute": "Headbump",
       "quality": "S",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -1135,6 +1215,7 @@
       "style": "Headbumps | Consistency | 20-45 sec",
       "attribute": "Insane",
       "quality": "B",
+      "towerCreatorId": "2554364132#2",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -1149,6 +1230,7 @@
       "style": "Low JP | Cam Control | 10-20 seconds",
       "attribute": "Insane",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1163,6 +1245,7 @@
       "style": "Hard Jumps | Headbumps | Nets | 1+ minute",
       "attribute": "Mixed",
       "quality": "C",
+      "towerCreatorId": "3752884709#7",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -1177,6 +1260,7 @@
       "style": "Headbump | Cam Control | 1+ minute",
       "attribute": "Unknown",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
@@ -1191,6 +1275,7 @@
       "style": "Wallhop Tower | Cam Control | 1+ minute",
       "attribute": "Popular",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon6/Png/noFilter"
     },
     {
@@ -1205,6 +1290,7 @@
       "style": "Wallhop Tower | Cam Control | 1+ minute",
       "attribute": "Common",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-a8767084380edde99d460ef1ccfabd3b/150/150/Image/Png/noFilter"
     },
     {
@@ -1219,6 +1305,7 @@
       "style": "Headbumps | Cam Control | 5-10 seconds",
       "attribute": "Unknown",
       "quality": "C",
+      "towerCreatorId": "499383327#3",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -1233,6 +1320,7 @@
       "style": "Wallhop Tower | Hard Jumps | <1 minute",
       "attribute": "Common",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1247,6 +1335,7 @@
       "style": "Annoying | Headbumps | 10-20 seconds",
       "attribute": "Headbump",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-04866c7149bb4dcacabafbcdd993f5c9/150/150/Image/Png/noFilter"
     },
     {
@@ -1261,6 +1350,7 @@
       "style": "Low JP | Hard Jumps | 10-20 seconds",
       "attribute": "Unique",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1275,6 +1365,7 @@
       "style": "Basic | Hard Jumps | 10-20 seconds",
       "attribute": "Common",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1289,6 +1380,7 @@
       "style": "Basic | Consistency  | 1+ minute",
       "attribute": "Endurance",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1303,6 +1395,7 @@
       "style": "Wallhop Tower | Hard Jumps |20-45 seconds",
       "attribute": "Hard Jumps",
       "quality": "B",
+      "towerCreatorId": "3752884709#6",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -1317,6 +1410,7 @@
       "style": "9 Stud Headbumps | 5-10 seconds",
       "attribute": "Headbump",
       "quality": "B",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon6/Png/noFilter"
     },
     {
@@ -1331,6 +1425,7 @@
       "style": "Wallhop Tower | Basic | Wraps | 1+ minute",
       "attribute": "Common",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1345,6 +1440,7 @@
       "style": "Wallhop Tower | Basic | 1+ minute",
       "attribute": "Common",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -1359,6 +1455,7 @@
       "style": "Headbumps | Basic | 10-20 seconds",
       "attribute": "Common",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1373,6 +1470,7 @@
       "style": "9 Stud HB's | 2 Lines | Cam Contol | 5-10 seconds",
       "attribute": "Headbump",
       "quality": "C",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1387,6 +1485,7 @@
       "style": "Wallhop Tower | Memory | 20-45 sec",
       "attribute": "Unique",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1401,6 +1500,7 @@
       "style": "Wallhop Tower | 20-45 seconds",
       "attribute": "Common",
       "quality": "D",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     }
   ],
@@ -1417,6 +1517,7 @@
       "style": "5 Stud Headbumps | Basic | 10-20 seconds",
       "attribute": "C",
       "quality": "46223",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1431,6 +1532,7 @@
       "style": "Hard on Mobile | Cam Control | 1+ minutes",
       "attribute": "Unique",
       "quality": "45894",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fd4b439f8497c778b66d18e8c00d1a1f/150/150/Image/Png/noFilter"
     },
     {
@@ -1445,6 +1547,7 @@
       "style": "Wallhop Tower | Headbumps | 1+ minutes",
       "attribute": "Popular",
       "quality": "46020",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -1459,6 +1562,7 @@
       "style": "Mixed Jumps | Cam Control | 20-45 sec",
       "attribute": "B",
       "quality": "46070",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -1472,7 +1576,8 @@
       "videoUrl": "https://www.youtube.com/shorts/BII7HJguRLw",
       "style": "Hard Jumps | Cam Control | <1 minute",
       "attribute": "C",
-      "quality": "46272"
+      "quality": "46272",
+      "towerCreatorId": ""
     },
     {
       "rank": 6,
@@ -1486,6 +1591,7 @@
       "style": "Cylinders | Headbumps | 1+ minutes",
       "attribute": "B",
       "quality": "46071",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -1500,6 +1606,7 @@
       "style": "Consistency | Headbumps | 20-45 seconds",
       "attribute": "B",
       "quality": "45885",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1514,6 +1621,7 @@
       "style": "Hard Jumps | Low JP | 10-20 seconds",
       "attribute": "B",
       "quality": "46084",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1528,6 +1636,7 @@
       "style": "Lodges | Hard Jumps | 20-45 seconds",
       "attribute": "C",
       "quality": "46208",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
@@ -1542,6 +1651,7 @@
       "style": "One Studs | Cam Control | 20-45 seconds",
       "attribute": "D",
       "quality": "46276",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-04866c7149bb4dcacabafbcdd993f5c9/150/150/Image/Png/noFilter"
     },
     {
@@ -1556,6 +1666,7 @@
       "style": "Headbumps | Consistency | 10-20 seconds",
       "attribute": "B",
       "quality": "45962",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-136bf1e6cadd004adf4fec113184043f/150/150/Image/Png/noFilter"
     },
     {
@@ -1570,6 +1681,7 @@
       "style": "Wallhop Tower | Consistency | 2+ minutes",
       "attribute": "C",
       "quality": "46052",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-046b7c6d13cc9efade2de438f97e564f/150/150/Image/Png/noFilter"
     },
     {
@@ -1584,6 +1696,7 @@
       "style": "Lodges | Cam Control | <1 minute",
       "attribute": "B",
       "quality": "45863",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -1598,6 +1711,7 @@
       "style": "Headbumps | <1 minute",
       "attribute": "B",
       "quality": "46043",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1612,6 +1726,7 @@
       "style": "Cam Control | Headbumps | 10-20 seconds",
       "attribute": "B",
       "quality": "45855",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1626,6 +1741,7 @@
       "style": "Headbumps | Wallhop Tower | 20-45 seconds",
       "attribute": "INSANE",
       "quality": "45871",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1640,6 +1756,7 @@
       "style": "Headbump | Cam Control | 20-45 seconds",
       "attribute": "B",
       "quality": "45798",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon9/Png/noFilter"
     },
     {
@@ -1654,6 +1771,7 @@
       "style": "Headbumps | 5-10 seconds",
       "attribute": "B",
       "quality": "46026",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon6/Png/noFilter"
     },
     {
@@ -1668,6 +1786,7 @@
       "style": "Wallhop Tower | Cam Control | <1 minute",
       "attribute": "B",
       "quality": "45877",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1682,6 +1801,7 @@
       "style": "Lodges | Cam Control | 20-45 seconds",
       "attribute": "B",
       "quality": "45988",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon9/Png/noFilter"
     },
     {
@@ -1696,6 +1816,7 @@
       "style": "Lodge | Headbumps | Cam Control | 20-45 sec",
       "attribute": "B",
       "quality": "45769",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon9/Png/noFilter"
     },
     {
@@ -1710,6 +1831,7 @@
       "style": "Lodge | Cam Control | <1 minute",
       "attribute": "B",
       "quality": "45847",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon8/Png/noFilter"
     },
     {
@@ -1724,6 +1846,7 @@
       "style": "Headhitter | Cam Control | 20-45 seconds",
       "attribute": "Common",
       "quality": "45847",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1738,6 +1861,7 @@
       "style": "Wallhop Tower | Cam Control | 1+ minutes",
       "attribute": "Popular",
       "quality": "46056",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1752,6 +1876,7 @@
       "style": "Headbumps | Wallhop Tower | 20-45 seconds",
       "attribute": "Common",
       "quality": "45875",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1766,6 +1891,7 @@
       "style": "Low JP | Cam Control | 10-20 seconds",
       "attribute": "B",
       "quality": "46083",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1780,6 +1906,7 @@
       "style": "Low JP | Hard Jumps | 10-20 seconds",
       "attribute": "Unique",
       "quality": "45849",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1794,6 +1921,7 @@
       "style": "Wallhop Tower | Consistency | 20-45 sec",
       "attribute": "Common",
       "quality": "45868",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1808,6 +1936,7 @@
       "style": "Wallhop Tower | Consistency | 1+ minutes",
       "attribute": "B",
       "quality": "45811",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-a8767084380edde99d460ef1ccfabd3b/150/150/Image/Png/noFilter"
     },
     {
@@ -1822,6 +1951,7 @@
       "style": "Headbumps | Wall-Walk | 20-45 seconds",
       "attribute": "B",
       "quality": "45738",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
@@ -1836,6 +1966,7 @@
       "style": "Memory | Wallhop Tower | 20-45 seconds",
       "attribute": "Unique",
       "quality": "46049",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1850,6 +1981,7 @@
       "style": "Headbumps | Cam Control | 10-20 seconds",
       "attribute": "Popular",
       "quality": "45820",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1864,6 +1996,7 @@
       "style": "Headhitters | Wallhop Tower | 20-45 seconds",
       "attribute": "Common",
       "quality": "45838",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1878,6 +2011,7 @@
       "style": "Headbump | Cam Control | 10-20 seconds",
       "attribute": "B",
       "quality": "45766",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-407f8fe12a11deaa5ab26b56097dd399/150/150/Image/Png/noFilter"
     },
     {
@@ -1892,6 +2026,7 @@
       "style": "Basic | Cam Control | 10-20 seconds",
       "attribute": "B",
       "quality": "45707",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-2125cc72dd196750d2b9b48cd552e1a0/150/150/Image/Png/noFilter"
     },
     {
@@ -1906,6 +2041,7 @@
       "style": "Basic | Cam Control | 20-45 seconds",
       "attribute": "C",
       "quality": "45765",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9ced28c165a9b7b6ecba04895f636b6e/150/150/Image/Png/noFilter"
     },
     {
@@ -1919,7 +2055,8 @@
       "videoUrl": "",
       "style": "",
       "attribute": "",
-      "quality": ""
+      "quality": "",
+      "towerCreatorId": ""
     },
     {
       "rank": 38,
@@ -1933,6 +2070,7 @@
       "style": "Basic | Cam Control | 10-20 seconds",
       "attribute": "C",
       "quality": "45788",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
@@ -1947,6 +2085,7 @@
       "style": "Wallhop Tower | Cam Control | 20-45 seconds",
       "attribute": "B",
       "quality": "45119",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fb8815abd8e6a669abd5ef95e484addc/150/150/Image/Png/noFilter"
     },
     {
@@ -1961,6 +2100,7 @@
       "style": "Wallhop Tower | Basic | 20-45 seconds",
       "attribute": "Common",
       "quality": "45839",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -1975,6 +2115,7 @@
       "style": "Wallhop Tower | Break | 20-45 seconds",
       "attribute": "Popular",
       "quality": "45064",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
@@ -1989,6 +2130,7 @@
       "style": "Cylinder Wallhop Tower | 20-45 seconds",
       "attribute": "C",
       "quality": "46033",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
@@ -2003,6 +2145,7 @@
       "style": "Fun | Cam Control | 10-20 seconds",
       "attribute": "B",
       "quality": "46046",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
@@ -2017,6 +2160,7 @@
       "style": "One Studs | Break | Basic | 10-20 seconds",
       "attribute": "C",
       "quality": "45050",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
@@ -2031,6 +2175,7 @@
       "style": "Wallhop Tower | 20-45 seconds",
       "attribute": "B",
       "quality": "45872",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-eb7ca9703f0bd1136c3c88d0cffcbd15/150/150/Image/Png/noFilter"
     },
     {
@@ -2044,7 +2189,8 @@
       "videoUrl": "https://www.youtube.com/watch?v=-G_27dJB7a4",
       "style": "Wallhop Tower | 20-45 seconds",
       "attribute": "B",
-      "quality": "45433"
+      "quality": "45433",
+      "towerCreatorId": ""
     },
     {
       "rank": 47,
@@ -2058,6 +2204,7 @@
       "style": "Basic | Cam Control | 20-45 seconds",
       "attribute": "Popular",
       "quality": "45745",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-b675e3e603e20d0f68858c97d9ad1be0/150/150/Image/Png/noFilter"
     },
     {
@@ -2072,6 +2219,7 @@
       "style": "Basic | Cam Control | 20-45 seconds",
       "attribute": "Common",
       "quality": "45739",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fb8815abd8e6a669abd5ef95e484addc/150/150/Image/Png/noFilter"
     },
     {
@@ -2086,6 +2234,7 @@
       "style": "Headbump/Headhitter | 10-20 seconds",
       "attribute": "C",
       "quality": "45744",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-04866c7149bb4dcacabafbcdd993f5c9/150/150/Image/Png/noFilter"
     },
     {
@@ -2100,6 +2249,7 @@
       "style": "Headbump | Cam Control | 10-20 seconds",
       "attribute": "Popular",
       "quality": "45677",
+      "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fd4b439f8497c778b66d18e8c00d1a1f/150/150/Image/Png/noFilter"
     }
   ]
