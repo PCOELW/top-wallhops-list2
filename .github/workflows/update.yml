@@ -33,8 +33,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12'    
       - name: Fetch public Google Sheet
+        id: sheets
+        continue-on-error: true
+        env:
+          WALLHOPS_SHEET_ID: "1lNT7GIOlqACLtC-4QgVaLigBL0oqD8K40q6mbi_3Xdg"
         run: python scripts/sync_sheets.py --output .build/rankings.json
       - name: Track real ranking changes
         run: python scripts/track_changes.py --fresh .build/rankings.json --snapshot data/rankings.json --history data/changes.json
