@@ -80,3 +80,9 @@
 .rules-count {
   display: none !important;
 }
+
+/* THE TOP WALLHOPS 중복 표시 제거 */
+.page-intro::before {
+    content: none !important;
+    display: none !important;
+}
