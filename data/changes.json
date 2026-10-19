@@ -2,6 +2,14 @@
   "events": [
     {
       "platform": "pc",
+      "type": "up",
+      "title": "Concussion",
+      "beforeRank": 3,
+      "rank": 1,
+      "at": "2026-10-19T07:18:17+00:00"
+    },
+    {
+      "platform": "pc",
       "type": "down",
       "title": "Concussion",
       "beforeRank": 1,
@@ -390,15 +398,7 @@
       "beforeRank": 52,
       "rank": 53,
       "at": "2026-10-19T06:30:09+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "down",
-      "title": "Angel's Path",
-      "beforeRank": 53,
-      "rank": 54,
-      "at": "2026-10-19T06:30:09+00:00"
     }
   ],
-  "updatedAt": "2026-10-19T06:30:09+00:00"
+  "updatedAt": "2026-10-19T07:18:17+00:00"
 }

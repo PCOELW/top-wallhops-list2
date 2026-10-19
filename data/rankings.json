@@ -1,6 +1,6 @@
 {
   "status": "live",
-  "updatedAt": "2026-10-19T06:30:09+00:00",
+  "updatedAt": "2026-10-19T07:18:17+00:00",
   "source": "Google Sheets",
   "downloadFormat": "xlsx",
   "sourceUrl": "https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit",
@@ -11,22 +11,6 @@
   "pc": [
     {
       "rank": 1,
-      "title": "Edifice of Wallhop Against Time",
-      "difficulty": "6.5",
-      "tier": "Tier 16 Mid",
-      "verifier": "Microwavium",
-      "creator": "Microwavium",
-      "gameUrl": "https://www.roblox.com/games/139114826476366/Edifice-of-Wallhop-Against-Time",
-      "videoUrl": "https://www.youtube.com/watch?v=_ha2cQZTxnA",
-      "style": "COs | Mixed Jumps/Lodges | 2+ minutes",
-      "attribute": "Mixed",
-      "quality": "A",
-      "date": "2026-03-08",
-      "towerCreatorId": "",
-      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon11/Png/noFilter"
-    },
-    {
-      "rank": 1,
       "title": "Concussion",
       "difficulty": "6.5",
       "tier": "Tier 16 Mid",
@@ -56,38 +40,6 @@
       "date": "2026-07-05",
       "towerCreatorId": "872867958#5",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
-    },
-    {
-      "rank": 2,
-      "title": "Silent Ballistics",
-      "difficulty": "6.4",
-      "tier": "Tier 16 Mid-Low",
-      "verifier": "JustAHolocene",
-      "creator": "Den1s2211",
-      "gameUrl": "https://www.roblox.com/games/8646026339/Tower-Creator-Beta",
-      "videoUrl": "https://www.youtube.com/watch?v=1a0FT2PQSi8",
-      "style": "7 Stud Headbumps | Cam Control | 20-45 seconds",
-      "attribute": "Headbump",
-      "quality": "A",
-      "date": "2026-07-05",
-      "towerCreatorId": "872867958#5",
-      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
-    },
-    {
-      "rank": 3,
-      "title": "Concussion",
-      "difficulty": "6.4",
-      "tier": "Tier 16 Mid-Low",
-      "verifier": "Krwkgropik",
-      "creator": "Krwkgropik",
-      "gameUrl": "https://www.roblox.com/games/84302836642344/Wallhop-stuff",
-      "videoUrl": "https://www.youtube.com/watch?v=gRyY4ClMrHY",
-      "style": "SCP Anomaly | Headbumps | 20-45 seconds",
-      "attribute": "Headbump",
-      "quality": "S",
-      "date": "2025-10-25",
-      "towerCreatorId": "",
-      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
       "rank": 3,
@@ -104,22 +56,6 @@
       "date": "2026-03-08",
       "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon11/Png/noFilter"
-    },
-    {
-      "rank": 4,
-      "title": "Steeple of Suspiciously Large Right Arm",
-      "difficulty": "6.3",
-      "tier": "Tier 16 Low-Mid",
-      "verifier": "Microwavium",
-      "creator": "Microwavium",
-      "gameUrl": "https://www.roblox.com/games/113284482164174/Steeple-of-Suspiciously-Large-Right-Arm",
-      "videoUrl": "https://www.youtube.com/watch?v=e1TGl3gRhq0",
-      "style": "Checkpoints | Consistency | COs | 10+ minutes",
-      "attribute": "Mixed",
-      "quality": "C",
-      "date": "2025-08-13",
-      "towerCreatorId": "",
-      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c69f83f4be9a2295f16884c2379ff8c7/150/150/Image/Png/noFilter"
     },
     {
       "rank": 4,
