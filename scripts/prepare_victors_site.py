@@ -1,42 +1,89 @@
 #!/usr/bin/env python3
-"""Non-destructively hook Victor UI + sheet source into the built site.
+"""Validate one-sheet JSON and align the built site's 30-second client config.
 
-Runs on _site only. Leaves original tracked user customizations unchanged.
+Modifies _site only, never overwrites tracked index.html/config.js or the user's styles.
 """
+import json
+import os
 from pathlib import Path
 import re
 
-SOURCE_URL = 'https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit'
-
+SID = os.environ.get('TTWL_SOURCE_SHEET_ID', '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0')
+SOURCE_URL = f'https://docs.google.com/spreadsheets/d/{SID}/edit'
 root = Path('_site')
-html_file = root / 'index.html'
-config_file = root / 'config.js'
 
-if not html_file.is_file() or not config_file.is_file():
-    raise SystemExit('Missing _site/index.html or _site/config.js')
 
-html = html_file.read_text(encoding='utf-8')
-if not re.search(r'(?:\./)?victors\.css\b', html, re.I):
-    html, n = re.subn(r'</head\s*>', '  <link rel="stylesheet" href="./victors.css">\n</head>', html, count=1, flags=re.I)
-    if not n: raise SystemExit('Missing </head> in website HTML')
+def verify(name):
+    path = root / 'data' / name
+    if not path.is_file():
+        raise SystemExit(f'Missing generated data file: {path}')
+    data = json.loads(path.read_text(encoding='utf-8'))
+    source = str(data.get('sourceUrl', ''))
+    if f'/d/{SID}/' not in source:
+        raise SystemExit(f'WRONG SOURCE in {path}: {source!r}. Expected ONLY {SID}.')
+    if not isinstance(data.get('pc'), (list, dict)) or not isinstance(data.get('mobile'), (list, dict)):
+        raise SystemExit(f'Incorrect PC/Mobile data structure in {path}')
+    return data
 
-if not re.search(r'(?:\./)?victors\.js\b', html, re.I):
-    html, n = re.subn(r'</body\s*>', '  <script defer src="./victors.js"></script>\n</body>', html, count=1, flags=re.I)
-    if not n: raise SystemExit('Missing </body> in website HTML')
 
-html_file.write_text(html, encoding='utf-8')
+rankings = verify('rankings.json')
+victors = verify('victors.json')
 
-config = config_file.read_text(encoding='utf-8')
-# Force the original rankings spreadsheet source for the direct (30s) Google Sheets reader.
-addition = (
-    '\n/* TTWL linked source sheet -- generated for deployment. */\n'
-    "window.WALLHOPS_CONFIG = window.WALLHOPS_CONFIG || {};\n"
-    f"window.WALLHOPS_CONFIG.spreadsheetUrl = '{SOURCE_URL}';\n"
-    f"window.WALLHOPS_CONFIG.sheetId = '{SOURCE_URL.split('/d/')[1].split('/')[0]}';\n"
-)
-marker = '/* TTWL linked source sheet -- generated for deployment. */'
-if marker in config:
-    config = config.split(marker)[0].rstrip() + '\n'
-config_file.write_text(config + addition, encoding='utf-8')
+# This protects against publishing repeated ranks/titles, even if XLSX/CSV input had duplicates.
+def canonical(title):
+    cleaned = re.sub(r'^\s*\d+\s*[).]\s*', '', str(title or ''))
+    return re.sub(r'\s+', ' ', cleaned).strip().casefold()
 
-print('Ready: index.html loads victors.css/victors.js; rankings use original spreadsheet.')
+for platform in ('pc', 'mobile'):
+    items = rankings[platform]
+    if not isinstance(items, list):
+        raise SystemExit(f'Expected {platform} rankings array')
+    ranks, names, output = set(), set(), []
+    for item in sorted(items, key=lambda row: (int(row.get('rank', 999999)), canonical(row.get('title')))):
+        rank = int(item.get('rank', 0))
+        name = canonical(item.get('title'))
+        if rank <= 0 or not name or rank in ranks or name in names:
+            continue
+        output.append(item)
+        ranks.add(rank)
+        names.add(name)
+    if len(output) != len(items):
+        print(f'WARNING: cleaned {len(items) - len(output)} duplicate {platform} ranking row(s).')
+        rankings[platform] = output
+
+(root / 'data' / 'rankings.json').write_text(json.dumps(rankings, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+
+# Keep the existing user's HTML exactly, merely wire the Victors scripts if needed.
+html_path = root / 'index.html'
+config_path = root / 'config.js'
+if not html_path.exists() or not config_path.exists():
+    raise SystemExit('Missing index.html/config.js in built site')
+html = html_path.read_text(encoding='utf-8')
+if (root / 'victors.css').is_file() and not re.search(r'(?:\./)?victors\.css\b', html, re.I):
+    html = re.sub(r'</head\s*>', '<link rel="stylesheet" href="./victors.css">\n</head>', html, count=1, flags=re.I)
+if (root / 'victors.js').is_file() and not re.search(r'(?:\./)?victors\.js\b', html, re.I):
+    html = re.sub(r'</body\s*>', '<script defer src="./victors.js"></script>\n</body>', html, count=1, flags=re.I)
+html_path.write_text(html, encoding='utf-8')
+
+config = config_path.read_text(encoding='utf-8')
+# Keep any Discord invite, title, colors, and UI settings in the existing config.
+# Replace only old generated overrides and then append the canonical source LAST.
+config = re.sub(r'/\* TTWL linked source sheet -- generated for deployment\. \*/.*?(?=/\* TTWL|\Z)', '', config, flags=re.S)
+marker = '/* TTWL single source - generated by GitHub Actions. */'
+config = config.split(marker)[0].rstrip()
+config += f'''\n\n{marker}
+window.WALLHOPS_CONFIG = window.WALLHOPS_CONFIG || {{}};
+window.WALLHOPS_CONFIG.spreadsheetUrl = '{SOURCE_URL}';
+window.WALLHOPS_CONFIG.sheetId = '{SID}';
+window.WALLHOPS_CONFIG.pcSheetName = 'Top PC Wallhops';
+window.WALLHOPS_CONFIG.mobileSheetName = 'Top Mobile Wallhops';
+window.WALLHOPS_CONFIG.dataUrl = './data/rankings.json';
+window.WALLHOPS_CONFIG.refreshMs = 30000;
+'''
+config_path.write_text(config, encoding='utf-8')
+(root / 'data' / 'source-status.json').write_text(json.dumps({
+    'sheetId': SID,
+    'rankings':{'sourceUrl':rankings['sourceUrl'],'pcCount':len(rankings['pc']),'mobileCount':len(rankings['mobile'])},
+    'victors':{'sourceUrl':victors['sourceUrl'],'status':victors.get('status','unknown')},
+}, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+print(f'SINGLE SOURCE VERIFIED: {SID}; PC={len(rankings["pc"])} Mobile={len(rankings["mobile"])}; Victors={victors.get("status")}.')

@@ -52,7 +52,7 @@
     for(const item of items) byRank.set(item.rank,item);
     const byTitle=new Map();
     for(const item of byRank.values()){
-      const key=item.title.normalize('NFKC').trim().replace(/\s+/g,' ').toLocaleLowerCase();
+      const key=item.title.normalize('NFKC').trim().replace(/^\d+\s*[).]\s*/, '').replace(/\s+/g,' ').toLocaleLowerCase();
       const existing=byTitle.get(key);
       if(!existing || item.rank<existing.rank) byTitle.set(key,item);
     }
@@ -309,7 +309,8 @@
       const cells=Array.isArray(dataRow?.c)?dataRow.c:[];
       const get=letter=>readCell(cells[colIndex(letter)]);
       const rawRank=get('A');
-      const rank=Number(rawRank);
+      const rankText=trim(rawRank).replace(/[).]\s*$/, '');
+      const rank=Number(rankText);
       const title=get('B');
       if(!Number.isSafeInteger(rank)||rank<=0||!title)continue;
       result.push({

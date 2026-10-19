@@ -248,8 +248,9 @@ def records_from_rows(rows, cell_notes=None):
         raw_rank = row.get("A", ("", ""))[0].strip()
         title = row.get("B", ("", ""))[0].strip()
         try:
-            rank = int(float(raw_rank))
-            if float(raw_rank) != rank or rank < 1:
+            normalized_rank = re.sub(r'[).]\s*$', '', raw_rank)
+            rank = int(float(normalized_rank))
+            if float(normalized_rank) != rank or rank < 1:
                 continue
         except (ValueError, OverflowError):
             continue
@@ -279,7 +280,7 @@ def records_from_rows(rows, cell_notes=None):
         by_rank[item["rank"]] = item
     by_title = {}
     for item in by_rank.values():
-        key = re.sub(r"\s+", " ", item["title"].strip()).casefold()
+        key = re.sub(r"\s+", " ", re.sub(r'^\d+\s*[).]\s*', '', item["title"].strip())).casefold()
         earlier = by_title.get(key)
         if earlier is None or item["rank"] < earlier["rank"]:
             by_title[key] = item
