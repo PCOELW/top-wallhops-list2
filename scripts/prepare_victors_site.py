@@ -23,6 +23,8 @@ def verify(name):
         raise SystemExit(f'WRONG SOURCE in {path}: {source!r}. Expected ONLY {SID}.')
     if not isinstance(data.get('pc'), (list, dict)) or not isinstance(data.get('mobile'), (list, dict)):
         raise SystemExit(f'Incorrect PC/Mobile data structure in {path}')
+    if name == 'rankings.json' and not isinstance(data.get('legacy'), list):
+        raise SystemExit(f'Missing Legacy rankings array in {path}')
     return data
 
 
@@ -34,7 +36,7 @@ def canonical(title):
     cleaned = re.sub(r'^\s*\d+\s*[).]\s*', '', str(title or ''))
     return re.sub(r'\s+', ' ', cleaned).strip().casefold()
 
-for platform in ('pc', 'mobile'):
+for platform in ('pc', 'mobile', 'legacy'):
     items = rankings[platform]
     if not isinstance(items, list):
         raise SystemExit(f'Expected {platform} rankings array')
@@ -79,13 +81,14 @@ window.WALLHOPS_CONFIG.spreadsheetUrl = '{SOURCE_URL}';
 window.WALLHOPS_CONFIG.sheetId = '{SID}';
 window.WALLHOPS_CONFIG.pcSheetName = 'Top PC Wallhops';
 window.WALLHOPS_CONFIG.mobileSheetName = 'Top Mobile Wallhops';
+window.WALLHOPS_CONFIG.legacySheetName = 'Legacy List (PC)';
 window.WALLHOPS_CONFIG.dataUrl = './data/rankings.json';
 window.WALLHOPS_CONFIG.refreshMs = 30000;
 '''
 config_path.write_text(config, encoding='utf-8')
 (root / 'data' / 'source-status.json').write_text(json.dumps({
     'sheetId': SID,
-    'rankings':{'sourceUrl':rankings['sourceUrl'],'pcCount':len(rankings['pc']),'mobileCount':len(rankings['mobile'])},
+    'rankings':{'sourceUrl':rankings['sourceUrl'],'pcCount':len(rankings['pc']),'mobileCount':len(rankings['mobile']),'legacyCount':len(rankings['legacy'])},
     'victors':{'sourceUrl':victors['sourceUrl'],'status':victors.get('status','unknown')},
 }, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
-print(f'SINGLE SOURCE VERIFIED: {SID}; PC={len(rankings["pc"])} Mobile={len(rankings["mobile"])}; Victors={victors.get("status")}.')
+print(f'SINGLE SOURCE VERIFIED: {SID}; PC={len(rankings["pc"])} Mobile={len(rankings["mobile"])} Legacy={len(rankings["legacy"])}; Victors={victors.get("status")}.')

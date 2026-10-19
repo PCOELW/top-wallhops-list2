@@ -23,7 +23,8 @@ import zipfile
 
 SHEET_ID = os.environ.get("WALLHOPS_SHEET_ID", "1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0")
 TABS = {"pc": os.environ.get("WALLHOPS_PC_TAB", "Top PC Wallhops"),
-        "mobile": os.environ.get("WALLHOPS_MOBILE_TAB", "Top Mobile Wallhops")}
+        "mobile": os.environ.get("WALLHOPS_MOBILE_TAB", "Top Mobile Wallhops"),
+        "legacy": os.environ.get("WALLHOPS_LEGACY_TAB", "Legacy List (PC)")}
 S = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
 PKG = "{http://schemas.openxmlformats.org/package/2006/relationships}"
@@ -345,7 +346,7 @@ def sync(source_file=None):
     try:
         all_tabs = read_xlsx(raw)
         if not all(name in all_tabs for name in TABS.values()):
-            raise ValueError(f"Missing PC/Mobile tab(s). Found: {', '.join(all_tabs.keys())}")
+            raise ValueError(f"Missing PC/Mobile/Legacy tab(s). Found: {', '.join(all_tabs.keys())}")
     except ValueError as exc:
         if source_file:
             raise
@@ -356,26 +357,26 @@ def sync(source_file=None):
         for name in TABS.values():
             all_tabs[name] = read_public_csv(name)
         warnings.append("CSV 대체 연결: 셀 속 [GAME]/[Link] 하이퍼링크가 누락될 수 있습니다.")
-    pc, mobile = all_tabs[TABS["pc"]], all_tabs[TABS["mobile"]]
-    if not pc and not mobile:
+    pc, mobile, legacy = (all_tabs[TABS[p]] for p in ("pc", "mobile", "legacy"))
+    if not pc and not mobile and not legacy:
         raise ValueError("PC and Mobile sheets both yielded zero rankings. Check access and A/B columns.")
-    if not pc or not mobile:
-        warnings.append("PC 또는 Mobile 데이터가 비어 있습니다. 탭 이름과 A/B열 구조를 확인하세요.")
+    if not pc or not mobile or not legacy:
+        warnings.append("PC, Mobile 또는 Legacy 데이터가 비어 있습니다. 탭 이름과 A/B열 구조를 확인하세요.")
     # Optionally use Roblox game thumbnails. This is best-effort: errors never stop sync.
     # The source sheet doesn't contain an image column, so show a styled fallback otherwise.
     if not source_file:
         try:
-            attach_roblox_thumbnails(pc + mobile)
+            attach_roblox_thumbnails(pc + mobile + legacy)
         except Exception as exc:
             warnings.append(f"Roblox 썸네일은 일부 표시되지 않을 수 있습니다: {exc}")
-    for label, items in [("PC", pc), ("Mobile", mobile)]:
+    for label, items in [("PC", pc), ("Mobile", mobile), ("Legacy", legacy)]:
         if any(not item["gameUrl"] or not item["videoUrl"] for item in items):
             warnings.append(f"{label}에서 일부 게임/영상 링크를 읽지 못했습니다. 원본 셀 또는 다운로드 형식을 확인하세요.")
     return {
         "status": "live", "updatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source": "Google Sheets", "downloadFormat": origin,
         "sourceUrl": f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit",
-        "warnings": warnings, "pc": pc, "mobile": mobile,
+        "warnings": warnings, "pc": pc, "mobile": mobile, "legacy": legacy,
     }
 
 
@@ -389,7 +390,7 @@ def main():
         path = Path(args.output)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"Success: PC {len(payload['pc'])}, Mobile {len(payload['mobile'])}, format {payload['downloadFormat']}")
+        print(f"Success: PC {len(payload['pc'])}, Mobile {len(payload['mobile'])}, Legacy {len(payload['legacy'])}, format {payload['downloadFormat']}")
         for item in payload["warnings"]:
             print("WARNING: " + item, file=sys.stderr)
     except Exception as exc:

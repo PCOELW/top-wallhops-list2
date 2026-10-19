@@ -3,9 +3,9 @@
   const $ = id => document.getElementById(id);
   const config = window.WALLHOPS_CONFIG || {};
   const state = {
-    platform: location.hash.toLowerCase() === '#mobile' ? 'mobile' : 'pc',
+    platform: ['mobile','legacy'].includes(location.hash.slice(1).toLowerCase()) ? location.hash.slice(1).toLowerCase() : 'pc',
     query: '', difficulty: 'all', attribute: 'all', sort: 'difficulty', reverseOrder: false,
-    payload: null, selection: {pc:null, mobile:null}, busy:false, lastCheck:0
+    payload: null, selection: {pc:null, mobile:null, legacy:null}, busy:false, lastCheck:0
   };
   const trim = x => x === null || x === undefined ? '' : String(x).trim();
   function url(value) { try { const u = new URL(trim(value)); return ['http:','https:'].includes(u.protocol) ? u.href : ''; } catch { return ''; } }
@@ -215,9 +215,9 @@
   }
   function render(){
     const platform=state.platform, isPc=platform==='pc';
-    $('pageTitle').textContent=isPc?'PC Wallhops':'Mobile Wallhops';
+    $('pageTitle').textContent=platform==='legacy'?'Legacy List':(isPc?'PC Wallhops':'Mobile Wallhops');
     const description=$('pageDescription');
-    if(description) description.textContent=isPc?'Community-ranked wallhops for keyboard and mouse players.':'Community-ranked wallhops for mobile players.';
+    if(description) description.textContent=platform==='legacy'?'Archived PC wallhops from the Legacy List (PC) sheet.':(isPc?'Community-ranked wallhops for keyboard and mouse players.':'Community-ranked wallhops for mobile players.');
     const filtered=getFilteredRows(),tbody=$('rankingRows'),frag=document.createDocumentFragment();
     if(filtered.length){const selected=selectedRow();filtered.forEach(r=>frag.append(renderRow(r,r.title===selected?.title)));}
     else {const tr=el('tr');const td=el('td','table-message',state.payload? (listRows().length?'No wallhops match your filters.':'No rankings available for this platform yet.'):'Loading rankings...');td.colSpan=10;tr.append(td);frag.append(tr);}
@@ -232,7 +232,7 @@
     select.value=state.attribute;
   }
   function switchPlatform(platform){
-    if(!['pc','mobile'].includes(platform))return;
+    if(!['pc','mobile','legacy'].includes(platform))return;
     state.platform=platform;
     document.querySelectorAll('[data-platform]').forEach(btn=>{
       const active=btn.dataset.platform===platform;btn.classList.toggle('is-active',active);
@@ -355,7 +355,7 @@
       if(!result.ok)throw new Error('Backup HTTP '+result.status);
       const payload=await result.json();
       if(!Array.isArray(payload.pc)||!Array.isArray(payload.mobile))throw new Error('Invalid backup data');
-      state.backup={...payload,pc:normalizeList(payload.pc),mobile:normalizeList(payload.mobile)};
+      state.backup={...payload,pc:normalizeList(payload.pc),mobile:normalizeList(payload.mobile),legacy:normalizeList(payload.legacy||[])};
       state.backupChecked=Date.now();
       if(!state.payload){
         state.payload=state.backup;
@@ -377,12 +377,13 @@
       if(!state.backup || Date.now()-(state.backupChecked||0)>=300000){
         try{await readBackup();}catch(err){backupError=err;}
       }
-      const backup=state.backup||{pc:[],mobile:[]};
-      const tabs={pc:trim(config.pcSheetName)||'Top PC Wallhops',mobile:trim(config.mobileSheetName)||'Top Mobile Wallhops'};
-      const outcomes=await Promise.allSettled([fetchSheet(tabs.pc),fetchSheet(tabs.mobile)]);
-      const result={pc:null,mobile:null};
+      const backup=state.backup||{pc:[],mobile:[],legacy:[]};
+      const tabs={pc:trim(config.pcSheetName)||'Top PC Wallhops',mobile:trim(config.mobileSheetName)||'Top Mobile Wallhops',legacy:trim(config.legacySheetName)||'Legacy List (PC)'};
+      const platforms=['pc','mobile','legacy'];
+      const outcomes=await Promise.allSettled(platforms.map(p=>fetchSheet(tabs[p])));
+      const result={pc:null,mobile:null,legacy:null};
       const errors=[];
-      for(const [index,platform] of ['pc','mobile'].entries()){
+      for(const [index,platform] of platforms.entries()){
         const item=outcomes[index];
         if(item.status==='fulfilled'){
           try{
@@ -393,13 +394,14 @@
           }catch(err){errors.push(platform+': '+err.message);}
         }else errors.push(platform+': '+item.reason?.message);
       }
-      if(result.pc||result.mobile){
+      if(result.pc||result.mobile||result.legacy){
         // Retain last successful direct data if only one tab fails temporarily.
         const oldLive=state.payload?.status==='direct'?state.payload:null;
         state.payload={
           ...(state.backup||{}),status:'direct',updatedAt:new Date().toISOString(),
           pc:result.pc||oldLive?.pc||backup.pc,
-          mobile:result.mobile||oldLive?.mobile||backup.mobile
+          mobile:result.mobile||oldLive?.mobile||backup.mobile,
+          legacy:result.legacy||oldLive?.legacy||backup.legacy
         };
         $('syncState').textContent=errors.length?'Google Sheets · partial live data':'Google Sheets · direct (30s)';
         $('syncDot').classList.add('is-live');
@@ -416,7 +418,7 @@
         $('syncState').textContent='Unable to access Google Sheets';
         $('syncDot').classList.remove('is-live');
         setAlert('Direct sync failed and no saved data was available. '+errors.join(' · ')+(backupError?' · '+backupError.message:''));
-        if(!state.payload)state.payload={pc:[],mobile:[],status:'error'};
+        if(!state.payload)state.payload={pc:[],mobile:[],legacy:[],status:'error'};
       }
       state.lastCheck=Date.now();
       refreshAttributeOptions();render();
@@ -518,7 +520,25 @@
     `;
     document.head.appendChild(style);
   }
+  function installLegacyNavigation(){
+    const mobile=document.querySelector('[data-platform="mobile"]');
+    if(!mobile || document.querySelector('[data-platform="legacy"]'))return;
+    const legacy=mobile.cloneNode(false);
+    legacy.removeAttribute('id');
+    legacy.removeAttribute('aria-current');
+    legacy.dataset.platform='legacy';
+    legacy.classList.remove('is-active');
+    legacy.textContent='Legacy List';
+    mobile.after(legacy);
+    // Mobile has no Victors, and the Legacy tab is also an archival listing.
+    // Force-hide even if victors.js switches the panel back to visible.
+    const style=document.createElement('style');
+    style.id='ttwl-legacy-victors-hide';
+    style.textContent='body:has([data-platform="legacy"].is-active) #victorsPanel{display:none!important}';
+    document.head.appendChild(style);
+  }
   function init(){
+    installLegacyNavigation();
     installTowerCreatorUI();
     setupDifficultyAndSortMenus();
     installOrderToggle();
@@ -537,7 +557,7 @@
     $('dismissAlert').addEventListener('click',()=>{$('statusAlert').hidden=true;});
     $('rulesButton').addEventListener('click',()=>{$('rulesDialog').showModal();});
     $('rulesDialog').addEventListener('click',e=>{if(e.target===$('rulesDialog'))$('rulesDialog').close();});
-    window.addEventListener('hashchange',()=>{const page=location.hash.slice(1).toLowerCase();if(['pc','mobile'].includes(page)&&page!==state.platform)switchPlatform(page);});
+    window.addEventListener('hashchange',()=>{const page=location.hash.slice(1).toLowerCase();if(['pc','mobile','legacy'].includes(page)&&page!==state.platform)switchPlatform(page);});
     switchPlatform(state.platform);loadData();
     const every=Math.max(10000,Number(config.refreshMs)||30000);
     setInterval(()=>{if(!document.hidden)loadData();},every);
