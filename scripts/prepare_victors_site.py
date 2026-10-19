@@ -27,15 +27,16 @@ if not re.search(r'(?:\./)?victors\.js\b', html, re.I):
 html_file.write_text(html, encoding='utf-8')
 
 config = config_file.read_text(encoding='utf-8')
-# Force the new spreadsheet source for the direct (30s) Google Sheets reader.
+# Force the original rankings spreadsheet source for the direct (30s) Google Sheets reader.
 addition = (
     '\n/* TTWL linked source sheet -- generated for deployment. */\n'
     "window.WALLHOPS_CONFIG = window.WALLHOPS_CONFIG || {};\n"
     f"window.WALLHOPS_CONFIG.spreadsheetUrl = '{SOURCE_URL}';\n"
+    f"window.WALLHOPS_CONFIG.sheetId = '{SOURCE_URL.split('/d/')[1].split('/')[0]}';\n"
 )
 marker = '/* TTWL linked source sheet -- generated for deployment. */'
 if marker in config:
     config = config.split(marker)[0].rstrip() + '\n'
 config_file.write_text(config + addition, encoding='utf-8')
 
-print('Ready: index.html loads victors.css/victors.js; config.js reads new spreadsheet.')
+print('Ready: index.html loads victors.css/victors.js; rankings use original spreadsheet.')
