@@ -1,24 +1,27 @@
-name: Update wallhops and deploy site
+name: TTWL - one original sheet (rankings + victors)
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: wallhops-pages
+  group: ttwl-original-sheet-pages
   cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # This is the ONLY spreadsheet ID used for ALL data. Do not use the copy.
+      TTWL_SOURCE_SHEET_ID: '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,56 +31,38 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Download PC & Mobile rankings from ORIGINAL spreadsheet
-        id: rankings
-        continue-on-error: true
+      - name: Fetch PC and Mobile rankings from ORIGINAL sheet
         env:
-          WALLHOPS_SHEET_ID: '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0'
+          WALLHOPS_SHEET_ID: ${{ env.TTWL_SOURCE_SHEET_ID }}
         run: |
           mkdir -p .build
           python scripts/sync_sheets.py --output .build/rankings.json
 
-      - name: Keep prior rankings if sheet download fails
-        if: steps.rankings.outcome == 'failure'
-        run: |
-          echo '::warning::Could not update rankings; preserving previous snapshot.'
-          mkdir -p .build
-          cp data/rankings.json .build/rankings.json
-
-      - name: Track ranking changes
-        if: steps.rankings.outcome == 'success'
-        run: |
-          if [ -f scripts/track_changes.py ]; then
-            python scripts/track_changes.py --fresh .build/rankings.json --snapshot data/rankings.json --history data/changes.json
-          fi
-
-      - name: Download Victors from new spreadsheet (M-column notes)
+      - name: Fetch Victors notes from SAME ORIGINAL sheet
         id: victors
         continue-on-error: true
         env:
-          TTWL_VICTORS_SHEET_ID: '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0'
+          TTWL_VICTORS_SHEET_ID: ${{ env.TTWL_SOURCE_SHEET_ID }}
         run: |
-          mkdir -p .build
           python scripts/sync_victors.py --output .build/victors.json
 
-      - name: Keep previous Victors if notes cannot be downloaded
-        if: steps.victors.outcome == 'failure'
+      - name: Do not reuse Victors from an unrelated sheet
+        if: steps.victors.outcome != 'success'
         run: |
-          echo '::warning::Could not read Victor notes from XLSX; check source permissions and note export.'
-          cp data/victors.json .build/victors.json
+          echo '::warning::The ORIGINAL spreadsheet does not expose usable M-column Victor notes. Old data from the copied sheet will NOT be published.'
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          sid = os.environ['TTWL_SOURCE_SHEET_ID']
+          Path('.build/victors.json').write_text(json.dumps({
+              'status':'unavailable',
+              'sourceUrl': f'https://docs.google.com/spreadsheets/d/{sid}/edit',
+              'pc':{}, 'mobile':{}, 'all':{},
+              'message':'No Victor notes could be read from the original spreadsheet.'
+          },ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
 
-      - name: Save ranking history, if updated
-        if: steps.rankings.outcome == 'success'
-        run: |
-          git add data/rankings.json data/changes.json 2>/dev/null || true
-          if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'Update public rankings [skip ci]'
-            git push origin "HEAD:${GITHUB_REF_NAME}" || echo '::warning::Cannot persist ranking history, but deploying current data.'
-          fi
-
-      - name: Assemble website (preserve existing CSS, JS, rules, favicon)
+      - name: Assemble and validate SINGLE-SOURCE website
         run: |
           mkdir -p _site/data
           find . -maxdepth 1 -type f \( -iname '*.html' -o -iname '*.css' -o -iname '*.js' -o -iname '*.ico' -o -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.svg' -o -iname '*.webp' \) -exec cp {} _site/ \;
@@ -90,7 +75,7 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload build
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -102,6 +87,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
