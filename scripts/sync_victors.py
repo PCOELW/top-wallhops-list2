@@ -17,7 +17,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 from urllib.request import Request, urlopen
 
-SHEET_ID = os.environ.get('TTWL_VICTORS_SHEET_ID', '1RwF0kxkdXh_Fk49zBLWJx1pGxVBLEtnRJK74gvSwzWo')
+SHEET_ID = os.environ.get('TTWL_VICTORS_SHEET_ID', '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0')
 S = '{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
 R = '{http://schemas.openxmlformats.org/officeDocument/2006/relationships}'
 PKG = '{http://schemas.openxmlformats.org/package/2006/relationships}'
