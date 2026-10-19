@@ -530,12 +530,6 @@
     legacy.classList.remove('is-active');
     legacy.textContent='Legacy List';
     mobile.after(legacy);
-    // Mobile has no Victors, and the Legacy tab is also an archival listing.
-    // Force-hide even if victors.js switches the panel back to visible.
-    const style=document.createElement('style');
-    style.id='ttwl-legacy-victors-hide';
-    style.textContent='body:has([data-platform="legacy"].is-active) #victorsPanel{display:none!important}';
-    document.head.appendChild(style);
   }
   function init(){
     installLegacyNavigation();

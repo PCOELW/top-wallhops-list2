@@ -22,9 +22,9 @@
     return clean(value).replace(/[^\p{L}\p{N}]+/gu, '');
   }
   function platform() {
-    const mobile = document.querySelector('[data-platform="mobile"]');
-    if (mobile?.classList.contains('is-active') || mobile?.getAttribute('aria-current') === 'page' || location.hash.toLowerCase() === '#mobile') return 'mobile';
-    return 'pc';
+    const active = document.querySelector('[data-platform].is-active');
+    const candidate = active?.dataset.platform || location.hash.slice(1).toLowerCase();
+    return ['pc', 'mobile', 'legacy'].includes(candidate) ? candidate : 'pc';
   }
   function currentTitle() {
     return ($('detailTitle')?.textContent || '').trim();
@@ -69,8 +69,10 @@
   function getPlayers(title) {
     if (!data) return [];
     // Never match the other platform's Victors to a wallhop of the current platform.
-    const fromPlatform = matches(data[platform()], title);
-    const fromAll = matches(data.all, title);
+    const currentPlatform = platform();
+    const fromPlatform = matches(data[currentPlatform], title);
+    // An archived wallhop must not accidentally inherit Victors from PC/Mobile.
+    const fromAll = currentPlatform === 'legacy' ? [] : matches(data.all, title);
     const names = fromPlatform.length ? fromPlatform : fromAll;
     const result = [], seen = new Set();
     for (const item of names) {

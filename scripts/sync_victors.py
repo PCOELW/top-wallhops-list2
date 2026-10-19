@@ -32,6 +32,8 @@ NOISE = re.compile(r'\b(tower\s+creator\s+id|date\s*\(|rules?|verified\s+by)\b',
 TITLE_NUMBER = re.compile(r'^\s*\d+(?:\.0+)?\s*$')
 SHEET_PC = os.environ.get('WALLHOPS_PC_TAB', 'Top PC Wallhops').casefold()
 SHEET_MOBILE = os.environ.get('WALLHOPS_MOBILE_TAB', 'Top Mobile Wallhops').casefold()
+SHEET_LEGACY = os.environ.get('WALLHOPS_LEGACY_TAB', 'Legacy List (PC)').casefold()
+PLATFORM_TABS = {SHEET_PC: 'pc', SHEET_MOBILE: 'mobile', SHEET_LEGACY: 'legacy'}
 
 
 def key(value):
@@ -128,18 +130,17 @@ def extract(payload):
         workbook = ET.fromstring(zf.read('xl/workbook.xml'))
         rels = relationships(zf,'xl/workbook.xml')
         strings = shared_strings(zf)
-        output = {'pc': {}, 'mobile': {}, 'all': {}}
+        output = {'pc': {}, 'mobile': {}, 'legacy': {}, 'all': {}}
         found_notes = 0
         skipped_numeric = 0
         for entry in workbook.findall('./'+S+'sheets/'+S+'sheet'):
             label = entry.attrib.get('name','')
             path = rels.get(entry.attrib.get(R+'id'))
             if not path or path not in zf.namelist(): continue
-            # Restrict to the two ranking tabs; do not attribute Victor notes
-            # from unrelated sheets just because their name contains 'PC'.
-            if label.casefold() not in (SHEET_PC, SHEET_MOBILE):
+            # Only use these exact ranking tabs; Legacy is independent of PC.
+            if label.casefold() not in PLATFORM_TABS:
                 continue
-            platform = 'pc' if label.casefold() == SHEET_PC else 'mobile'
+            platform = PLATFORM_TABS[label.casefold()]
             root = ET.fromstring(zf.read(path))
             cells = {}
             for row in root.findall('./'+S+'sheetData/'+S+'row'):
@@ -197,7 +198,7 @@ def run(input_file=None):
         raise ValueError(f'No Victor entries extracted from XLSX (notes found: {total_notes}). Check column B titles and column M notes, tab names, and XLSX export support.')
     return {'status':'live','updatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
             'sourceUrl':f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit',
-            'pc':records['pc'],'mobile':records['mobile'],'all':records['all'],
+            'pc':records['pc'],'mobile':records['mobile'],'legacy':records['legacy'],'all':records['all'],
             'message': 'Found no matching Victor notes; check source note placement or XLSX export.' if not found else '',
             'noteCount':total_notes,'wallhopCount':found}
 
