@@ -2,64 +2,403 @@
   "events": [
     {
       "platform": "pc",
-      "type": "new",
-      "title": "Concussion",
-      "rank": 1,
-      "at": "2026-10-18T02:15:10+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "new",
-      "title": "Silent Ballistics",
-      "rank": 2,
-      "at": "2026-10-18T02:15:10+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "removed",
-      "title": "WWWWWWWWWWWW",
-      "beforeRank": 1,
-      "rank": null,
-      "at": "2026-10-18T02:15:10+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "removed",
-      "title": "qwejpqwpeniqpnwiepn",
-      "beforeRank": 2,
-      "rank": null,
-      "at": "2026-10-18T02:15:10+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "new",
-      "title": "qwejpqwpeniqpnwiepn",
-      "rank": 2,
-      "at": "2026-10-18T02:09:51+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "removed",
-      "title": "Silent Ballistics",
-      "beforeRank": 2,
-      "rank": null,
-      "at": "2026-10-18T02:09:51+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "new",
-      "title": "WWWWWWWWWWWW",
-      "rank": 1,
-      "at": "2026-10-18T01:58:45+00:00"
-    },
-    {
-      "platform": "pc",
-      "type": "removed",
+      "type": "down",
       "title": "Concussion",
       "beforeRank": 1,
-      "rank": null,
-      "at": "2026-10-18T01:58:45+00:00"
+      "rank": 3,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "up",
+      "title": "Chicken 44",
+      "beforeRank": 7,
+      "rank": 5,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "new",
+      "title": "Wallhop Monolith",
+      "rank": 6,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Stephenson 2-18",
+      "beforeRank": 5,
+      "rank": 7,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Tree Canopy",
+      "beforeRank": 6,
+      "rank": 8,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Edifice of Wooting 80HE Zinc",
+      "beforeRank": 8,
+      "rank": 9,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Power Tower - Solo",
+      "beforeRank": 9,
+      "rank": 11,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Betelgeuse",
+      "beforeRank": 11,
+      "rank": 12,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Wallhop of Death Call",
+      "beforeRank": 12,
+      "rank": 13,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Horizontal Endurance",
+      "beforeRank": 13,
+      "rank": 14,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Sunken Mystery",
+      "beforeRank": 14,
+      "rank": 15,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Abysmal Void",
+      "beforeRank": 15,
+      "rank": 16,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Wallhop of Real Maliciousility",
+      "beforeRank": 16,
+      "rank": 17,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "teehee colon three tower",
+      "beforeRank": 17,
+      "rank": 18,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "QuintupleX",
+      "beforeRank": 18,
+      "rank": 19,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "The Great Centurial: Trial 98",
+      "beforeRank": 19,
+      "rank": 20,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Wallhop of Surreal Sovereignty",
+      "beforeRank": 20,
+      "rank": 21,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Big wallhop skilled tower",
+      "beforeRank": 21,
+      "rank": 22,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Mystic Stars",
+      "beforeRank": 22,
+      "rank": 23,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Stalactic Soar",
+      "beforeRank": 23,
+      "rank": 24,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Cubic Matter",
+      "beforeRank": 24,
+      "rank": 25,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Steeple of Wallhop Destiny",
+      "beforeRank": 25,
+      "rank": 26,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Cucahop",
+      "beforeRank": 26,
+      "rank": 27,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Bridged Wallhop",
+      "beforeRank": 27,
+      "rank": 28,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "The Siglically Wallhop",
+      "beforeRank": 28,
+      "rank": 29,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Tier 14/15 Wallhop - Practice",
+      "beforeRank": 29,
+      "rank": 30,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "zVic’s Realtime Wall Hop",
+      "beforeRank": 30,
+      "rank": 31,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Wallhop of 7 Floor Hell",
+      "beforeRank": 31,
+      "rank": 32,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Subterra",
+      "beforeRank": 32,
+      "rank": 33,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Tower of Ten Wallhops",
+      "beforeRank": 33,
+      "rank": 34,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Crushing Eternity",
+      "beforeRank": 34,
+      "rank": 35,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Odyssey of The Wallhop",
+      "beforeRank": 35,
+      "rank": 36,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Forgotten By Time",
+      "beforeRank": 36,
+      "rank": 37,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Constellational",
+      "beforeRank": 37,
+      "rank": 38,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Jaco Never Clear",
+      "beforeRank": 38,
+      "rank": 39,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "HBump Omega",
+      "beforeRank": 39,
+      "rank": 40,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Furrohop",
+      "beforeRank": 40,
+      "rank": 41,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Hyper Lazer",
+      "beforeRank": 41,
+      "rank": 42,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Brimstone Anathema",
+      "beforeRank": 42,
+      "rank": 43,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Cylinderhop",
+      "beforeRank": 43,
+      "rank": 44,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Thingymahop",
+      "beforeRank": 44,
+      "rank": 45,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Wedge Wallhop",
+      "beforeRank": 45,
+      "rank": 46,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "One Stud Hell",
+      "beforeRank": 46,
+      "rank": 47,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Darken Isles",
+      "beforeRank": 47,
+      "rank": 48,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Buffed 6 Floor Wallhop Tower",
+      "beforeRank": 48,
+      "rank": 49,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Universal Struggles",
+      "beforeRank": 49,
+      "rank": 50,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Noams Headbump Hop",
+      "beforeRank": 50,
+      "rank": 51,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Inversion",
+      "beforeRank": 51,
+      "rank": 52,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "The Golden Perennial",
+      "beforeRank": 52,
+      "rank": 53,
+      "at": "2026-10-19T06:30:09+00:00"
+    },
+    {
+      "platform": "pc",
+      "type": "down",
+      "title": "Angel's Path",
+      "beforeRank": 53,
+      "rank": 54,
+      "at": "2026-10-19T06:30:09+00:00"
     }
   ],
-  "updatedAt": "2026-10-18T02:38:47+00:00"
+  "updatedAt": "2026-10-19T06:30:09+00:00"
 }

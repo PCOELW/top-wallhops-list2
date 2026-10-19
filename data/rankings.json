@@ -1,6 +1,6 @@
 {
   "status": "live",
-  "updatedAt": "2026-10-18T02:38:47+00:00",
+  "updatedAt": "2026-10-19T06:30:09+00:00",
   "source": "Google Sheets",
   "downloadFormat": "xlsx",
   "sourceUrl": "https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit",
@@ -9,6 +9,22 @@
     "Mobile에서 일부 게임/영상 링크를 읽지 못했습니다. 원본 셀 또는 다운로드 형식을 확인하세요."
   ],
   "pc": [
+    {
+      "rank": 1,
+      "title": "Edifice of Wallhop Against Time",
+      "difficulty": "6.5",
+      "tier": "Tier 16 Mid",
+      "verifier": "Microwavium",
+      "creator": "Microwavium",
+      "gameUrl": "https://www.roblox.com/games/139114826476366/Edifice-of-Wallhop-Against-Time",
+      "videoUrl": "https://www.youtube.com/watch?v=_ha2cQZTxnA",
+      "style": "COs | Mixed Jumps/Lodges | 2+ minutes",
+      "attribute": "Mixed",
+      "quality": "A",
+      "date": "2026-03-08",
+      "towerCreatorId": "",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon11/Png/noFilter"
+    },
     {
       "rank": 1,
       "title": "Concussion",
@@ -40,6 +56,38 @@
       "date": "2026-07-05",
       "towerCreatorId": "872867958#5",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
+    },
+    {
+      "rank": 2,
+      "title": "Silent Ballistics",
+      "difficulty": "6.4",
+      "tier": "Tier 16 Mid-Low",
+      "verifier": "JustAHolocene",
+      "creator": "Den1s2211",
+      "gameUrl": "https://www.roblox.com/games/8646026339/Tower-Creator-Beta",
+      "videoUrl": "https://www.youtube.com/watch?v=1a0FT2PQSi8",
+      "style": "7 Stud Headbumps | Cam Control | 20-45 seconds",
+      "attribute": "Headbump",
+      "quality": "A",
+      "date": "2026-07-05",
+      "towerCreatorId": "872867958#5",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
+    },
+    {
+      "rank": 3,
+      "title": "Concussion",
+      "difficulty": "6.4",
+      "tier": "Tier 16 Mid-Low",
+      "verifier": "Krwkgropik",
+      "creator": "Krwkgropik",
+      "gameUrl": "https://www.roblox.com/games/84302836642344/Wallhop-stuff",
+      "videoUrl": "https://www.youtube.com/watch?v=gRyY4ClMrHY",
+      "style": "SCP Anomaly | Headbumps | 20-45 seconds",
+      "attribute": "Headbump",
+      "quality": "S",
+      "date": "2025-10-25",
+      "towerCreatorId": "",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
       "rank": 3,
@@ -74,7 +122,55 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c69f83f4be9a2295f16884c2379ff8c7/150/150/Image/Png/noFilter"
     },
     {
+      "rank": 4,
+      "title": "Steeple of Suspiciously Large Right Arm",
+      "difficulty": "6.3",
+      "tier": "Tier 16 Low-Mid",
+      "verifier": "Microwavium",
+      "creator": "Microwavium",
+      "gameUrl": "https://www.roblox.com/games/113284482164174/Steeple-of-Suspiciously-Large-Right-Arm",
+      "videoUrl": "https://www.youtube.com/watch?v=e1TGl3gRhq0",
+      "style": "Checkpoints | Consistency | COs | 10+ minutes",
+      "attribute": "Mixed",
+      "quality": "C",
+      "date": "2025-08-13",
+      "towerCreatorId": "",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c69f83f4be9a2295f16884c2379ff8c7/150/150/Image/Png/noFilter"
+    },
+    {
       "rank": 5,
+      "title": "Chicken 44",
+      "difficulty": "6.2",
+      "tier": "Tier 16 Low",
+      "verifier": "Microwavium",
+      "creator": "Ecotism",
+      "gameUrl": "https://www.roblox.com/games/117866296811091/Wallhop-Haven",
+      "videoUrl": "https://youtu.be/6UKQdoErJvk?is=An0leZRIX-17eBhR",
+      "style": "Cam Control |  | 1+ minute",
+      "attribute": "Camera Control",
+      "quality": "C",
+      "date": "2026-03-22",
+      "towerCreatorId": "",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
+    },
+    {
+      "rank": 6,
+      "title": "Wallhop Monolith",
+      "difficulty": "6.2",
+      "tier": "Tier 16 Low",
+      "verifier": "WuduTeHg",
+      "creator": "EndOfUsers",
+      "gameUrl": "https://www.roblox.com/games/8646026339/Tower-Creator-Beta",
+      "videoUrl": "https://youtu.be/vCmQTLAZOI8?si=EIuqzu8IrGhm59Ik",
+      "style": "Consistency | Nets | Headbumps | 10+ minutes",
+      "attribute": "Endurance",
+      "quality": "B",
+      "date": "2026-10-16",
+      "towerCreatorId": "",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
+    },
+    {
+      "rank": 7,
       "title": "Stephenson 2-18",
       "difficulty": "6.2",
       "tier": "Tier 16 Low",
@@ -90,7 +186,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-bcee76116410e656a9e78cea67ea89be/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 6,
+      "rank": 8,
       "title": "Tree Canopy",
       "difficulty": "6.2",
       "tier": "Tier 16 Low",
@@ -106,23 +202,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 7,
-      "title": "Chicken 44",
-      "difficulty": "6.1",
-      "tier": "Tier 16 Bottom",
-      "verifier": "Microwavium",
-      "creator": "Ecotism",
-      "gameUrl": "https://www.roblox.com/games/117866296811091/Wallhop-Haven",
-      "videoUrl": "https://youtu.be/6UKQdoErJvk?is=An0leZRIX-17eBhR",
-      "style": "Cam Control |  | 1+ minute",
-      "attribute": "Camera Control",
-      "quality": "C",
-      "date": "2026-03-22",
-      "towerCreatorId": "",
-      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
-    },
-    {
-      "rank": 8,
+      "rank": 9,
       "title": "Edifice of Wooting 80HE Zinc",
       "difficulty": "6.1",
       "tier": "Tier 16 Bottom",
@@ -136,22 +216,6 @@
       "date": "2026-09-05",
       "towerCreatorId": "",
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
-    },
-    {
-      "rank": 9,
-      "title": "Power Tower - Solo",
-      "difficulty": "6.1",
-      "tier": "Tier 16 Bottom",
-      "verifier": "WuduTeHg",
-      "creator": "KittenCarnation",
-      "gameUrl": "https://www.roblox.com/games/10128481431/King-of-Wallhops",
-      "videoUrl": "https://youtu.be/-jJUs9_HeH8",
-      "style": "Wallhop Tower | Lodges | COs | RNG | 2+ minutes",
-      "attribute": "Mixed",
-      "quality": "B",
-      "date": "2026-09-20",
-      "towerCreatorId": "",
-      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-d85f035db3b00e86cdf4d1614ac01ae8/150/150/Image/Png/noFilter"
     },
     {
       "rank": 10,
@@ -171,6 +235,22 @@
     },
     {
       "rank": 11,
+      "title": "Power Tower - Solo",
+      "difficulty": "6",
+      "tier": "Tier 16 Baseline",
+      "verifier": "WuduTeHg",
+      "creator": "KittenCarnation",
+      "gameUrl": "https://www.roblox.com/games/10128481431/King-of-Wallhops",
+      "videoUrl": "https://youtu.be/-jJUs9_HeH8",
+      "style": "Wallhop Tower | Lodges | COs | RNG | 2+ minutes",
+      "attribute": "Mixed",
+      "quality": "B",
+      "date": "2026-09-20",
+      "towerCreatorId": "",
+      "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-d85f035db3b00e86cdf4d1614ac01ae8/150/150/Image/Png/noFilter"
+    },
+    {
+      "rank": 12,
       "title": "Betelgeuse",
       "difficulty": "5.9",
       "tier": "Tier 15 Peak",
@@ -186,7 +266,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon4/Png/noFilter"
     },
     {
-      "rank": 12,
+      "rank": 13,
       "title": "Wallhop of Death Call",
       "difficulty": "5.8",
       "tier": "Tier 15 High-Peak",
@@ -202,7 +282,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon7/Png/noFilter"
     },
     {
-      "rank": 13,
+      "rank": 14,
       "title": "Horizontal Endurance",
       "difficulty": "5.8",
       "tier": "Tier 15 High-Peak",
@@ -218,7 +298,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 14,
+      "rank": 15,
       "title": "Sunken Mystery",
       "difficulty": "5.8",
       "tier": "Tier 15 High-Peak",
@@ -234,7 +314,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 15,
+      "rank": 16,
       "title": "Abysmal Void",
       "difficulty": "5.7",
       "tier": "Tier 15 High",
@@ -250,7 +330,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 16,
+      "rank": 17,
       "title": "Wallhop of Real Maliciousility",
       "difficulty": "5.6",
       "tier": "Tier 15 Mid-High",
@@ -266,7 +346,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon7/Png/noFilter"
     },
     {
-      "rank": 17,
+      "rank": 18,
       "title": "teehee colon three tower",
       "difficulty": "5.5",
       "tier": "Tier 15 Mid",
@@ -282,7 +362,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
-      "rank": 18,
+      "rank": 19,
       "title": "QuintupleX",
       "difficulty": "5.5",
       "tier": "Tier 15 Mid",
@@ -298,7 +378,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 19,
+      "rank": 20,
       "title": "The Great Centurial: Trial 98",
       "difficulty": "5.2",
       "tier": "Tier 15 Low",
@@ -314,7 +394,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-6605983c4a70ebf5fa8e4fe4a85f7f57/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 20,
+      "rank": 21,
       "title": "Wallhop of Surreal Sovereignty",
       "difficulty": "5.2",
       "tier": "Tier 15 Low",
@@ -330,7 +410,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 21,
+      "rank": 22,
       "title": "Big wallhop skilled tower",
       "difficulty": "5.2",
       "tier": "Tier 15 Low",
@@ -346,7 +426,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 22,
+      "rank": 23,
       "title": "Mystic Stars",
       "difficulty": "5.2",
       "tier": "Tier 15 Low",
@@ -362,7 +442,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 23,
+      "rank": 24,
       "title": "Stalactic Soar",
       "difficulty": "5.1",
       "tier": "Tier 15 Bottom",
@@ -378,7 +458,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 24,
+      "rank": 25,
       "title": "Cubic Matter",
       "difficulty": "5.1",
       "tier": "Tier 15 Bottom",
@@ -394,7 +474,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 25,
+      "rank": 26,
       "title": "Steeple of Wallhop Destiny",
       "difficulty": "5",
       "tier": "Tier 15 Baseline",
@@ -410,7 +490,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fd4b439f8497c778b66d18e8c00d1a1f/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 26,
+      "rank": 27,
       "title": "Cucahop",
       "difficulty": "5",
       "tier": "Tier 15 Baseline",
@@ -426,7 +506,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 27,
+      "rank": 28,
       "title": "Bridged Wallhop",
       "difficulty": "5",
       "tier": "Tier 15 Baseline",
@@ -442,7 +522,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 28,
+      "rank": 29,
       "title": "The Siglically Wallhop",
       "difficulty": "5",
       "tier": "Tier 15 Baseline",
@@ -458,7 +538,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
-      "rank": 29,
+      "rank": 30,
       "title": "Tier 14/15 Wallhop - Practice",
       "difficulty": "4.9",
       "tier": "Tier 14 Peak",
@@ -474,7 +554,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-407f8fe12a11deaa5ab26b56097dd399/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 30,
+      "rank": 31,
       "title": "zVic’s Realtime Wall Hop",
       "difficulty": "4.9",
       "tier": "Tier 14 Peak",
@@ -490,7 +570,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 31,
+      "rank": 32,
       "title": "Wallhop of 7 Floor Hell",
       "difficulty": "4.9",
       "tier": "Tier 14 Peak",
@@ -506,7 +586,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon7/Png/noFilter"
     },
     {
-      "rank": 32,
+      "rank": 33,
       "title": "Subterra",
       "difficulty": "4.9",
       "tier": "Tier 14 Peak",
@@ -522,7 +602,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 33,
+      "rank": 34,
       "title": "Tower of Ten Wallhops",
       "difficulty": "4.8",
       "tier": "Tier 14 High-Peak",
@@ -538,7 +618,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-6c01b45af88479f377858194a550f2da/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 34,
+      "rank": 35,
       "title": "Crushing Eternity",
       "difficulty": "4.8",
       "tier": "Tier 14 High-Peak",
@@ -554,7 +634,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 35,
+      "rank": 36,
       "title": "Odyssey of The Wallhop",
       "difficulty": "4.8",
       "tier": "Tier 14 High-Peak",
@@ -570,7 +650,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
-      "rank": 36,
+      "rank": 37,
       "title": "Forgotten By Time",
       "difficulty": "4.8",
       "tier": "Tier 14 High-Peak",
@@ -586,7 +666,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 37,
+      "rank": 38,
       "title": "Constellational",
       "difficulty": "4.7",
       "tier": "Tier 14 High",
@@ -602,7 +682,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 38,
+      "rank": 39,
       "title": "Jaco Never Clear",
       "difficulty": "4.7",
       "tier": "Tier 14 High",
@@ -618,7 +698,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 39,
+      "rank": 40,
       "title": "HBump Omega",
       "difficulty": "4.6",
       "tier": "Tier 14 Mid-High",
@@ -634,7 +714,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 40,
+      "rank": 41,
       "title": "Furrohop",
       "difficulty": "4.6",
       "tier": "Tier 14 Mid-High",
@@ -649,7 +729,7 @@
       "towerCreatorId": ""
     },
     {
-      "rank": 41,
+      "rank": 42,
       "title": "Hyper Lazer",
       "difficulty": "4.6",
       "tier": "Tier 14 Mid-High",
@@ -665,7 +745,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 42,
+      "rank": 43,
       "title": "Brimstone Anathema",
       "difficulty": "4.6",
       "tier": "Tier 14 Mid-High",
@@ -681,7 +761,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 43,
+      "rank": 44,
       "title": "Cylinderhop",
       "difficulty": "4.6",
       "tier": "Tier 14 Mid-High",
@@ -697,7 +777,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 44,
+      "rank": 45,
       "title": "Thingymahop",
       "difficulty": "4.6",
       "tier": "Tier 14 Mid-High",
@@ -713,7 +793,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-62ebfcf4320aaf4844982089c687731a/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 45,
+      "rank": 46,
       "title": "Wedge Wallhop",
       "difficulty": "4.5",
       "tier": "Tier 14 Mid",
@@ -729,7 +809,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
-      "rank": 46,
+      "rank": 47,
       "title": "One Stud Hell",
       "difficulty": "4.5",
       "tier": "Tier 14 Mid",
@@ -745,7 +825,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-04866c7149bb4dcacabafbcdd993f5c9/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 47,
+      "rank": 48,
       "title": "Darken Isles",
       "difficulty": "4.5",
       "tier": "Tier 14 Mid",
@@ -761,7 +841,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 48,
+      "rank": 49,
       "title": "Buffed 6 Floor Wallhop Tower",
       "difficulty": "4.5",
       "tier": "Tier 14 Mid",
@@ -777,7 +857,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 49,
+      "rank": 50,
       "title": "Universal Struggles",
       "difficulty": "4.5",
       "tier": "Tier 14 Mid",
@@ -793,7 +873,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 50,
+      "rank": 51,
       "title": "Noams Headbump Hop",
       "difficulty": "4.4",
       "tier": "Tier 14 Mid-Low",
@@ -809,7 +889,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 51,
+      "rank": 52,
       "title": "Inversion",
       "difficulty": "4.3",
       "tier": "Tier 14 Low-Mid",
@@ -825,7 +905,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 52,
+      "rank": 53,
       "title": "The Golden Perennial",
       "difficulty": "4.2",
       "tier": "Tier 14 Low",
@@ -841,7 +921,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 53,
+      "rank": 54,
       "title": "Angel's Path",
       "difficulty": "4.2",
       "tier": "Tier 14 Low",
@@ -857,7 +937,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
-      "rank": 54,
+      "rank": 55,
       "title": "HBump Buffed",
       "difficulty": "4.2",
       "tier": "Tier 14 Low",
@@ -873,7 +953,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-e2602cecf3b03efe750aa770723d6569/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 55,
+      "rank": 56,
       "title": "Scarlet Zenith",
       "difficulty": "4.2",
       "tier": "Tier 14 Low",
@@ -889,7 +969,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 56,
+      "rank": 57,
       "title": "Under The Canopy",
       "difficulty": "4.2",
       "tier": "Tier 14 Low",
@@ -905,7 +985,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 57,
+      "rank": 58,
       "title": "OnyxBump",
       "difficulty": "4.2",
       "tier": "Tier 14 Low",
@@ -920,7 +1000,7 @@
       "towerCreatorId": ""
     },
     {
-      "rank": 58,
+      "rank": 59,
       "title": "Lodge Wallhop",
       "difficulty": "4.1",
       "tier": "Tier 14 Bottom",
@@ -936,7 +1016,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-88edbd4c22e4a1b7ef17bb94d78ebde1/150/150/GameIcon1/Png/noFilter"
     },
     {
-      "rank": 59,
+      "rank": 60,
       "title": "Narrow Unclear Limited Landscape",
       "difficulty": "4.1",
       "tier": "Tier 14 Bottom",
@@ -951,7 +1031,7 @@
       "towerCreatorId": ""
     },
     {
-      "rank": 60,
+      "rank": 61,
       "title": "The Vortexual Wallhop",
       "difficulty": "4.1",
       "tier": "Tier 14 Bottom",
@@ -967,7 +1047,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 61,
+      "rank": 62,
       "title": "The Tower of Wallhop",
       "difficulty": "4.1",
       "tier": "Tier 14 Bottom",
@@ -982,7 +1062,7 @@
       "towerCreatorId": ""
     },
     {
-      "rank": 62,
+      "rank": 63,
       "title": "zVic's Sahur Wall Hop Tower",
       "difficulty": "4",
       "tier": "Tier 14 Baseline",
@@ -998,7 +1078,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 63,
+      "rank": 64,
       "title": "Wigglehop",
       "difficulty": "3.9",
       "tier": "Tier 13 Peak",
@@ -1014,7 +1094,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 64,
+      "rank": 65,
       "title": "The 82Oth Wallhop",
       "difficulty": "3.8",
       "tier": "Tier 13 High-Peak",
@@ -1030,7 +1110,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 65,
+      "rank": 66,
       "title": "Hotdog Wallhop Tower",
       "difficulty": "3.8",
       "tier": "Tier 13 High-Peak",
@@ -1046,7 +1126,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 66,
+      "rank": 67,
       "title": "Fling Wallhop",
       "difficulty": "3.7",
       "tier": "Tier 13 High",
@@ -1062,7 +1142,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
-      "rank": 67,
+      "rank": 68,
       "title": "Wiggly Descent",
       "difficulty": "3.7",
       "tier": "Tier 13 High",
@@ -1078,7 +1158,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 68,
+      "rank": 69,
       "title": "The WoodLeafyGrass",
       "difficulty": "3.6",
       "tier": "Tier 13 Mid-High",
@@ -1094,7 +1174,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 69,
+      "rank": 70,
       "title": "Quadratical Clamber",
       "difficulty": "3.6",
       "tier": "Tier 13 Mid-High",
@@ -1110,7 +1190,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 70,
+      "rank": 71,
       "title": "Gandigmon Wallhop",
       "difficulty": "3.6",
       "tier": "Tier 13 Mid-High",
@@ -1126,7 +1206,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fb8815abd8e6a669abd5ef95e484addc/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 71,
+      "rank": 72,
       "title": "7 Layer Wallhop Tower",
       "difficulty": "3.6",
       "tier": "Tier 13 Mid-High",
@@ -1142,7 +1222,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-2328aa288225e9dcf3e293f42f065e20/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 72,
+      "rank": 73,
       "title": "Steeple of Greek Alphabet Hop",
       "difficulty": "3.6",
       "tier": "Tier 13 Mid-High",
@@ -1157,7 +1237,7 @@
       "towerCreatorId": ""
     },
     {
-      "rank": 73,
+      "rank": 74,
       "title": "Steeple of Hopouement",
       "difficulty": "3.6",
       "tier": "Tier 13 Mid-High",
@@ -1173,7 +1253,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-f67b3b0fa6d04a2eb5e04413e74c6644/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 74,
+      "rank": 75,
       "title": "Headbump Hell",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1189,7 +1269,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-fb8815abd8e6a669abd5ef95e484addc/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 75,
+      "rank": 76,
       "title": "A Glacial Path",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1205,7 +1285,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 76,
+      "rank": 77,
       "title": "Will i ever be loved",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1221,7 +1301,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-8cb11daa7547e4f6c13c7ccb081ac3ab/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 77,
+      "rank": 78,
       "title": "Steeple of Wallhop, Wallhop and Wallhop",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1236,7 +1316,7 @@
       "towerCreatorId": ""
     },
     {
-      "rank": 78,
+      "rank": 79,
       "title": "Jankhop",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1252,7 +1332,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
-      "rank": 79,
+      "rank": 80,
       "title": "The Pinnacle of White and Red",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1268,7 +1348,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 80,
+      "rank": 81,
       "title": "Blossom Beginnings",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1284,7 +1364,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 81,
+      "rank": 82,
       "title": "Roofed Agony",
       "difficulty": "3.5",
       "tier": "Tier 13 Mid",
@@ -1300,7 +1380,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 82,
+      "rank": 83,
       "title": "Hefty Bound",
       "difficulty": "3.4",
       "tier": "Tier 13 Mid-Low",
@@ -1316,7 +1396,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 83,
+      "rank": 84,
       "title": "Not Even A Wallhop Tower of Toys",
       "difficulty": "3.4",
       "tier": "Tier 13 Mid-Low",
@@ -1332,7 +1412,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 84,
+      "rank": 85,
       "title": "KaasKaas Wallhop",
       "difficulty": "3.4",
       "tier": "Tier 13 Mid-Low",
@@ -1348,7 +1428,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon3/Png/noFilter"
     },
     {
-      "rank": 85,
+      "rank": 86,
       "title": "Buffed Cyclically Wallhop",
       "difficulty": "3.2",
       "tier": "Tier 13 Low",
@@ -1364,7 +1444,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon6/Png/noFilter"
     },
     {
-      "rank": 86,
+      "rank": 87,
       "title": "Wallhop Of Stressful Mechanics",
       "difficulty": "3",
       "tier": "Tier 13 Baseline",
@@ -1380,7 +1460,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-a8767084380edde99d460ef1ccfabd3b/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 87,
+      "rank": 88,
       "title": "Droplet",
       "difficulty": "3",
       "tier": "Tier 13 Baseline",
@@ -1396,7 +1476,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 88,
+      "rank": 89,
       "title": "Wallhop of Skillbiditoy Buffed",
       "difficulty": "3",
       "tier": "Tier 13 Baseline",
@@ -1412,7 +1492,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 89,
+      "rank": 90,
       "title": "Headbump Hell From Ohio",
       "difficulty": "3",
       "tier": "Tier 13 Baseline",
@@ -1428,7 +1508,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-04866c7149bb4dcacabafbcdd993f5c9/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 90,
+      "rank": 91,
       "title": "Wallhop of Minuscle Motion",
       "difficulty": "3",
       "tier": "Tier 13 Baseline",
@@ -1444,7 +1524,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 91,
+      "rank": 92,
       "title": "Quantum Hop",
       "difficulty": "3",
       "tier": "Tier 13 Baseline",
@@ -1460,7 +1540,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 92,
+      "rank": 93,
       "title": "Golden Cross",
       "difficulty": "2.8",
       "tier": "Tier 12 High-Peak",
@@ -1476,7 +1556,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 93,
+      "rank": 94,
       "title": "Final Wallhop of 3x3",
       "difficulty": "2.7",
       "tier": "Tier 12 High",
@@ -1492,7 +1572,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-9fc281df1de0ae91a8fa56dc85ca1213/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 94,
+      "rank": 95,
       "title": "Hopocalypse",
       "difficulty": "2.5",
       "tier": "Tier 12 Mid",
@@ -1508,7 +1588,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-26de3a6f3be928df6691f27dc32575c9/150/150/GameIcon6/Png/noFilter"
     },
     {
-      "rank": 95,
+      "rank": 96,
       "title": "Pastel Journey",
       "difficulty": "2.3",
       "tier": "Tier 12 Low-Mid",
@@ -1524,7 +1604,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 96,
+      "rank": 97,
       "title": "6 Floor Wallhop Tower",
       "difficulty": "2.2",
       "tier": "Tier 12 Low",
@@ -1540,7 +1620,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-3998f74aae4c9c76b1369f66fcac9f80/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 97,
+      "rank": 98,
       "title": "HBump",
       "difficulty": "2.2",
       "tier": "Tier 12 Low",
@@ -1556,7 +1636,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 98,
+      "rank": 99,
       "title": "Hopocalyptic",
       "difficulty": "2.1",
       "tier": "Tier 12 Bottom",
@@ -1572,7 +1652,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 99,
+      "rank": 100,
       "title": "THE HALLUCINATION",
       "difficulty": "0.7",
       "tier": "Tier 10 High",
@@ -1588,7 +1668,7 @@
       "thumbnailUrl": "https://tr.rbxcdn.com/180DAY-c93fe74889f4116c35daba6267e6fba7/150/150/Image/Png/noFilter"
     },
     {
-      "rank": 100,
+      "rank": 101,
       "title": "Cylinder Wall Hop Tower",
       "difficulty": "0.3",
       "tier": "Tier 10 Low-Mid",
