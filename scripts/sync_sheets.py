@@ -273,18 +273,19 @@ def records_from_rows(rows, cell_notes=None):
         record["towerCreatorId"] = (explicit_id or extracted_id) if is_tower_creator_game(record["gameUrl"]) else ""
         record["date"] = normalize_date(record.get("date", ""))
         records.append(record)
-    # Remove duplicate rows from the spreadsheet. The later row wins for a
-    # repeated ranking number. Repeated names are kept only once as well.
-    by_rank = {}
+    # Preserve the FIRST occurrence in physical sheet row order. Ranking
+    # sheets can contain a second/stale set of rows with the same ranks and
+    # titles. The old last-wins approach accidentally displayed that stale
+    # set instead of the top ranking block.
+    seen_ranks, seen_titles, unique = set(), set(), []
     for item in records:
-        by_rank[item["rank"]] = item
-    by_title = {}
-    for item in by_rank.values():
         key = re.sub(r"\s+", " ", re.sub(r'^\d+\s*[).]\s*', '', item["title"].strip())).casefold()
-        earlier = by_title.get(key)
-        if earlier is None or item["rank"] < earlier["rank"]:
-            by_title[key] = item
-    return sorted(by_title.values(), key=lambda record: record["rank"])
+        if item["rank"] in seen_ranks or key in seen_titles:
+            continue
+        seen_ranks.add(item["rank"])
+        seen_titles.add(key)
+        unique.append(item)
+    return sorted(unique, key=lambda record: record["rank"])
 
 
 def read_public_csv(tab):

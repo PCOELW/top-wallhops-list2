@@ -39,7 +39,9 @@ for platform in ('pc', 'mobile'):
     if not isinstance(items, list):
         raise SystemExit(f'Expected {platform} rankings array')
     ranks, names, output = set(), set(), []
-    for item in sorted(items, key=lambda row: (int(row.get('rank', 999999)), canonical(row.get('title')))):
+    # Preserve incoming sheet order; sorting by title here could select
+    # a stale conflicting record simply because its name comes first.
+    for item in items:
         rank = int(item.get('rank', 0))
         name = canonical(item.get('title'))
         if rank <= 0 or not name or rank in ranks or name in names:

@@ -44,19 +44,17 @@
   }
   function numericDifficulty(r){const n=parseFloat(trim(r.difficulty));return Number.isFinite(n)?n:null;}
   function displayDifficulty(row){const raw=trim(row.difficulty),n=Number(raw);return raw&&Number.isFinite(n)&&Number.isInteger(n)?n.toFixed(1):(raw||'—');}
-  // Avoid duplicate rows if Google Sheets / the generated rankings.json contains
-  // repeated ranks or titles. Within one rank, keep the LAST source record;
-  // a title appearing at multiple ranks is kept at its smallest remaining rank.
+  // Keep the first physical sheet row for each rank and each wallhop title.
+  // IMPORTANT: a second (older) ranking block must never override the first.
+  // This matches scripts/sync_sheets.py and prepare_victors_site.py.
   function dedupeRankingRecords(items){
-    const byRank=new Map();
-    for(const item of items) byRank.set(item.rank,item);
-    const byTitle=new Map();
-    for(const item of byRank.values()){
+    const ranks=new Set(), titles=new Set(), unique=[];
+    for(const item of items){
       const key=item.title.normalize('NFKC').trim().replace(/^\d+\s*[).]\s*/, '').replace(/\s+/g,' ').toLocaleLowerCase();
-      const existing=byTitle.get(key);
-      if(!existing || item.rank<existing.rank) byTitle.set(key,item);
+      if(ranks.has(item.rank)||titles.has(key))continue;
+      ranks.add(item.rank); titles.add(key); unique.push(item);
     }
-    return [...byTitle.values()].sort((a,b)=>a.rank-b.rank);
+    return unique.sort((a,b)=>a.rank-b.rank);
   }
   function normalizeList(raw){
     if(!Array.isArray(raw)) return [];
