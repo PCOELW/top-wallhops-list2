@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Download PC & Mobile rankings from NEW spreadsheet
+      - name: Download PC & Mobile rankings from ORIGINAL spreadsheet
         id: rankings
         continue-on-error: true
         env:
