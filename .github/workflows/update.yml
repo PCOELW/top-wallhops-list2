@@ -55,7 +55,7 @@ jobs:
         id: victors
         continue-on-error: true
         env:
-          TTWL_VICTORS_SHEET_ID: '1RwF0kxkdXh_Fk49zBLWJx1pGxVBLEtnRJK74gvSwzWo'
+          TTWL_VICTORS_SHEET_ID: '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0'
         run: |
           mkdir -p .build
           python scripts/sync_victors.py --output .build/victors.json
