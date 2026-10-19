@@ -32,7 +32,7 @@ jobs:
         id: rankings
         continue-on-error: true
         env:
-          WALLHOPS_SHEET_ID: '1RwF0kxkdXh_Fk49zBLWJx1pGxVBLEtnRJK74gvSwzWo'
+          WALLHOPS_SHEET_ID: '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0'
         run: |
           mkdir -p .build
           python scripts/sync_sheets.py --output .build/rankings.json
