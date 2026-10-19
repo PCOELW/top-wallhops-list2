@@ -272,7 +272,18 @@ def records_from_rows(rows, cell_notes=None):
         record["towerCreatorId"] = (explicit_id or extracted_id) if is_tower_creator_game(record["gameUrl"]) else ""
         record["date"] = normalize_date(record.get("date", ""))
         records.append(record)
-    return sorted(records, key=lambda record: record["rank"])
+    # Remove duplicate rows from the spreadsheet. The later row wins for a
+    # repeated ranking number. Repeated names are kept only once as well.
+    by_rank = {}
+    for item in records:
+        by_rank[item["rank"]] = item
+    by_title = {}
+    for item in by_rank.values():
+        key = re.sub(r"\s+", " ", item["title"].strip()).casefold()
+        earlier = by_title.get(key)
+        if earlier is None or item["rank"] < earlier["rank"]:
+            by_title[key] = item
+    return sorted(by_title.values(), key=lambda record: record["rank"])
 
 
 def read_public_csv(tab):
