@@ -6,7 +6,7 @@ Runs on _site only. Leaves original tracked user customizations unchanged.
 from pathlib import Path
 import re
 
-SOURCE_URL = 'https://docs.google.com/spreadsheets/d/1RwF0kxkdXh_Fk49zBLWJx1pGxVBLEtnRJK74gvSwzWo/edit'
+SOURCE_URL = 'https://docs.google.com/spreadsheets/d/1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0/edit'
 
 root = Path('_site')
 html_file = root / 'index.html'
