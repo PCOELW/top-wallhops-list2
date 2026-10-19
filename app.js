@@ -44,13 +44,31 @@
   }
   function numericDifficulty(r){const n=parseFloat(trim(r.difficulty));return Number.isFinite(n)?n:null;}
   function displayDifficulty(row){const raw=trim(row.difficulty),n=Number(raw);return raw&&Number.isFinite(n)&&Number.isInteger(n)?n.toFixed(1):(raw||'—');}
-  function normalizeList(raw){return Array.isArray(raw)?raw.filter(row=>row&&trim(row.title)).map((r,i)=>({
-    rank:Number.isFinite(Number(r.rank))&&Number(r.rank)>0?Math.trunc(Number(r.rank)):i+1,
-    title:trim(r.title),difficulty:trim(r.difficulty),tier:trim(r.tier),
-    verifier:trim(r.verifier),creator:trim(r.creator),style:trim(r.style),
-    attribute:trim(r.attribute),quality:trim(r.quality),gameUrl:url(r.gameUrl),videoUrl:url(r.videoUrl),
-    date:formatWallhopDate(r.date),towerCreatorId:parseTowerCreatorId(r.towerCreatorId)
-  })):[];}
+  // Avoid duplicate rows if Google Sheets / the generated rankings.json contains
+  // repeated ranks or titles. Within one rank, keep the LAST source record;
+  // a title appearing at multiple ranks is kept at its smallest remaining rank.
+  function dedupeRankingRecords(items){
+    const byRank=new Map();
+    for(const item of items) byRank.set(item.rank,item);
+    const byTitle=new Map();
+    for(const item of byRank.values()){
+      const key=item.title.normalize('NFKC').trim().replace(/\s+/g,' ').toLocaleLowerCase();
+      const existing=byTitle.get(key);
+      if(!existing || item.rank<existing.rank) byTitle.set(key,item);
+    }
+    return [...byTitle.values()].sort((a,b)=>a.rank-b.rank);
+  }
+  function normalizeList(raw){
+    if(!Array.isArray(raw)) return [];
+    const parsed=raw.filter(row=>row&&trim(row.title)).map((r,i)=>({
+      rank:Number.isFinite(Number(r.rank))&&Number(r.rank)>0?Math.trunc(Number(r.rank)):i+1,
+      title:trim(r.title),difficulty:trim(r.difficulty),tier:trim(r.tier),
+      verifier:trim(r.verifier),creator:trim(r.creator),style:trim(r.style),
+      attribute:trim(r.attribute),quality:trim(r.quality),gameUrl:url(r.gameUrl),videoUrl:url(r.videoUrl),
+      date:formatWallhopDate(r.date),towerCreatorId:parseTowerCreatorId(r.towerCreatorId)
+    }));
+    return dedupeRankingRecords(parsed);
+  }
   // Google Visualization transmits dates as Date(year, zeroBasedMonth, day).
   // L is the Date column; M may contain an explicitly entered Tower Creator ID.
   function formatWallhopDate(value) {
@@ -499,16 +517,6 @@
       }
       @media(max-width:620px){.toolbar #ttwl-order-toggle{height:42px}}
     `;
-    document.head.appendChild(style);
-  }
-  function installStickyDetails(){
-    // Sticky the grid column, not only the inner panel: sticky children are
-    // otherwise constrained by a short aside that ends before the table does.
-    // Media query leaves the vertically stacked narrow-screen layout unchanged.
-    if(document.getElementById('ttwl-sticky-details-style'))return;
-    const style=document.createElement('style');
-    style.id='ttwl-sticky-details-style';
-    style.textContent='@media (min-width: 1041px) { body .content-grid > .details-column { position: sticky !important; top: 14px !important; align-self: start !important; } }';
     document.head.appendChild(style);
   }
   function init(){
