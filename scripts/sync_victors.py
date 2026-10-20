@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Extract space-separated Victor usernames from cell notes of a public Google Sheet.
+"""TTWL Victors importer: notes on column M of Top PC Wallhops / Legacy List (PC).
 
-No Apps Script, service account, or third-party dependencies. Notes are only
-accessible when Google's anonymous XLSX export includes their Excel comments.
+The title must come from column B on the very same row. Mobile and visible
+column-M cell values must never be used: on the source workbook they contain
+non-Victor descriptions that led to fake player names in the published JSON.
+
+This uses the XLSX export's Excel comments, not Google Sheets cell values.
+Google may omit some notes from public exports; report that explicitly.
 """
 import argparse
 from datetime import datetime, timezone
@@ -17,205 +21,221 @@ import zipfile
 import xml.etree.ElementTree as ET
 from urllib.request import Request, urlopen
 
-SHEET_ID = os.environ.get('TTWL_VICTORS_SHEET_ID', '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0')
+SOURCE_ID = os.environ.get('TTWL_VICTORS_SHEET_ID') or os.environ.get('TTWL_SOURCE_SHEET_ID') or '1IL_rmiXINST07Hb04RX3qpfQ2pM98FBqnxWwN4Xt7o0'
 S = '{http://schemas.openxmlformats.org/spreadsheetml/2006/main}'
 R = '{http://schemas.openxmlformats.org/officeDocument/2006/relationships}'
 PKG = '{http://schemas.openxmlformats.org/package/2006/relationships}'
 CELL = re.compile(r'^([A-Z]+)(\d+)$')
-VICTOR_WORD = re.compile(r'\bvictors?\b', re.I)
-VICTOR_LABEL = re.compile(r'(?:^|[\n\r])\s*(?:victors?|winners?)\s*[:：=\-–]?\s*', re.I)
-NAME = re.compile(r'^[\w.\-]{2,40}$', re.UNICODE)
-NOISE = re.compile(r'\b(tower\s+creator\s+id|date\s*\(|rules?|verified\s+by)\b', re.I)
-# Exact source mapping provided by the user:
-# Column B = Wallhop Title, column M = victor notes (same row).
-# Column N is only an auxiliary reading column and MUST NOT be used for matching.
 TITLE_NUMBER = re.compile(r'^\s*\d+(?:\.0+)?\s*$')
-SHEET_PC = os.environ.get('WALLHOPS_PC_TAB', 'Top PC Wallhops').casefold()
-SHEET_MOBILE = os.environ.get('WALLHOPS_MOBILE_TAB', 'Top Mobile Wallhops').casefold()
-SHEET_LEGACY = os.environ.get('WALLHOPS_LEGACY_TAB', 'Legacy List (PC)').casefold()
-PLATFORM_TABS = {SHEET_PC: 'pc', SHEET_MOBILE: 'mobile', SHEET_LEGACY: 'legacy'}
+LABEL = re.compile(r'^\s*(?:victors?|winners?|clearers?|클리어자)\s*[:：=\-–]?\s*', re.I)
+BAD_NOTE = re.compile(r'\b(?:tower\s+creator\s+id|obby\s+creator\s+id|gameplay\s+style|\d+\s*(?:seconds?|minutes?|studs?))\b', re.I)
+# Roblox usernames, not ordinary prose; no whitespace, punctuation, or hyphens.
+ROBLOX_NAME = re.compile(r'^[A-Za-z0-9_]{3,20}$')
+COMMON_PROSE = {'this', 'that', 'seconds', 'second', 'minute', 'minutes', 'gameplay', 'headbumps',
+                'wallhops', 'wallhop', 'tower', 'obby', 'mostly', 'mainly', 'made', 'just',
+                'fast', 'slow', 'like', 'with', 'from', 'only', 'here', 'and', 'for', 'the',
+                'not', 'are', 'you', 'have', 'more', 'less', 'time'}
+TABS = {
+    os.environ.get('WALLHOPS_PC_TAB', 'Top PC Wallhops').strip().casefold(): 'pc',
+    os.environ.get('WALLHOPS_LEGACY_TAB', 'Legacy List (PC)').strip().casefold(): 'legacy',
+}
 
 
-def key(value):
-    return ' '.join(str(value or '').strip().lower().split())
+def canonical(value):
+    return re.sub(r'\s+', ' ', str(value or '').strip()).casefold()
 
 
 def usernames(raw):
-    """Each whitespace-delimited nickname is a separate person."""
+    """Parse whitespace/comma-separated Roblox usernames from a note, never prose."""
     text = str(raw or '').strip()
-    text = VICTOR_LABEL.sub('', text)
-    text = re.sub(r'(?i)^\s*(?:victors?|winners?)\s*[:：=\-–]?\s*', '', text)
-    tokens = re.split(r'[\s,;，、]+', text)
-    clean, seen = [], set()
-    for token in tokens:
-        t = token.strip(' \t\r\n\"\'[]()')
-        if NAME.fullmatch(t) and t.lower() not in seen:
-            clean.append(t)
-            seen.add(t.lower())
-    return clean
+    if not text or BAD_NOTE.search(text):
+        return []
+    text = LABEL.sub('', text)
+    pieces = re.split(r'[\s,;，、]+', text)
+    names, seen = [], set()
+    for piece in pieces:
+        word = piece.strip(' \t\r\n\"\'[]()')
+        if not word:
+            continue
+        # Reject the whole cell instead of collecting random words from a sentence.
+        if not ROBLOX_NAME.fullmatch(word) or word.casefold() in COMMON_PROSE:
+            return []
+        if word.casefold() not in seen:
+            names.append(word)
+            seen.add(word.casefold())
+    return names
 
 
-def relationships(zf, path):
-    folder, filename = posixpath.split(path)
-    relpath = posixpath.join(folder, '_rels', filename + '.rels')
-    if relpath not in zf.namelist():
+def relations(zf, path):
+    folder, name = posixpath.split(path)
+    rel_path = posixpath.join(folder, '_rels', name + '.rels')
+    if rel_path not in zf.namelist():
         return {}
-    out = {}
-    for rel in ET.fromstring(zf.read(relpath)).findall(PKG + 'Relationship'):
+    result = {}
+    for rel in ET.fromstring(zf.read(rel_path)).findall(PKG + 'Relationship'):
         target = rel.attrib.get('Target', '')
         if rel.attrib.get('TargetMode') != 'External':
             target = target.lstrip('/') if target.startswith('/') else posixpath.normpath(posixpath.join(folder, target))
-        out[rel.attrib.get('Id')] = target
-    return out
-
-
-def read_notes(zf, sheetrels):
-    notes = {}
-    for path in set(sheetrels.values()):
-        if path not in zf.namelist() or not re.search(r'(?:^|/)(?:comments|threadedcomments)', path, re.I):
-            continue
-        root = ET.fromstring(zf.read(path))
-        for c in root.iter():
-            if c.tag.rsplit('}', 1)[-1] not in ('comment','threadedComment'):
-                continue
-            ref = c.attrib.get('ref','').upper()
-            if not CELL.fullmatch(ref):
-                continue
-            text = ''.join((node.text or '') for node in c.iter() if node.tag.rsplit('}',1)[-1] == 't').strip()
-            if not text:
-                text = ''.join((node.text or '') for node in c.iter() if node.tag.rsplit('}',1)[-1] == 'text').strip()
-            if text:
-                notes[ref] = text
-    return notes
+        result[rel.attrib.get('Id')] = target
+    return result
 
 
 def shared_strings(zf):
     if 'xl/sharedStrings.xml' not in zf.namelist():
         return []
     root = ET.fromstring(zf.read('xl/sharedStrings.xml'))
-    return [''.join(n.text or '' for n in item.iter(S+'t')) for item in root.findall(S+'si')]
+    return [''.join(t.text or '' for t in element.iter(S+'t')) for element in root.findall(S+'si')]
 
 
-def cell_value(cell, shared):
-    kind = cell.attrib.get('t','')
+def value(cell, shared):
+    kind = cell.attrib.get('t', '')
     if kind == 'inlineStr':
-        s = cell.find(S+'is')
-        return ''.join(n.text or '' for n in s.iter(S+'t')) if s is not None else ''
+        e = cell.find(S+'is')
+        return ''.join(t.text or '' for t in e.iter(S+'t')) if e is not None else ''
     v = cell.find(S+'v')
-    result = (v.text or '') if v is not None else ''
+    raw = (v.text or '') if v is not None else ''
     if kind == 's':
-        try: return shared[int(result)]
-        except (ValueError, IndexError): return ''
-    return result
+        try:
+            return shared[int(raw)]
+        except (ValueError, IndexError):
+            return ''
+    return raw
 
 
-def identify_platform(sheet_name):
-    if re.search(r'\bmobile\b|모바일',sheet_name,re.I): return 'mobile'
-    if re.search(r'\bpc\b|컴퓨터',sheet_name,re.I): return 'pc'
-    return 'all'
-
-
-def add(map_, title, candidates):
-    k = key(title)
-    if not k or not candidates: return
-    prior = map_.setdefault(k, [])
-    for name in candidates:
-        if name.lower() not in {x.lower() for x in prior}:
-            prior.append(name)
-
-
-def extract(payload):
-    zf = zipfile.ZipFile(io.BytesIO(payload))
-    with zf:
-        workbook = ET.fromstring(zf.read('xl/workbook.xml'))
-        rels = relationships(zf,'xl/workbook.xml')
-        strings = shared_strings(zf)
-        output = {'pc': {}, 'mobile': {}, 'legacy': {}, 'all': {}}
-        found_notes = 0
-        skipped_numeric = 0
-        for entry in workbook.findall('./'+S+'sheets/'+S+'sheet'):
-            label = entry.attrib.get('name','')
-            path = rels.get(entry.attrib.get(R+'id'))
-            if not path or path not in zf.namelist(): continue
-            # Only use these exact ranking tabs; Legacy is independent of PC.
-            if label.casefold() not in PLATFORM_TABS:
+def comments(zf, sheet_path):
+    """Only actual XLSX comments/notes, NOT displayed values in M."""
+    found = {}
+    for target in set(relations(zf, sheet_path).values()):
+        if target not in zf.namelist() or not re.search(r'(?:^|/)(?:comments|threadedcomments)', target, re.I):
+            continue
+        root = ET.fromstring(zf.read(target))
+        for node in root.iter():
+            if node.tag.rsplit('}', 1)[-1] not in ('comment', 'threadedComment'):
                 continue
-            platform = PLATFORM_TABS[label.casefold()]
+            address = node.attrib.get('ref', '').upper()
+            if not CELL.fullmatch(address):
+                continue
+            text = ''.join((t.text or '') for t in node.iter() if t.tag.rsplit('}', 1)[-1] == 't').strip()
+            if not text:
+                text = ''.join((t.text or '') for t in node.iter() if t.tag.rsplit('}', 1)[-1] == 'text').strip()
+            if text:
+                found[address] = text
+    return found
+
+
+def add(players, title, names):
+    key = canonical(title)
+    if not key or not names:
+        return
+    group = players.setdefault(key, [])
+    seen = {n.casefold() for n in group}
+    for name in names:
+        if name.casefold() not in seen:
+            group.append(name)
+            seen.add(name.casefold())
+
+
+def extract(blob):
+    result = {'pc': {}, 'mobile': {}, 'legacy': {}, 'all': {}}
+    diagnostic = {'recognizedTabs': [], 'titles': {'pc': 0, 'legacy': 0},
+                  'allNotes': {'pc': 0, 'legacy': 0}, 'mNotes': {'pc': 0, 'legacy': 0},
+                  'rejectedMNotes': {'pc': 0, 'legacy': 0}}
+    with zipfile.ZipFile(io.BytesIO(blob)) as zf:
+        sheets = ET.fromstring(zf.read('xl/workbook.xml'))
+        rels = relations(zf, 'xl/workbook.xml')
+        strings = shared_strings(zf)
+        for sheet in sheets.findall('./'+S+'sheets/'+S+'sheet'):
+            label = sheet.attrib.get('name', '')
+            platform = TABS.get(label.strip().casefold())
+            if platform not in ('pc', 'legacy'):
+                continue  # Mobile is deliberately excluded.
+            path = rels.get(sheet.attrib.get(R+'id'))
+            if not path or path not in zf.namelist():
+                print(f'WARNING: cannot read worksheet path for {label}', file=sys.stderr)
+                continue
+            diagnostic['recognizedTabs'].append(label)
             root = ET.fromstring(zf.read(path))
-            cells = {}
+            titles = {}
             for row in root.findall('./'+S+'sheetData/'+S+'row'):
-                r = int(row.attrib.get('r','0'))
-                cells[r] = {c.attrib.get('r','').upper():cell_value(c,strings).strip() for c in row.findall(S+'c')}
-            # Only B{row} identifies the wallhop. N{row} must be ignored.
-            # M{row} contains Victors (usually in an XLSX cell note).
-            notes = read_notes(zf, relationships(zf, path))
-            found_notes += len(notes)
-            byrow = {}
-            for r, row in cells.items():
-                if r < 3:
-                    continue  # Sheet headers / banner
-                title = row.get(f'B{r}', '').strip()
-                # A numeric value is not a valid wallhop title; never use N as fallback.
-                if not title or TITLE_NUMBER.fullmatch(title) or title.casefold() in (
-                    'wallhop title', 'title', 'wallhop name', 'wallhop', 'wallhop title / name'
-                ):
-                    if title and TITLE_NUMBER.fullmatch(title):
-                        skipped_numeric += 1
+                number = int(row.attrib.get('r', '0'))
+                if number < 3:
                     continue
-                byrow[r] = title
-                # Support both visible values and notes in column M.
-                visible = row.get(f'M{r}', '').strip()
-                if visible and not re.fullmatch(r'victors?', visible, re.I):
-                    add(output[platform], title, usernames(visible))
+                # Read B only; ignore all other values, particularly M/N.
+                title = ''
+                for cell in row.findall(S+'c'):
+                    if cell.attrib.get('r', '').upper() == f'B{number}':
+                        title = value(cell, strings).strip()
+                        break
+                if title and not TITLE_NUMBER.fullmatch(title) and canonical(title) not in {'wallhop title', 'title'}:
+                    titles[number] = title
+            diagnostic['titles'][platform] = len(titles)
+            notes = comments(zf, path)
+            diagnostic['allNotes'][platform] = len(notes)
             for address, note in notes.items():
-                m = CELL.fullmatch(address)
-                if not m:
+                match = CELL.fullmatch(address)
+                if not match or match.group(1) != 'M':
                     continue
-                col, r = m.group(1), int(m.group(2))
-                if col != 'M' or r not in byrow:
+                number = int(match.group(2))
+                if number not in titles:
                     continue
-                if NOISE.search(note):
+                diagnostic['mNotes'][platform] += 1
+                names = usernames(note)
+                if not names:
+                    diagnostic['rejectedMNotes'][platform] += 1
                     continue
-                if VICTOR_WORD.search(note):
-                    note = re.sub(r'(?i)\bvictors?\s*[:：=\-–]?\s*', ' ', note)
-                add(output[platform], byrow[r], usernames(note))
-        if skipped_numeric:
-            print(f'Victor extraction: {skipped_numeric} rows with numeric values in B were skipped; N was intentionally ignored.', file=sys.stderr)
-        return output,found_notes
+                add(result[platform], titles[number], names)
+    return result, diagnostic
 
 
 def run(input_file=None):
-    if input_file: content=Path(input_file).read_bytes()
+    if input_file:
+        payload = Path(input_file).read_bytes()
     else:
-        request=Request(f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=xlsx',headers={'User-Agent':'Mozilla/5.0'})
-        with urlopen(request,timeout=50) as response:
-            content=response.read(30*1024*1024+1)
-    if len(content)>30*1024*1024: raise ValueError('XLSX too large')
-    if not content.startswith(b'PK'): raise ValueError('Google returned non-XLSX content; check anonymous download permission')
-    records, total_notes=extract(content)
-    found=sum(len(x) for x in records.values())
-    if not found:
-        raise ValueError(f'No Victor entries extracted from XLSX (notes found: {total_notes}). Check column B titles and column M notes, tab names, and XLSX export support.')
-    return {'status':'live','updatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-            'sourceUrl':f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit',
-            'pc':records['pc'],'mobile':records['mobile'],'legacy':records['legacy'],'all':records['all'],
-            'message': 'Found no matching Victor notes; check source note placement or XLSX export.' if not found else '',
-            'noteCount':total_notes,'wallhopCount':found}
+        request = Request(f'https://docs.google.com/spreadsheets/d/{SOURCE_ID}/export?format=xlsx',
+                          headers={'User-Agent': 'Mozilla/5.0'})
+        with urlopen(request, timeout=50) as response:
+            payload = response.read(30 * 1024 * 1024 + 1)
+    if len(payload) > 30 * 1024 * 1024:
+        raise ValueError('XLSX export exceeds 30 MB.')
+    if not payload.startswith(b'PK'):
+        raise ValueError('Source did not return an XLSX. Check sharing/download permissions.')
+    records, diagnostic = extract(payload)
+    print('Victors notes diagnostic: ' + json.dumps(diagnostic, ensure_ascii=False), file=sys.stderr)
+    if not diagnostic['recognizedTabs']:
+        raise ValueError('Neither Top PC Wallhops nor Legacy List (PC) was found. Check the exact tab names.')
+    total = len(records['pc']) + len(records['legacy'])
+    if not total:
+        raise ValueError('No usable M-column NOTES found in PC/Legacy. Visible M-cell text was intentionally ignored. '
+                         'Check if notes survive Google Sheets XLSX export (see diagnostic above).')
+    missing = [p for p in ('pc', 'legacy') if diagnostic['titles'][p] and not records[p]]
+    if missing:
+        print(f'WARNING: no usernames could be extracted from {", ".join(missing)} M-cell notes.', file=sys.stderr)
+    return {
+        'status': 'partial' if missing else 'live',
+        'updatedAt': datetime.now(timezone.utc).isoformat(timespec='seconds'),
+        'sourceUrl': f'https://docs.google.com/spreadsheets/d/{SOURCE_ID}/edit',
+        'pc': records['pc'], 'mobile': {}, 'legacy': records['legacy'], 'all': {},
+        'wallhopCount': total, 'noteCount': sum(diagnostic['allNotes'].values()),
+        'mNoteCount': sum(diagnostic['mNotes'].values()), 'diagnostic': diagnostic,
+        'message': f'No extractable notes in: {", ".join(missing)}' if missing else '',
+    }
 
 
 def main():
-    p=argparse.ArgumentParser()
-    p.add_argument('--input')
-    p.add_argument('--output',default='data/victors.json')
-    options=p.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', help='Optional local XLSX file for tests.')
+    parser.add_argument('--output', default='data/victors.json')
+    args = parser.parse_args()
     try:
-        data=run(options.input)
-        target=Path(options.output)
-        target.parent.mkdir(parents=True,exist_ok=True)
-        target.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-        print(f"Victor sync: {data['wallhopCount']} wallhops, {data['noteCount']} notes")
-    except Exception as exc:
-        print(f'Victor sync failed: {exc}',file=sys.stderr)
+        data = run(args.input)
+        output = Path(args.output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        print(f'Victor sync: pc={len(data["pc"])} legacy={len(data["legacy"])} mobile=0 ({data["status"]}).')
+    except Exception as error:
+        print(f'Victor sync failed: {error}', file=sys.stderr)
         raise SystemExit(1)
 
-if __name__=='__main__':main()
+
+if __name__ == '__main__':
+    main()

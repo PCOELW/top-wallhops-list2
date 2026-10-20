@@ -93,6 +93,14 @@
       panel.hidden = true;
       return;
     }
+    // User wants Victors ONLY on PC and Legacy, not on Mobile.
+    // Use inline display too: site styles can override the [hidden] attribute.
+    if (platform() === 'mobile') {
+      panel.hidden = true;
+      panel.style.display = 'none';
+      return;
+    }
+    panel.style.display = '';
     panel.hidden = false;
     const players = getPlayers(title);
     count.textContent = `${players.length} player${players.length === 1 ? '' : 's'}`;
