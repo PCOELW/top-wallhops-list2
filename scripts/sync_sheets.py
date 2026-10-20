@@ -31,7 +31,12 @@ PKG = "{http://schemas.openxmlformats.org/package/2006/relationships}"
 CELL_RE = re.compile(r"^([A-Za-z]+)([0-9]+)$")
 # A cell note such as "Tower Creator id: 872867958#5" is a tower ID,
 # not the place ID in the linked Roblox game URL.
-TOWER_CREATOR_ID_RE = re.compile(r"\bTower\s*Creator\s*id\s*[:：]\s*([0-9]+(?:#[A-Za-z0-9_-]+)?)", re.I)
+# The label in a [GAME] cell note is authoritative: don't infer the game
+# type from a Roblox Place ID, since both links may point at Tower Creator.
+CREATOR_NOTE_RE = re.compile(
+    r"\b(?P<kind>Tower|Obby)\s*Creator\s*(?:ID)?\s*[:：]\s*"
+    r"(?P<id>[0-9]{6,20}(?:#[A-Za-z0-9_-]+)?)", re.I
+)
 # Excel can save HYPERLINK as a formula instead of a hyperlink relationship.
 HYPERLINK_RE = re.compile(r'^\s*(?:_xlfn\.)?HYPERLINK\s*\(\s*"((?:[^"]|"")+)"\s*[,;]', re.I)
 COLS = {"rank":"A", "title":"B", "difficulty":"C", "tier":"D",
@@ -263,15 +268,22 @@ def records_from_rows(rows, cell_notes=None):
                 continue
             display, hyperlink = row.get(column, ("", ""))
             record[field] = (hyperlink or safe_http_url(display)) if field.endswith("Url") else display.strip()
-        # Find Tower Creator ID in the Google Sheets note on the [GAME]
-        # cell. The small black-corner tooltip seen in Sheets is a note,
-        # separate from the Roblox hyperlink and visible cell text.
+        # The [GAME] cell note determines whether this is a Tower Creator
+        # or an Obby Creator ID. Google exports notes as XLSX comments.
+        # Example: "Obby Creator Id: 19819486557".
         notes = cell_notes or {}
         note = notes.get(f"G{rindex}", "")
-        match = TOWER_CREATOR_ID_RE.search(note)
+        match = CREATOR_NOTE_RE.search(note)
         explicit_id = parse_tower_creator_id(record.get("towerCreatorId"))
-        extracted_id = match.group(1) if match else ""
-        record["towerCreatorId"] = (explicit_id or extracted_id) if is_tower_creator_game(record["gameUrl"]) else ""
+        record["towerCreatorId"] = ""
+        record["obbyCreatorId"] = ""
+        if match:
+            field = "obbyCreatorId" if match.group("kind").casefold() == "obby" else "towerCreatorId"
+            record[field] = match.group("id")
+        elif is_tower_creator_game(record["gameUrl"]):
+            # Backward compatibility: users may still enter an unlabelled
+            # Tower Creator ID directly in column M.
+            record["towerCreatorId"] = explicit_id
         record["date"] = normalize_date(record.get("date", ""))
         records.append(record)
     # Preserve the FIRST occurrence in physical sheet row order. Ranking

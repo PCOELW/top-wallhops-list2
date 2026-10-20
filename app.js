@@ -63,7 +63,8 @@
       title:trim(r.title),difficulty:trim(r.difficulty),tier:trim(r.tier),
       verifier:trim(r.verifier),creator:trim(r.creator),style:trim(r.style),
       attribute:trim(r.attribute),quality:trim(r.quality),gameUrl:url(r.gameUrl),videoUrl:url(r.videoUrl),
-      date:formatWallhopDate(r.date),towerCreatorId:parseTowerCreatorId(r.towerCreatorId)
+      date:formatWallhopDate(r.date),towerCreatorId:parseTowerCreatorId(r.towerCreatorId),
+      obbyCreatorId:parseObbyCreatorId(r.obbyCreatorId)
     }));
     return dedupeRankingRecords(parsed);
   }
@@ -90,6 +91,11 @@
   function parseTowerCreatorId(raw) {
     const text=trim(raw);
     const match=text.match(/^(?:Tower\s*Creator\s*(?:ID)?\s*[:：]\s*)?(\d{6,20}(?:#[A-Za-z0-9_-]+)?)$/i);
+    return match?match[1]:'';
+  }
+  function parseObbyCreatorId(raw) {
+    const text=trim(raw);
+    const match=text.match(/^(?:Obby\s*Creator\s*(?:ID)?\s*[:：]\s*)?(\d{6,20}(?:#[A-Za-z0-9_-]+)?)$/i);
     return match?match[1]:'';
   }
   function isTowerCreatorGame(row) {
@@ -165,8 +171,13 @@
     }
     const idLine=$('towerCreatorLine');
     if(idLine){
-      const id=isTowerCreatorGame(row)?parseTowerCreatorId(row.towerCreatorId):'';
+      // The note label wins, regardless of the Roblox game URL.
+      const obbyId=parseObbyCreatorId(row?.obbyCreatorId);
+      const towerId=parseTowerCreatorId(row?.towerCreatorId);
+      const id=obbyId||towerId;
       idLine.hidden=!id;
+      const label=idLine.querySelector('dt');
+      if(label)label.textContent=obbyId?'Obby Creator ID':'Tower Creator ID';
       $('towerCreatorId').textContent=id;
     }
   }
@@ -341,7 +352,15 @@
         attribute:trim(row.attribute)||trim(earlier?.attribute)||trim(snapshot?.attribute),
         quality:trim(row.quality)||trim(earlier?.quality)||trim(snapshot?.quality),
         date:formatWallhopDate(row.date)||formatWallhopDate(earlier?.date)||formatWallhopDate(snapshot?.date),
-        towerCreatorId:parseTowerCreatorId(row.towerCreatorId)||parseTowerCreatorId(snapshot?.towerCreatorId)||parseTowerCreatorId(earlier?.towerCreatorId)
+        // The 30s GViz feed does not expose cell notes. Preserve the
+        // type and ID from the XLSX-backed GitHub snapshot instead.
+        obbyCreatorId:parseObbyCreatorId(snapshot?.obbyCreatorId)
+          ||(!parseTowerCreatorId(snapshot?.towerCreatorId)?parseObbyCreatorId(earlier?.obbyCreatorId):''),
+        towerCreatorId:(parseObbyCreatorId(snapshot?.obbyCreatorId)
+          ||(!parseTowerCreatorId(snapshot?.towerCreatorId)&&parseObbyCreatorId(earlier?.obbyCreatorId)))
+          ? '' : (parseTowerCreatorId(snapshot?.towerCreatorId)
+          ||parseTowerCreatorId(earlier?.towerCreatorId)
+          ||(isTowerCreatorGame({gameUrl})?parseTowerCreatorId(row.towerCreatorId):''))
       };
     });
   }
