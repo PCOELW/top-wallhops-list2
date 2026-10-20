@@ -107,6 +107,27 @@
       return /^\/games\/8646026339(?:\/|$)/i.test(parsed.pathname);
     }catch{return false;}
   }
+  // Normalize Date Beaten values for date sorting. Sources include XLSX,
+  // Google Sheets GViz (Date(...)), and US-style M/D/YYYY formatted cells.
+  // Invalid or missing dates return null so they always sort to the bottom.
+  function dateSortKey(value) {
+    const formatted = formatWallhopDate(value);
+    if (!formatted || formatted === '—') return null;
+    const iso = formatted.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s].*)?$/);
+    const us = formatted.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
+    let y, m, d;
+    if (iso) [, y, m, d] = iso;
+    else if (us) [, m, d, y] = us;
+    else {
+      const parsed = Date.parse(formatted);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+    y = Number(y); m = Number(m); d = Number(d);
+    const utc = Date.UTC(y, m - 1, d);
+    const check = new Date(utc);
+    if (check.getUTCFullYear() !== y || check.getUTCMonth() !== m - 1 || check.getUTCDate() !== d) return null;
+    return utc;
+  }
   const rankSort = (a,b)=>a.rank-b.rank;
   function listRows() {return state.payload?.[state.platform] || [];}
   function selectedRow(){
@@ -137,10 +158,21 @@
       const gradeIndex=row=>gradeOrder[qualityFor(row)]??5;
       rows.sort((a,b)=>gradeIndex(a)-gradeIndex(b)||rankSort(a,b));
     }
+    else if(state.sort==='date'){
+      // Default: newest first. The arrow button switches to oldest first.
+      // Undated rows stay at the bottom in both directions.
+      rows.sort((a,b)=>{
+        const da=dateSortKey(a.date), db=dateSortKey(b.date);
+        if(da===null && db===null)return rankSort(a,b);
+        if(da===null)return 1;
+        if(db===null)return -1;
+        return (state.reverseOrder ? da-db : db-da)||rankSort(a,b);
+      });
+    }
     else if(state.sort==='rank')rows.sort(rankSort);
     else rows.sort((a,b)=>(numericDifficulty(b)??-Infinity)-(numericDifficulty(a)??-Infinity)||rankSort(a,b));
-    // One independent toggle reverses whichever order the dropdown selected.
-    if(state.reverseOrder)rows.reverse();
+    // Date manages its own direction to keep entries without dates last.
+    if(state.reverseOrder && state.sort!=='date')rows.reverse();
     return rows;
   }
   function installTowerCreatorUI(){
@@ -459,6 +491,13 @@
       rankOption.textContent='Sort by: Quality';
     }else if(!sort.querySelector('option[value="quality"]')){
       sort.append(new Option('Sort by: Quality','quality'));
+    }
+    // The sort option is inserted here so index.html needs no changes.
+    if(!sort.querySelector('option[value="date"]')){
+      const dateOption=new Option('Sort by: Date','date');
+      const qualityOption=sort.querySelector('option[value="quality"]');
+      if(qualityOption)qualityOption.after(dateOption);
+      else sort.append(dateOption);
     }
     // Reverse ordering is handled by its own square button, not this menu.
     sort.querySelector('option[value="reverse-rank"]')?.remove();
