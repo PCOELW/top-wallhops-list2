@@ -1,22 +1,31 @@
 /* TTWL player leaderboard — no extra API, account, or spreadsheet required.
    Based exclusively on published data/rankings.json + data/victors.json.
-   Ranking: lexicographically compare each player's completed wallhop ranks
-   in ascending order; for an identical prefix, more clears wins. */
+   Hardest: lexicographic comparison of ascending completed ranks.
+   Total: completed wallhop count descending (equal counts share a place). */
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const state = {scope:'all', search:'', players:[], selected:'', rankings:null, victors:null};
+  const state = {mode:'hardest', search:'', players:[], selected:'', rankings:null, victors:null};
   const text = x => String(x ?? '').trim();
   const canonical = x => text(x).normalize('NFKC').replace(/[\u200b-\u200f\u2060\ufeff]/g,'').replace(/[\u2018\u2019\u201b\u00b4\u0060]/g,"'").replace(/[\u2010-\u2015\u2212]/g,'-').replace(/\s+/g,' ').toLowerCase();
   const signature = x => canonical(x).replace(/[^\p{L}\p{N}]+/gu,'');
   const validName = x => /^[A-Za-z0-9_]{3,20}$/.test(text(x));
   const node = (tag, className, value) => {const n=document.createElement(tag);if(className)n.className=className;if(value!==undefined)n.textContent=value;return n;};
   const byRank = (a,b) => a.rank-b.rank || a.platform.localeCompare(b.platform) || a.title.localeCompare(b.title,'en');
-  function compareVectors(a,b){
+  function compareHardest(a,b){
     const x=a.clears.map(c=>c.rank), y=b.clears.map(c=>c.rank);
     for(let i=0;i<Math.min(x.length,y.length);i++)if(x[i]!==y[i])return x[i]-y[i];
     return y.length-x.length;
   }
+  function compareTotal(a,b){return b.clears.length-a.clears.length;}
+  function compareByMode(a,b,mode){
+    return mode==='total' ? compareTotal(a,b) : compareHardest(a,b);
+  }
+  // Hardest breaks display-order ties in Total mode; equal totals still share a rank.
+  function compareDisplay(a,b,mode){
+    return compareByMode(a,b,mode) || (mode==='total' ? compareHardest(a,b) : 0) || a.name.localeCompare(b.name,'en',{sensitivity:'base'});
+  }
+  function rankClass(rank){return rank<=3 ? ' top-'+rank : ''; }
   function matchedWallhop(title, rows){
     const exact=rows.filter(r=>canonical(r.title)===canonical(title));
     if(exact.length===1)return exact[0];
@@ -25,8 +34,8 @@
     const candidates=rows.filter(r=>signature(r.title)===normalized);
     return candidates.length===1?candidates[0]:null;
   }
-  function createPlayers(rankings,victors,scope){
-    const players=new Map(), platformNames=scope==='all'?['pc','legacy']:[scope];
+  function createPlayers(rankings,victors,mode='hardest'){
+    const players=new Map(), platformNames=['pc','legacy'];
     const seenCompleted=new Set();
     let rejected=0, unmatched=0;
     for(const platform of platformNames){
@@ -52,8 +61,8 @@
     }
     const output=[...players.values()];
     output.forEach(p=>p.clears.sort(byRank));
-    output.sort((a,b)=>compareVectors(a,b)||a.name.localeCompare(b.name,'en',{sensitivity:'base'}));
-    output.forEach((p,i)=>{p.place=(i>0&&compareVectors(output[i-1],p)===0)?output[i-1].place:i+1;});
+    output.sort((a,b)=>compareDisplay(a,b,mode));
+    output.forEach((p,i)=>{p.place=(i>0&&compareByMode(output[i-1],p,mode)===0)?output[i-1].place:i+1;});
     return {players:output,rejected,unmatched};
   }
   function makeWallhopLink(clear){
@@ -69,7 +78,7 @@
     if(!player){
       $('selectedPlayerRank').textContent='#—';$('selectedPlayerName').textContent='No player selected';
       $('selectedPlayerBest').textContent='—';$('selectedPlayerCount').textContent='0';
-      $('selectedPlayerCaption').textContent='0 clears';
+      $('selectedPlayerCaption').textContent='0 completions';
       list.replaceChildren(node('li','player-empty','No completed wallhops are available for this selection.'));
       return;
     }
@@ -77,12 +86,12 @@
     $('selectedPlayerName').textContent=player.name;
     $('selectedPlayerBest').textContent='#'+player.clears[0].rank;
     $('selectedPlayerCount').textContent=String(player.clears.length);
-    $('selectedPlayerCaption').textContent=player.clears.length+' clear'+(player.clears.length===1?'':'s');
+    $('selectedPlayerCaption').textContent=player.clears.length+' completion'+(player.clears.length===1?'':'s');
     const frag=document.createDocumentFragment();
     player.clears.forEach(clear=>{
       const li=node('li');const link=node('a');link.href=makeWallhopLink(clear);
       link.title='Open '+clear.title+' in '+(clear.platform==='legacy'?'Legacy List':'PC Wallhops');
-      link.append(node('span','player-clear-rank','#'+clear.rank),node('span','player-clear-title',clear.title),node('span','player-clear-tag',clear.platform==='legacy'?'Legacy':'PC'));
+      link.append(node('span','player-clear-rank'+rankClass(clear.rank),'#'+clear.rank),node('span','player-clear-title',clear.title),node('span','player-clear-tag',clear.platform==='legacy'?'Legacy':'PC'));
       li.append(link);frag.append(li);
     });
     list.replaceChildren(frag);
@@ -93,18 +102,16 @@
     const frag=document.createDocumentFragment();
     if(!visible.length){
       const tr=node('tr'), td=node('td','leaderboard-empty',state.players.length?'No players match your search.':'No Victors available in the selected list.');
-      td.colSpan=5;tr.append(td);frag.append(tr);
+      td.colSpan=4;tr.append(td);frag.append(tr);
     }
     for(const player of visible){
       const tr=node('tr',player.key===state.selected?'is-selected':'');tr.tabIndex=0;
       tr.setAttribute('aria-label',`Player ${player.name}, position ${player.place}. View completed wallhops`);
-      const place=node('td','leaderboard-place'+(player.place<=3?' top-'+player.place:''),'#'+player.place);
+      const place=node('td','leaderboard-place'+rankClass(player.place),'#'+player.place);
       const username=node('td','leaderboard-name',player.name);
-      const best=node('td','leaderboard-best','#'+player.clears[0].rank);
+      const best=node('td','leaderboard-best'+rankClass(player.clears[0].rank),'#'+player.clears[0].rank);
       const total=node('td','leaderboard-total',String(player.clears.length));
-      const rankText=player.clears.slice(0,5).map(c=>'#'+c.rank).join(' · ')+(player.clears.length>5?' · +'+(player.clears.length-5):'');
-      const ranks=node('td','leaderboard-ranks',rankText);
-      tr.append(place,username,best,total,ranks);
+      tr.append(place,username,best,total);
       const choose=()=>{state.selected=player.key;renderPlayers();renderPlayerDetails();if(window.innerWidth<=900)$('playerDetailsPanel').scrollIntoView({behavior:'smooth',block:'start'});};
       tr.addEventListener('click',choose);
       tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});
@@ -116,7 +123,7 @@
   function recompute(){
     if(!state.rankings||!state.victors)return;
     const oldSelection=state.selected;
-    const result=createPlayers(state.rankings,state.victors,state.scope);
+    const result=createPlayers(state.rankings,state.victors,state.mode);
     state.players=result.players;
     const requested=new URLSearchParams(location.search).get('player');
     state.selected=state.players.find(p=>p.key===oldSelection)?.key||state.players.find(p=>p.key===canonical(requested))?.key||state.players[0]?.key||'';
@@ -144,7 +151,7 @@
       $('leaderboardUpdated').textContent='Victors last synced: '+(date&&!Number.isNaN(date.getTime())?date.toLocaleString(): 'not available')+'. Rankings and Victors are read from the published site data.';
       recompute();
     }catch(e){
-      if(!state.players.length){$('playerRankingRows').replaceChildren((()=>{const tr=node('tr'),td=node('td','leaderboard-empty','Could not load the player leaderboard.');td.colSpan=5;tr.append(td);return tr;})());}
+      if(!state.players.length){$('playerRankingRows').replaceChildren((()=>{const tr=node('tr'),td=node('td','leaderboard-empty','Could not load the player leaderboard.');td.colSpan=4;tr.append(td);return tr;})());}
       $('leaderboardAlert').hidden=false;
       $('leaderboardAlert').textContent='Data could not be loaded: '+e.message+' Check that both data/rankings.json and data/victors.json are published.';
       console.warn('[TTWL leaderboard]',e);
@@ -154,7 +161,7 @@
     const config=window.WALLHOPS_CONFIG||{};
     if(/^https:\/\//.test(text(config.discordUrl))){$('leaderboardDiscord').href=config.discordUrl;$('leaderboardDiscord').hidden=false;}
     $('playerSearch').addEventListener('input',e=>{state.search=e.target.value;renderPlayers();});
-    $('playerScope').addEventListener('change',e=>{state.scope=e.target.value;recompute();});
+    $('playerMode').addEventListener('change',e=>{state.mode=e.target.value==='total'?'total':'hardest';recompute();});
     refresh();
     setInterval(()=>{if(!document.hidden)refresh();},30000);
   }

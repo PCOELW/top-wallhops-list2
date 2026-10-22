@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#101722">
   <meta name="description" content="The Top Wallhops player leaderboard, ranked by the highest-ranked wallhops each player has completed.">
-  <title>Player Leaderboard — The Top Wallhops</title>
+  <title>TTWL</title>
   <link rel="icon" href="./favicon.png" type="image/png">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./site-additions.css">
@@ -31,10 +31,8 @@
   <main class="shell leaderboard-page">
     <div class="leaderboard-intro">
       <div>
-        <h1>Player Leaderboard</h1>
-        <p>Ranked by each player's strongest completed wallhops. If the best ranks are tied, the next best ranks decide the order.</p>
+        <h1>Leaderboard</h1>
       </div>
-      <span class="leaderboard-source">PC + Legacy completions</span>
     </div>
 
     <div id="leaderboardAlert" class="leaderboard-alert" role="status" hidden></div>
@@ -45,19 +43,18 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16.3 16.3 5 5"/></svg>
             <input id="playerSearch" type="search" placeholder="Search players..." autocomplete="off" aria-label="Search players">
           </label>
-          <label class="leaderboard-filter-label" for="playerScope">List</label>
-          <select id="playerScope" aria-label="Choose included wallhop lists">
-            <option value="all">PC + Legacy</option>
-            <option value="pc">PC Only</option>
-            <option value="legacy">Legacy Only</option>
+          <label class="leaderboard-filter-label" for="playerMode">Sort by</label>
+          <select id="playerMode" aria-label="Choose leaderboard ranking method">
+            <option value="hardest">Hardest</option>
+            <option value="total">Total</option>
           </select>
         </div>
         <div class="leaderboard-table-scroll" role="region" aria-label="Player leaderboard table" tabindex="0">
           <table class="leaderboard-table">
             <thead>
-              <tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Best Clear</th><th scope="col">Clears</th><th scope="col">Completed Ranks</th></tr>
+              <tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Hardest</th><th scope="col">Completions</th></tr>
             </thead>
-            <tbody id="playerRankingRows"><tr><td class="leaderboard-loading" colspan="5">Loading player rankings...</td></tr></tbody>
+            <tbody id="playerRankingRows"><tr><td class="leaderboard-loading" colspan="4">Loading player rankings...</td></tr></tbody>
           </table>
         </div>
         <div class="leaderboard-table-footer"><span id="playerResults">Loading...</span><span>Click a player to view their completions ↗</span></div>
@@ -66,10 +63,10 @@
         <section class="player-details-panel" id="playerDetailsPanel">
           <div class="player-details-title"><span id="selectedPlayerRank">#—</span><h2 id="selectedPlayerName">Select a player</h2></div>
           <div class="player-details-summary">
-            <div><span>Best Clear</span><strong id="selectedPlayerBest">—</strong></div>
-            <div><span>Total Clears</span><strong id="selectedPlayerCount">—</strong></div>
+            <div><span>Hardest</span><strong id="selectedPlayerBest">—</strong></div>
+            <div><span>Total Completions</span><strong id="selectedPlayerCount">—</strong></div>
           </div>
-          <div class="player-clears-head"><h3>Completed Wallhops</h3><span id="selectedPlayerCaption">0 clears</span></div>
+          <div class="player-clears-head"><h3>Completed Wallhops</h3><span id="selectedPlayerCaption">0 completions</span></div>
           <ol id="selectedPlayerClears" class="player-clears"><li class="player-empty">Select a name to view their cleared wallhops.</li></ol>
         </section>
         <p class="leaderboard-footnote" id="leaderboardUpdated">Based on the site's published Victors data.</p>

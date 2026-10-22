@@ -128,3 +128,17 @@ config_path.write_text(config, encoding='utf-8')
     'victors':{'sourceUrl':victors['sourceUrl'],'status':victors.get('status','unknown')},
 }, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
 print(f'SINGLE SOURCE VERIFIED: {SID}; PC={len(rankings["pc"])} Mobile={len(rankings["mobile"])} Legacy={len(rankings["legacy"])}; Victors={victors.get("status")}.')
+
+
+# All navigation destinations should retain the same short browser tab title.
+for page in ('index.html', 'rules.html', 'leaderboard.html'):
+    page_path = root / page
+    if not page_path.is_file():
+        continue
+    page_html = page_path.read_text(encoding='utf-8')
+    page_html, replaced = re.subn(
+        r'<title\b[^>]*>.*?</title\s*>', '<title>TTWL</title>',
+        page_html, count=1, flags=re.I | re.S,
+    )
+    if replaced:
+        page_path.write_text(page_html, encoding='utf-8')
