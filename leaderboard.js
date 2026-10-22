@@ -158,8 +158,6 @@
     }
   }
   function init(){
-    const config=window.WALLHOPS_CONFIG||{};
-    if(/^https:\/\//.test(text(config.discordUrl))){$('leaderboardDiscord').href=config.discordUrl;$('leaderboardDiscord').hidden=false;}
     $('playerSearch').addEventListener('input',e=>{state.search=e.target.value;renderPlayers();});
     $('playerMode').addEventListener('change',e=>{state.mode=e.target.value==='total'?'total':'hardest';recompute();});
     refresh();
