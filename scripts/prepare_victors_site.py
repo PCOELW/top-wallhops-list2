@@ -92,7 +92,17 @@ if rules_path.is_file():
         rules_html, changed = mobile_link.subn(lambda m: m.group(1) + '\n      ' + legacy_link, rules_html, count=1)
         if changed != 1:
             raise SystemExit('Could not find Mobile Wallhops link in Rules navigation')
-        rules_path.write_text(rules_html, encoding='utf-8')
+        # Do not write yet; also insert the Leaderboard item below.
+    if not re.search(r'href\s*=\s*["\'](?:\./)?leaderboard\.html["\']', rules_html, re.I):
+        legacy_nav = re.compile(
+            r'(<a\b(?=[^>]*\bhref\s*=\s*["\'](?:\./)?index\.html#legacy["\'])[^>]*>.*?</a>)',
+            re.I | re.S,
+        )
+        leaderboard_link = '<a class="nav-item" href="./leaderboard.html">Leaderboard</a>'
+        rules_html, inserted = legacy_nav.subn(lambda m: m.group(1) + '\n      ' + leaderboard_link, rules_html, count=1)
+        if inserted != 1:
+            raise SystemExit('Could not insert Leaderboard link in Rules navigation')
+    rules_path.write_text(rules_html, encoding='utf-8')
 
 
 config = config_path.read_text(encoding='utf-8')

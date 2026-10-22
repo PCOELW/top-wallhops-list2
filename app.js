@@ -133,7 +133,9 @@
   function selectedRow(){
     const rows=listRows();
     const selection=state.selection[state.platform];
-    return rows.find(r => r.title===selection) || [...rows].sort(rankSort)[0] || null;
+    return rows.find(r => r.title===selection)
+      || (selection && rows.find(r => r.title.normalize('NFKC').trim().toLowerCase()===selection.normalize('NFKC').trim().toLowerCase()))
+      || [...rows].sort(rankSort)[0] || null;
   }
   function getFilteredRows(){
     const q=state.query.trim().toLocaleLowerCase();
@@ -266,6 +268,13 @@
     else {const tr=el('tr');const td=el('td','table-message',state.payload? (listRows().length?'No wallhops match your filters.':'No rankings available for this platform yet.'):'Loading rankings...');td.colSpan=10;tr.append(td);frag.append(tr);}
     tbody.replaceChildren(frag);$('resultsLabel').textContent=`${filtered.length} of ${listRows().length} wallhops`;
     renderDetails();
+    if(deepLinkPending && state.platform===deepLinkPlatform && listRows().some(r=>r.title.toLowerCase()===deepLinkTitle.toLowerCase())){
+      deepLinkPending=false;
+      requestAnimationFrame(()=>{
+        const row=$('rankingRows').querySelector('tr.is-selected');
+        if(row)row.scrollIntoView({block:'center',behavior:'auto'});
+      });
+    }
   }
   function refreshAttributeOptions(){
     const select=$('attributeFilter');const options=[...new Set(listRows().map(displayAttr))].filter(x=>x!=='—').sort((a,b)=>a.localeCompare(b));
@@ -578,6 +587,24 @@
     `;
     document.head.appendChild(style);
   }
+  // Deep links from the player leaderboard to an individual completed wallhop.
+  const incoming=new URLSearchParams(location.search);
+  const deepLinkTitle=trim(incoming.get('wallhop')).slice(0,250);
+  const deepLinkPlatform=trim(incoming.get('list')).toLowerCase();
+  let deepLinkPending=!!deepLinkTitle&&['pc','mobile','legacy'].includes(deepLinkPlatform);
+  function installLeaderboardNavigation(){
+    const nav=document.querySelector('.main-nav');
+    if(!nav || nav.querySelector('a[href*="leaderboard.html"]'))return;
+    const link=el('a','nav-item','Leaderboard');
+    link.href='./leaderboard.html';
+    const legacy=nav.querySelector('[data-platform="legacy"]');
+    const mobile=nav.querySelector('[data-platform="mobile"]');
+    const rules=nav.querySelector('#rulesButton, a[href*="rules.html"]');
+    if(legacy)legacy.after(link);
+    else if(mobile)mobile.after(link);
+    else if(rules)rules.before(link);
+    else nav.append(link);
+  }
   function installLegacyNavigation(){
     const mobile=document.querySelector('[data-platform="mobile"]');
     if(!mobile || document.querySelector('[data-platform="legacy"]'))return;
@@ -591,6 +618,11 @@
   }
   function init(){
     installLegacyNavigation();
+    installLeaderboardNavigation();
+    if(deepLinkPending){
+      state.platform=deepLinkPlatform;
+      state.selection[deepLinkPlatform]=deepLinkTitle;
+    }
     installTowerCreatorUI();
     setupDifficultyAndSortMenus();
     installOrderToggle();

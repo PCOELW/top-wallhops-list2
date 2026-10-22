@@ -117,8 +117,10 @@
         const number = document.createElement('span');
         number.className = 'ttwl-victor-number';
         number.textContent = String(index + 1).padStart(2, '0');
-        const name = document.createElement('span');
-        name.className = 'ttwl-victor-name';
+        const name = document.createElement('a');
+        name.className = 'ttwl-victor-name ttwl-victor-link';
+        name.href = './leaderboard.html?player=' + encodeURIComponent(player);
+        name.title = 'See ' + player + ' on the player leaderboard';
         name.textContent = player;
         item.append(number, name);
         fragment.appendChild(item);
@@ -152,6 +154,12 @@
   }
   function init() {
     createPanel();
+    if (!document.getElementById('ttwl-victor-link-style')) {
+      const style = document.createElement('style');
+      style.id = 'ttwl-victor-link-style';
+      style.textContent = '.ttwl-victor-link{color:inherit;text-decoration:none;cursor:pointer}.ttwl-victor-link:hover{text-decoration:underline;color:#dceafd}.ttwl-victor-link:focus-visible{outline:2px solid #9db4db;outline-offset:2px;border-radius:3px}';
+      document.head.appendChild(style);
+    }
     render();
     const target = $('detailTitle');
     if (target) new MutationObserver(selectionChanged).observe(target, {childList:true,characterData:true,subtree:true});
