@@ -75,6 +75,9 @@ jobs:
       - name: Add Google SEO and sitemap
         run: python scripts/add_seo.py
 
+      - name: Copy custom favicon
+        run: cp favicon.png _site/favicon.png
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
