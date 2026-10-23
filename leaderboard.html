@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#101722">
+  <meta name="theme-color" content="#0a1420">
   <meta name="description" content="The Top Wallhops player leaderboard, ranked by the highest-ranked wallhops each player has completed.">
   <title>TTWL</title>
   <link rel="icon" href="./favicon.png" type="image/png">
@@ -28,40 +28,40 @@
       </nav>
     </div>
   </header>
-  <main class="shell leaderboard-page">
-    <div class="leaderboard-intro">
+  <main class="shell page leaderboard-page">
+    <div class="page-intro leaderboard-intro">
       <div>
         <h1>Leaderboard</h1>
       </div>
     </div>
 
     <div id="leaderboardAlert" class="leaderboard-alert" role="status" hidden></div>
-    <div class="leaderboard-layout">
-      <section class="leaderboard-main" aria-label="Player rankings">
-        <div class="leaderboard-controls">
-          <label class="leaderboard-search-wrap">
+    <div class="content-grid leaderboard-layout">
+      <section class="rankings-column leaderboard-main" aria-label="Player rankings">
+        <div class="toolbar leaderboard-controls">
+          <label class="search-field toolbar-search leaderboard-search-wrap">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.2"/><path d="m16.3 16.3 5 5"/></svg>
             <input id="playerSearch" type="search" placeholder="Search players..." autocomplete="off" aria-label="Search players">
           </label>
           <label class="leaderboard-filter-label" for="playerMode">Sort by</label>
-          <select id="playerMode" aria-label="Choose leaderboard ranking method">
+          <span class="select-wrap leaderboard-select-wrap"><select id="playerMode" aria-label="Choose leaderboard ranking method">
             <option value="hardest">Hardest</option>
             <option value="total">Total</option>
-          </select>
+          </select></span>
         </div>
-        <div class="leaderboard-table-scroll" role="region" aria-label="Player leaderboard table" tabindex="0">
-          <table class="leaderboard-table">
+        <div class="table-scroll leaderboard-table-scroll" role="region" aria-label="Player leaderboard table" tabindex="0">
+          <table class="rankings-table leaderboard-table">
             <thead>
               <tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Hardest</th><th scope="col">Completions</th></tr>
             </thead>
             <tbody id="playerRankingRows"><tr><td class="leaderboard-loading" colspan="4">Loading player rankings...</td></tr></tbody>
           </table>
         </div>
-        <div class="leaderboard-table-footer"><span id="playerResults">Loading...</span><span>Click a player to view their completions ↗</span></div>
+        <div class="table-bottom leaderboard-table-footer"><span id="playerResults">Loading...</span><span>Click a player to view their completions ↗</span></div>
       </section>
-      <aside class="leaderboard-side" aria-label="Selected player completions">
-        <section class="player-details-panel" id="playerDetailsPanel">
-          <div class="player-details-title"><span id="selectedPlayerRank">#—</span><h2 id="selectedPlayerName">Select a player</h2></div>
+      <aside class="details-column leaderboard-side" aria-label="Selected player completions">
+        <section class="detail-panel player-details-panel" id="playerDetailsPanel">
+          <div class="detail-heading player-details-title"><span class="detail-rank" id="selectedPlayerRank">#—</span><h2 id="selectedPlayerName">Select a player</h2></div>
           <div class="player-details-summary">
             <div><span>Hardest</span><strong id="selectedPlayerBest">—</strong></div>
             <div><span>Total Completions</span><strong id="selectedPlayerCount">—</strong></div>
