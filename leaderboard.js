@@ -1,7 +1,8 @@
 /* TTWL player leaderboard — no extra API, account, or spreadsheet required.
    Based exclusively on published data/rankings.json + data/victors.json.
    Hardest: lexicographic comparison of ascending completed ranks.
-   Total: completed wallhop count descending (equal counts share a place). */
+   Total: completed wallhop count descending.
+   Each player receives a unique sequential display rank in both modes. */
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -21,7 +22,7 @@
   function compareByMode(a,b,mode){
     return mode==='total' ? compareTotal(a,b) : compareHardest(a,b);
   }
-  // Hardest breaks display-order ties in Total mode; equal totals still share a rank.
+  // Hardest breaks ties for ordering in Total mode; display ranks are unique in both modes.
   function compareDisplay(a,b,mode){
     return compareByMode(a,b,mode) || (mode==='total' ? compareHardest(a,b) : 0) || a.name.localeCompare(b.name,'en',{sensitivity:'base'});
   }
@@ -62,7 +63,7 @@
     const output=[...players.values()];
     output.forEach(p=>p.clears.sort(byRank));
     output.sort((a,b)=>compareDisplay(a,b,mode));
-    output.forEach((p,i)=>{p.place=(i>0&&compareByMode(output[i-1],p,mode)===0)?output[i-1].place:i+1;});
+    output.forEach((p,i)=>{p.place=i+1;});
     return {players:output,rejected,unmatched};
   }
   function makeWallhopLink(clear){
