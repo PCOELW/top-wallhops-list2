@@ -72,6 +72,9 @@ jobs:
           python scripts/prepare_victors_site.py
           touch _site/.nojekyll
 
+      - name: Add Google SEO and sitemap
+        run: python scripts/add_seo.py
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
