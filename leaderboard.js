@@ -84,7 +84,7 @@
     }
     $('selectedPlayerRank').textContent='#'+player.place;
     $('selectedPlayerName').textContent=player.name;
-    $('selectedPlayerBest').textContent='#'+player.clears[0].rank;
+    $('selectedPlayerBest').textContent=player.clears[0].title;
     $('selectedPlayerCount').textContent=String(player.clears.length);
     $('selectedPlayerCaption').textContent=player.clears.length+' completion'+(player.clears.length===1?'':'s');
     const frag=document.createDocumentFragment();
@@ -109,7 +109,8 @@
       tr.setAttribute('aria-label',`Player ${player.name}, position ${player.place}. View completed wallhops`);
       const place=node('td','leaderboard-place'+rankClass(player.place),'#'+player.place);
       const username=node('td','leaderboard-name',player.name);
-      const best=node('td','leaderboard-best'+rankClass(player.clears[0].rank),'#'+player.clears[0].rank);
+      const best=node('td','leaderboard-best',player.clears[0].title);
+      best.title='Hardest clear: #'+player.clears[0].rank;
       const total=node('td','leaderboard-total',String(player.clears.length));
       tr.append(place,username,best,total);
       const choose=()=>{state.selected=player.key;renderPlayers();renderPlayerDetails();if(window.innerWidth<=900)$('playerDetailsPanel').scrollIntoView({behavior:'smooth',block:'start'});};

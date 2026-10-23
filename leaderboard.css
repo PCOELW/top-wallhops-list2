@@ -32,7 +32,7 @@
 .leaderboard-place{font-size:16px;color:#e2e9f3;font-weight:800;font-variant-numeric:tabular-nums}
 .leaderboard-place.top-1{color:#f1bd61}.leaderboard-place.top-2{color:#aebfd1}.leaderboard-place.top-3{color:#e99e68}
 .leaderboard-name{font-weight:700;color:#f6f8fe;overflow-wrap:anywhere}
-.leaderboard-best{font-weight:700;color:#dbe7f4;white-space:nowrap}
+.leaderboard-best{font-weight:700;color:#dbe7f4;white-space:normal;overflow-wrap:anywhere;line-height:1.45;min-width:0}
 .leaderboard-best.top-1{color:#f1bd61}.leaderboard-best.top-2{color:#aebfd1}.leaderboard-best.top-3{color:#e99e68}
 .leaderboard-total{font-weight:600;color:#c5d3e7;white-space:nowrap}
 .leaderboard-ranks{color:#a9bace;font-size:12px;line-height:1.5}
@@ -61,3 +61,7 @@
 @media(max-width:1150px){.leaderboard-layout{grid-template-columns:minmax(0,1fr) 300px}.leaderboard-page{padding-top:35px}}
 @media(max-width:900px){.leaderboard-layout{grid-template-columns:1fr}.leaderboard-side{min-width:0}.player-clears{max-height:360px}.leaderboard-intro{flex-direction:column;align-items:start}.player-leaderboard-page .site-header-inner{gap:14px}.ttwl-leaderboard-discord{display:none}}
 @media(max-width:640px){.leaderboard-page{padding-top:24px}.leaderboard-controls{flex-wrap:wrap}.leaderboard-filter-label{display:none}.leaderboard-controls select{min-width:118px}.leaderboard-table{min-width:430px}.leaderboard-table th,.leaderboard-table td{padding:13px 10px}.player-details-panel{padding:19px 16px}.leaderboard-intro{margin-bottom:24px}}
+
+/* Long hardest-wallhop titles must wrap within the right-side player details. */
+.player-details-summary{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+#selectedPlayerBest{font-size:15px;line-height:1.45;overflow-wrap:anywhere;word-break:normal}
